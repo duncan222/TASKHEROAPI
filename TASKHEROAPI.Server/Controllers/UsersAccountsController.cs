@@ -12,25 +12,25 @@ namespace TASKHEROAPI.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserAccountsController : ControllerBase
+    public class UsersAccountsController : ControllerBase
     {
         private readonly DataContext _context;
 
-        public UserAccountsController(DataContext context)
+        public UsersAccountsController(DataContext context)
         {
             _context = context;
         }
 
         // GET: api/UserAccounts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserAccount>>> GetUsersAccounts()
+        public async Task<ActionResult<IEnumerable<UsersAccounts>>> GetUsersAccounts()
         {
             return await _context.UsersAccounts.ToListAsync();
         }
 
         // GET: api/UserAccounts/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserAccount>> GetUserAccount(int id)
+        public async Task<ActionResult<UsersAccounts>> GetUserAccount(int id)
         {
             var userAccount = await _context.UsersAccounts.FindAsync(id);
 
@@ -45,7 +45,7 @@ namespace TASKHEROAPI.Server.Controllers
         // PUT: api/UserAccounts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserAccount(int id, UserAccount userAccount)
+        public async Task<IActionResult> PutUserAccount(int id, UsersAccounts userAccount)
         {
             if (id != userAccount.UserId)
             {
@@ -76,7 +76,7 @@ namespace TASKHEROAPI.Server.Controllers
         // POST: api/UserAccounts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<UserAccount>> PostUserAccount(UserAccount userAccount)
+        public async Task<ActionResult<UsersAccounts>> PostUserAccount(UsersAccounts userAccount)
         {
             _context.UsersAccounts.Add(userAccount);
             try

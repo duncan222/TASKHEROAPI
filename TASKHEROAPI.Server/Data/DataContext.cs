@@ -10,7 +10,7 @@ namespace TaskHeroAPI.Data
 
         public DbSet<User> Users { get; set; }
 
-        public DbSet<UserAccount> UsersAccounts { get; set; }
+        public DbSet<UsersAccounts> UsersAccounts { get; set; }
     
         public DbSet<UserAchievements> UserAchievements { get; set;}
 

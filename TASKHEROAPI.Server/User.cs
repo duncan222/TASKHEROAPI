@@ -16,7 +16,7 @@ namespace TaskHeroAPI
 
         public UserSettings? UserSettings { get; set; }
 
-        public UserAccount? UserAccount { get; set; }
+        public UsersAccounts? UserAccount { get; set; }
 
         public UserFriends? Friends { get; set; }
 
