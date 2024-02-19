@@ -3,7 +3,7 @@
 namespace TaskHeroAPI
 {
     //model for the users account ( such as password, email, and phone) associated with UserID. 
-    public class UserAccount
+    public class UsersAccounts
     {
         [Key] public int UserId { get; set; }
 

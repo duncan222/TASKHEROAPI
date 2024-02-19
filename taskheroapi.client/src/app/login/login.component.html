@@ -1,21 +1,30 @@
-<div class="parent">
-  <div class="container">
-    <div class="login-box">
-      <h2>Login</h2>
-      <form action="#">
-        <div class="input-box">
-          <input type="email" name="EmailId" required>
-          <label>Email</label>
+<div class="row">
+  <div class="col-md-4 offset-md-4 col-sm-6 offset-sm-3">
+    <div class="card auth">
+      <div class="card-body auth-card">
+        <div class="auth-avatar">
+          <img src="../../assets/icons/logo.svg" alt="logo" class="logo-image">
         </div>
-        <div class="input-box">
-          <input type="password" name="Password" required>
-          <label>Password</label>
+        <form submit="login">
+          <div class="form-group">
+            <label for="email">Email: </label>
+            <input type="text" name="email" class="form-control" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <label for="password">Password: </label>
+            <input type="password" name="password" class="form-control" placeholder="********">
+            <div class="text-right forget-pass">
+              <a routerLink="/forget-password">Forget Password ?</a>
+            </div>
+          </div>
+          <div class="text-center">
+            <input type="submit" class="btn btn-my" value="Login" >
+          </div>
+        </form>
+        <div class="text-center sign-up">
+          Don't have an account? <a routerLink="/signup">Sign Up</a> here.
         </div>
-
-        <button type="button" class="btn">Login</button>
-
-      </form>
+      </div>
     </div>
-
   </div>
 </div>

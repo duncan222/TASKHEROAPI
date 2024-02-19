@@ -1,0 +1,13 @@
+.login {
+  color: #000;
+}
+
+.login a {
+  color: #d39e00;
+  font-weight: 600;
+  text-decoration: none;
+ }
+
+.btn-my {
+  background-color: turquoise
+}
