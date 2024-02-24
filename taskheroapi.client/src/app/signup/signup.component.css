@@ -2,12 +2,24 @@
   color: #000;
 }
 
+.card {
+  background-color: #3e3939;
+}
+
+.form-group label {
+  color: #fff;
+}
+
+.sign-up-button-container {
+  margin-top: 10px;
+}
+
 .login a {
-  color: #d39e00;
+  color: #fa47f1;
   font-weight: 600;
   text-decoration: none;
- }
+}
 
 .btn-my {
-  background-color: turquoise
+  background-color: #71bac2;
 }

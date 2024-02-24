@@ -5,15 +5,31 @@
 }
 
 .sign-up {
+  color: #fff;
+}
+
+.sign-up-link {
   color: #000;
 }
 
+.card {
+  background-color: #3e3939;
+}
+
+.form-group label {
+  color: #fff;
+}
+
+.login-button-container {
+  margin-top: 10px;
+}
+
 .btn-my {
-    background-color: turquoise
+  background-color: #71bac2;
 }
 
   .sign-up a {
-    color: #d39e00;
+    color: #fa47f1;
     font-weight: 600;
     text-decoration: none;
   }

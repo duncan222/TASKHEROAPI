@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SignupComponent } from './signup/signup.component';
+import { SocialComponent } from './social/social.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -13,10 +14,8 @@ const routes: Routes = [
     path: '',
     component: NavbarComponent,
     children: [
-      {
-        path: 'home',
-        component: HomeComponent
-      }
+      { path: 'home', component: HomeComponent },
+      { path: 'social', component: SocialComponent }
     ]
   }
 ];
