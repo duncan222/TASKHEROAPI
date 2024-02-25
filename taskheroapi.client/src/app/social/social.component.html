@@ -1,1 +1,26 @@
-<p>social works!</p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-GLhlTQ8iKIIeKy7mous2hFnhBakLpsNHi6aQD5rW+5uj6ET2+Ywe4+Y1p2eL3I5" crossorigin="anonymous">
+
+<div class="social-container">
+  <div class="buttons-container">
+    <button class="social-button" [class.active]="isFriendsActive" (click)="showFriends()">Friends</button>
+    <button class="social-button" [class.active]="!isFriendsActive" (click)="showAllUsers()">All Users</button>
+    <div class="active-bar" [style.left]="activeBarLeft"></div>
+  </div>
+
+  <div class="user-list">
+    <div *ngFor="let user of displayedUserList" class="user-block">
+      <div class="user-info">
+        <div class="username">{{ user.username }}</div>
+        <div class="points">{{ user.points }} points</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="search-box">
+    <div class="search-content">
+      <span>Search for Users</span>
+      <i class="fa fa-search"></i>
+    </div>
+  </div>
+</div>
+
