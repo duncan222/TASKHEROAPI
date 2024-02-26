@@ -79,3 +79,67 @@
 .search-content span {
   margin-right: 10px;
 }
+
+.search-popup {
+  width: 600px;
+  height: 800px;
+  position: fixed; /* Position the popup relative to its parent */
+  top: 50%; /* Adjust the vertical position from the top */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #3e3939; /* Set the background color to light gray */
+  padding: 15px; /* Add some padding inside the popup */
+  border-radius: 5px; /* Add rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
+  z-index: 10; /* Ensure the popup is displayed above other elements */
+  display: none; /* Hide the popup initially */
+}
+
+  .search-popup.show { /* Apply styles when the popup is open */
+    display: block; /* Make the popup visible */
+  }
+
+  .search-popup h3 {
+      color: white;
+  }
+
+  .search-popup input {
+      width: 60%;
+      height: 40px;
+      border-radius: 10px;
+      color: #000;
+  }
+
+.search-button {
+  width: 15%;
+  height: 40px;
+  background-color: lightblue; /* Set the background color to light blue */
+  border: none;
+  border-radius: 10px; /* Add rounded edges to the button */
+  color: black; /* Set the text color to black */
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #e06666;
+  color: black;
+  border: 2px solid black; /* Add a white outline */
+  border-radius: 8px; /* Adjust the border-radius for a square shape */
+  font-size: 24px; /* Increase the font size for a larger button */
+  width: 40px; /* Set a specific width */
+  height: 40px; /* Set a specific height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.search-results {
+    margin: 10px;
+}
+
+

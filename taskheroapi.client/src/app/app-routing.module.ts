@@ -5,6 +5,9 @@ import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SignupComponent } from './signup/signup.component';
 import { SocialComponent } from './social/social.component';
+import { ProfileComponent } from './profile/profile.component';
+import { AchievementsComponent } from './achievements/achievements.component';
+import { TasksComponent } from './tasks/tasks.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -15,7 +18,10 @@ const routes: Routes = [
     component: NavbarComponent,
     children: [
       { path: 'home', component: HomeComponent },
-      { path: 'social', component: SocialComponent }
+      { path: 'social', component: SocialComponent },
+      { path: 'profile', component: ProfileComponent },
+      { path: 'achievements', component: AchievementsComponent },
+      { path: 'tasks', component: TasksComponent }
     ]
   }
 ];
