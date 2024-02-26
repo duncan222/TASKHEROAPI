@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class SocialComponent implements OnInit {
   isFriendsActive: boolean = true;
   activeBarLeft: string = '0%';
+  isSearchPopupOpen: boolean = false;
   displayedUserList: any[] = [
     { username: 'User1', points: 100 },
     { username: 'User2', points: 150 },
@@ -17,6 +18,9 @@ export class SocialComponent implements OnInit {
     { username: 'User4', points: 120 },
     // Add more test users as needed
   ];
+  searchTestData: any[] = [
+    { username: 'SearchedUser1', points: 200}
+  ]
 
   ngOnInit() {
     // Set the initial state when the component is initialized
@@ -33,6 +37,10 @@ export class SocialComponent implements OnInit {
     this.isFriendsActive = false;
     this.updateActiveBar();
     // Add logic to populate displayedUserList with all users
+  }
+
+  toggleSearchPopup() {
+    this.isSearchPopupOpen = !this.isSearchPopupOpen;
   }
 
   private updateActiveBar() {

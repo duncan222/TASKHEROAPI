@@ -10,6 +10,9 @@ import { LoginComponent } from './login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SignupComponent } from './signup/signup.component';
 import { SocialComponent } from './social/social.component';
+import { ProfileComponent } from './profile/profile.component';
+import { TasksComponent } from './tasks/tasks.component';
+import { AchievementsComponent } from './achievements/achievements.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { SocialComponent } from './social/social.component';
     LoginComponent,
     NavbarComponent,
     SignupComponent,
-    SocialComponent
+    SocialComponent,
+    ProfileComponent,
+    TasksComponent,
+    AchievementsComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,TooltipModule.forRoot(),
