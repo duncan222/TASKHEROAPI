@@ -24,14 +24,33 @@
 
 .active-bar {
   position: absolute;
-  bottom: 0;
-  height: 3px;
+  bottom: -40px;
+  height: 5px;
   background-color: lightblue;
   transition: left 0.3s ease;
+  width: 20%;
+  visibility: visible;
+  border-radius: 15px;
+  margin-bottom: 25px;
+}
+
+svg:hover {
+    cursor: pointer;
+}
+
+.friend-popup {
+  position: fixed;
+  top: 30%;
+  left: 37%;
+  width: 500px;
+  z-index: 100;
+  background-color: lightgreen;
+  padding: 20px;
+  border-radius: 15px;
 }
 
 .user-list {
-  /* Removed display: flex; */
+  margin-top: 55px;
 }
 
 .user-block {
@@ -40,6 +59,7 @@
   border: 1px solid #ccc;
   padding: 2%;
   margin: 1%;
+  margin-top: 20px;
   min-width: 300px;
   width: 100%;
   border-radius: 15px;
@@ -74,6 +94,10 @@
 .search-content {
   display: flex;
   align-items: center;
+}
+
+.search-points {
+  margin-left: 300px;
 }
 
 .search-content span {
