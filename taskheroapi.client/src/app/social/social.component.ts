@@ -11,6 +11,7 @@ export class SocialComponent implements OnInit {
   isFriendsActive: boolean = true;
   activeBarLeft: string = '0%';
   isSearchPopupOpen: boolean = false;
+  isFriendAddedOpen: boolean = false;
   displayedUserList: any[] = [
     { username: 'User1', points: 100 },
     { username: 'User2', points: 150 },
@@ -43,9 +44,21 @@ export class SocialComponent implements OnInit {
     this.isSearchPopupOpen = !this.isSearchPopupOpen;
   }
 
+  toggleFriendAdded() {
+    this.isFriendAddedOpen = !this.isFriendAddedOpen;
+    this.showFriendAddedPopup();
+  }
+
+  private showFriendAddedPopup() {
+    this.isFriendAddedOpen = true;
+    setTimeout(() => {
+      this.isFriendAddedOpen = false;
+    }, 2000);
+  }
+
   private updateActiveBar() {
     // Update the activeBarLeft based on the isFriendsActive state
-    this.activeBarLeft = this.isFriendsActive ? '0%' : '50%';
+    this.activeBarLeft = this.isFriendsActive ? '15%' : '65%';
   }
 }
 
