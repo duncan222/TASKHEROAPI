@@ -13,6 +13,7 @@ import { SocialComponent } from './social/social.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { AchievementsComponent } from './achievements/achievements.component';
+import { UserService } from '../services/user.service'
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { AchievementsComponent } from './achievements/achievements.component';
     BrowserModule, HttpClientModule,TooltipModule.forRoot(),
     AppRoutingModule, FormsModule, ReactiveFormsModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
