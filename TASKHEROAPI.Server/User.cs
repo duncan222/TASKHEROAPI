@@ -22,6 +22,6 @@ namespace TaskHeroAPI
 
         public UserAchievements? Achievements { get; set; }
 
-        public UserTasks[]? Tasks { get; set; }
+        public ICollection<UserTasks>? Tasks { get; set; }
     }
 }
