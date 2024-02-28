@@ -4,7 +4,7 @@ interface UserAccount {
   UserId: number;
   Password: string;
   Email: string;
-  PhoneNumber: number;
+  PhoneNumber: string;
 }
 
 @Component({
