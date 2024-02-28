@@ -25,14 +25,14 @@ namespace TASKHEROAPI.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Achievements>>> GetAchievemts()
         {
-            return await _context.Achievemts.ToListAsync();
+            return await _context.Achievements.ToListAsync();
         }
 
         // GET: api/Achievements/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Achievements>> GetAchievements(int id)
         {
-            var achievements = await _context.Achievemts.FindAsync(id);
+            var achievements = await _context.Achievements.FindAsync(id);
 
             if (achievements == null)
             {
@@ -78,7 +78,7 @@ namespace TASKHEROAPI.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Achievements>> PostAchievements(Achievements achievements)
         {
-            _context.Achievemts.Add(achievements);
+            _context.Achievements.Add(achievements);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetAchievements", new { id = achievements.Id }, achievements);
@@ -88,13 +88,13 @@ namespace TASKHEROAPI.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAchievements(int id)
         {
-            var achievements = await _context.Achievemts.FindAsync(id);
+            var achievements = await _context.Achievements.FindAsync(id);
             if (achievements == null)
             {
                 return NotFound();
             }
 
-            _context.Achievemts.Remove(achievements);
+            _context.Achievements.Remove(achievements);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -102,7 +102,7 @@ namespace TASKHEROAPI.Server.Controllers
 
         private bool AchievementsExists(int id)
         {
-            return _context.Achievemts.Any(e => e.Id == id);
+            return _context.Achievements.Any(e => e.Id == id);
         }
     }
 }
