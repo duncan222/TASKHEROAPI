@@ -13,7 +13,6 @@ namespace TASKHEROAPI.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("myAllowSpecificOrgins")]
     public class UsersController : ControllerBase
     {
         private readonly DataContext _context;
