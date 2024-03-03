@@ -40,8 +40,10 @@ body::-webkit-scrollbar-thumb{
 }
 
 .navbar {
+    z-index: 1;
     position: fixed;
     background-color: var(--bg-primary);
+    box-shadow: 0px 0px 20px 0px #A8EFFF;
     transition: width 200ms ease;
   }
   .navbar-nav {
@@ -54,20 +56,24 @@ body::-webkit-scrollbar-thumb{
     height: 100%;
 }
 
+.mat-card{ 
+    color: white;
+    background-color: white;
+}
+
 .nav-item { 
     width: 100%; 
 }
 
 .nav-item:last-child { 
     margin-top: auto; 
-    width: 16rem;
 }
 
 .nav-link{ 
     display: flex;
     align-items: center;
     height: 5rem;
-    color: var(--text-primary);
+    color: #A8EFFF;
     text-decoration: none;
     filter: grayscale(100%) opacity(.7);
     transition: var(--transition-speed);
@@ -104,6 +110,10 @@ body::-webkit-scrollbar-thumb{
     width: 100%;
 }
 
+.home{ 
+    backdrop-filter: blur(0.8);
+}
+
 .logo img { 
     transform: rotate(0deg); 
     transition: transform var(--transition-speed);
@@ -121,6 +131,14 @@ body::-webkit-scrollbar-thumb{
         width: 16rem;
     }
 
+    .nav-item:hover { 
+        width: 16rem;
+    }
+
+    .nav-link:hover { 
+        width: 16rem;
+    }
+    
     .navbar:hover .logo img { 
         transform: rotate(-360deg);
     }
@@ -166,3 +184,5 @@ body::-webkit-scrollbar-thumb{
         padding: .5;
     }
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
