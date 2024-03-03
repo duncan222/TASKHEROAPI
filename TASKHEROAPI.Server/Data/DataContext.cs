@@ -8,6 +8,11 @@ namespace TaskHeroAPI.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDefaultSchema("dbo");
+        }
+
         public DbSet<User> Users { get; set; }
 
         public DbSet<UsersAccounts> UsersAccounts { get; set; }
@@ -18,7 +23,7 @@ namespace TaskHeroAPI.Data
 
         public DbSet<UserSettings> UserSettings { get; set; }
 
-        public DbSet<Achievements> Achievemts { get; set; } 
+        public DbSet<Achievements> Achievements { get; set; } 
 
         public DbSet<UserTasks> UserTasks { get; set; }
     

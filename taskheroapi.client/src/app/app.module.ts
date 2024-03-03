@@ -17,7 +17,7 @@ import { AchievementsComponent } from './achievements/achievements.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import {MatCardModule} from '@angular/material/card';
-
+import { UserService } from '../services/user.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,7 @@ import {MatCardModule} from '@angular/material/card';
     BrowserModule, ProgressbarModule, MatCardModule, BrowserAnimationsModule,  HttpClientModule,TooltipModule.forRoot(),
     AppRoutingModule, FormsModule, ReactiveFormsModule
   ],
-  providers: [
+  providers: [UserService,
     provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]

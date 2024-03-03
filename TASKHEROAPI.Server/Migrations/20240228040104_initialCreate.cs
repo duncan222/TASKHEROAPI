@@ -5,13 +5,17 @@
 namespace TASKHEROAPI.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "dbo");
+
             migrationBuilder.CreateTable(
-                name: "Achievemts",
+                name: "Achievements",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -24,44 +28,28 @@ namespace TASKHEROAPI.Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Achievemts", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserSettings",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserSettings", x => x.UserId);
+                    table.PrimaryKey("PK_Achievements", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Users",
+                schema: "dbo",
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Score = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    UserSettingsUserId = table.Column<int>(type: "int", nullable: true)
+                    Image = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.UserId);
-                    table.ForeignKey(
-                        name: "FK_Users_UserSettings_UserSettingsUserId",
-                        column: x => x.UserSettingsUserId,
-                        principalTable: "UserSettings",
-                        principalColumn: "UserId");
                 });
 
             migrationBuilder.CreateTable(
                 name: "UserAchievements",
+                schema: "dbo",
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false),
@@ -75,6 +63,7 @@ namespace TASKHEROAPI.Server.Migrations
                     table.ForeignKey(
                         name: "FK_UserAchievements_Users_UserId",
                         column: x => x.UserId,
+                        principalSchema: "dbo",
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
@@ -82,6 +71,7 @@ namespace TASKHEROAPI.Server.Migrations
 
             migrationBuilder.CreateTable(
                 name: "UserFriends",
+                schema: "dbo",
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false),
@@ -94,6 +84,48 @@ namespace TASKHEROAPI.Server.Migrations
                     table.ForeignKey(
                         name: "FK_UserFriends_Users_UserId",
                         column: x => x.UserId,
+                        principalSchema: "dbo",
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UsersAccounts",
+                schema: "dbo",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UsersAccounts", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_UsersAccounts_Users_UserId",
+                        column: x => x.UserId,
+                        principalSchema: "dbo",
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserSettings",
+                schema: "dbo",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserSettings", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_UserSettings_Users_UserId",
+                        column: x => x.UserId,
+                        principalSchema: "dbo",
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
@@ -101,6 +133,7 @@ namespace TASKHEROAPI.Server.Migrations
 
             migrationBuilder.CreateTable(
                 name: "UserTasks",
+                schema: "dbo",
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
@@ -119,26 +152,7 @@ namespace TASKHEROAPI.Server.Migrations
                     table.ForeignKey(
                         name: "FK_UserTasks_Users_UserId1",
                         column: x => x.UserId1,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UsersAccounts",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    PhoneNumber = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UsersAccounts", x => x.UserId);
-                    table.ForeignKey(
-                        name: "FK_UsersAccounts_Users_UserId",
-                        column: x => x.UserId,
+                        principalSchema: "dbo",
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
@@ -146,38 +160,41 @@ namespace TASKHEROAPI.Server.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserTasks_UserId1",
+                schema: "dbo",
                 table: "UserTasks",
                 column: "UserId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_UserSettingsUserId",
-                table: "Users",
-                column: "UserSettingsUserId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Achievemts");
+                name: "Achievements",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "UserAchievements");
+                name: "UserAchievements",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "UserFriends");
+                name: "UserFriends",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "UserTasks");
+                name: "UsersAccounts",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "UsersAccounts");
+                name: "UserSettings",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "UserTasks",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "UserSettings");
+                name: "Users",
+                schema: "dbo");
         }
     }
 }

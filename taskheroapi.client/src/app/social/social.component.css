@@ -106,7 +106,7 @@ svg:hover {
 
 .search-popup {
   width: 600px;
-  height: 800px;
+  height: 400px;
   position: fixed; /* Position the popup relative to its parent */
   top: 50%; /* Adjust the vertical position from the top */
   left: 50%;

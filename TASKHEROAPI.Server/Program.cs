@@ -28,9 +28,10 @@ builder.Services.AddDbContext<DataContext>(options =>
 //enable cors
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: myAllowSpecificOrgins,
+    options.AddPolicy(myAllowSpecificOrgins,
         builder => {
-            builder.WithOrigins("http://localhost:4200")
+            //builder.WithOrigins("http://localhost:4200", "https://localhost:4200")
+            builder.AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader();
         });
@@ -48,7 +49,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseCors(myAllowSpecificOrgins);
 
