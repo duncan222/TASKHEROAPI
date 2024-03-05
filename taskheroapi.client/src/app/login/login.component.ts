@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UserAccountService } from '../../services/userAccount.service'
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service'
 
 interface userAccounts {
   userId?: number;
@@ -22,7 +23,7 @@ export class LoginComponent {
   password: string = '';
   validUser = false;
 
-  constructor(private userAccountService: UserAccountService, private router: Router) { }
+  constructor(private userAccountService: UserAccountService, private router: Router, private authService: AuthService) { }
 
   onLogIn() {
     console.log('onLogIn triggerd')
@@ -34,6 +35,7 @@ export class LoginComponent {
           
           if ((user.email == this.email) && (user.password == this.password)) {
             this.validUser = true;
+            this.authService.setLoggedInUserId(user.userId);
           }
         }
 
