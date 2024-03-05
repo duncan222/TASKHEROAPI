@@ -33,3 +33,8 @@
     font-weight: 600;
     text-decoration: none;
   }
+
+.error-text {
+  color: #e03131;
+  font-weight: bold;
+}

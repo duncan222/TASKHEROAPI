@@ -1,24 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IUser } from '../interfaces/user.inteface';
+import { IUsersAccounts } from '../interfaces/useraccounts.interface'
 import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
+export class UserAccountService {
   private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
-  post(user: IUser): Observable<any> {
-    const url = `${this.apiUrl}/Users`;
-    return this.http.post(url, user);
-  }
-
   get(): Observable<any> {
-    const url = `${this.apiUrl}/Users`;
+    const url = `${this.apiUrl}/UsersAccounts`;
     return this.http.get(url);
   }
 }

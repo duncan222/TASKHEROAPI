@@ -5,17 +5,21 @@
         <div class="auth-avatar">
           <img src="../../assets/icons/logo.svg" alt="logo" class="logo-image">
         </div>
-        <form submit="login">
+        <form (ngSubmit)="onLogIn()">
           <div class="form-group">
-            <label for="email">Email: </label>
-            <input type="text" name="email" class="form-control" placeholder="Email">
+            <label for="email">*Email: </label>
+            <input type="text" name="email" class="form-control" placeholder="Email" [(ngModel)]="email" required>
           </div>
           <div class="form-group">
-            <label for="password">Password: </label>
-            <input type="password" name="password" class="form-control" placeholder="********">
+            <label for="password">*Password: </label>
+            <input type="password" name="password" class="form-control" placeholder="********" [(ngModel)]="password" required>
           </div>
+          <div class="error-text"> {{ errorMessage}} </div>
           <div class="text-center login-button-container">
-            <input type="submit" class="btn btn-my" value="Login" >
+            <button type="submit" class="btn btn-my" [disabled]="loading">
+              <span *ngIf="!loading">Log In</span>
+              <span *ngIf="loading">Logging you in...</span>
+            </button>
           </div>
         </form>
         <div class="text-center sign-up">
