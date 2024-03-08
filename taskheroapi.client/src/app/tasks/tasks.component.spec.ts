@@ -10,8 +10,10 @@ describe('TasksComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [TasksComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+  });
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(TasksComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
