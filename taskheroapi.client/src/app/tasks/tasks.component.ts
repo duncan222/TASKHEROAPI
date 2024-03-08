@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from '../model/task'; 
 import { CrudService } from '../service/crud.service'; 
+import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tasks',
@@ -75,5 +78,15 @@ export class TasksComponent implements OnInit {
   call(etask: Task) {
     this.taskObj = etask;
     this.editTaskValue = etask.task_name;
+  }
+  ngOnInit(): void {
+    if (this.authService.isLoggedIn()) {
+      //Get logged-in user
+      const loggedInUserId = this.authService.getLoggedInUserId();
+      //From here call whatever endpoints you need to call to get necessary data
+    }
+    else {
+      this.router.navigate(['/login']);
+    }
   }
 }

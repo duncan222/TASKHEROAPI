@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { IUser } from '../../interfaces/user.inteface'
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service'
 
 @Component({
   selector: 'app-signup',
@@ -23,24 +24,37 @@ export class SignupComponent {
     }
   };
   confirmPassword: string = '';
+  loading = false;
+  errorMessage: string = '';
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router, private authService: AuthService) { }
 
   onSignUp() {
     console.log('onSignUp triggered');
     if (this.user.UserAccount.Password !== this.confirmPassword) {
-      console.error('Passwords do not match');
+      this.errorMessage = 'Error: Passwords do not match';
       return;
     }
 
-    this.userService.signUp(this.user).subscribe(
+    if ((this.user.UserAccount.Email == '') || (this.user.UserName == '') || (this.user.UserAccount.Password == '') || (this.confirmPassword == '')) {
+      this.errorMessage = "Error: One or more required fields were left blank";
+      return;
+    }
+
+    this.errorMessage = '';
+
+    this.loading = true;
+
+    this.userService.post(this.user).subscribe(
       (response) => {
         console.log('User signed up successfully', response);
+        this.authService.setLoggedInUserId(response.userId);
         this.router.navigate(['/home'])
       },
       (error) => {
         //handle error
         console.error('Sign-Up error', error);
+        this.loading = false;
       }
     );
   }

@@ -1,5 +1,5 @@
 .login {
-  color: #000;
+  color: #fff;
 }
 
 .card {
@@ -22,4 +22,9 @@
 
 .btn-my {
   background-color: #71bac2;
+}
+
+.error-text {
+    color: #e03131;
+    font-weight: bold;
 }

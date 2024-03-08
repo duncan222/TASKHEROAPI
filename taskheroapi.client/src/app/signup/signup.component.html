@@ -26,8 +26,12 @@
             <label for="c_password">*Confirm Password: </label>
             <input type="password" name="c_password" class="form-control" placeholder="********" [(ngModel)]="confirmPassword" required>
           </div>
+          <div class="error-text"> {{ errorMessage }}</div>
           <div class="text-center sign-up-button-container">
-            <button type="submit" class="btn btn-my">Sign Up</button>
+            <button type="submit" class="btn btn-my" [disabled]="loading">
+              <span *ngIf="!loading">Sign Up</span>
+              <span *ngIf="loading"><i class="spinner"></i>Signing you up...</span>
+            </button>
           </div>
           <div class="text-center login">
             Already have an account? <a routerLink="/login">Login</a> here.
