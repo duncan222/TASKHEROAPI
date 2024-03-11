@@ -10,7 +10,7 @@ import { AchievementsComponent } from './achievements/achievements.component';
 import { TasksComponent } from './tasks/tasks.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent},
   {
