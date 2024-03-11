@@ -21,4 +21,9 @@ export class UserService {
     const url = `${this.apiUrl}/Users`;
     return this.http.get(url);
   }
+
+  getUserById(userId: number): Observable<any> {
+    const url = `${this.apiUrl}/Users/${userId}`;
+    return this.http.get(url);
+  }
 }

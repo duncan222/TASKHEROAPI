@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
+import { IUser } from '../../interfaces/user.inteface'
 
 @Component({
   selector: 'app-profile',
@@ -8,16 +10,9 @@ import { Router } from '@angular/router';
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private userService: UserService) { }
 
-  ngOnInit(): void {
-    if (this.authService.isLoggedIn()) {
-      //Get logged-in user
-      const loggedInUserId = this.authService.getLoggedInUserId();
-      //From here call whatever endpoints you need to call to get necessary data
-    }
-    else {
-      this.router.navigate(['/login']);
-    }
-  }
+  userProfile: any
+
+  ngOnInit(): void { }
 }
