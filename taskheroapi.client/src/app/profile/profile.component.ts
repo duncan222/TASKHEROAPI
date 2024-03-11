@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { achievementBadge } from '../../interfaces/achievementBadge.interface';
 import { Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
+import { IUser } from '../../interfaces/user.inteface'
 
 @Component({
   selector: 'app-profile',
@@ -9,8 +11,7 @@ import { Router } from '@angular/router';
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
-  constructor(private authService: AuthService, private router: Router) { }
-
+  constructor(private authService: AuthService, private router: Router, private userService: UserService) { }
 
   // set up a ngonit function to update all the values on the screen to be that of the current user 
 
@@ -45,15 +46,8 @@ export class ProfileComponent {
     this.router.navigate(['/settings'])
   }
 
+  userProfile: any
 
-  ngOnInit(): void {
-    if (this.authService.isLoggedIn()) {
-      //Get logged-in user
-      const loggedInUserId = this.authService.getLoggedInUserId();
-      //From here call whatever endpoints you need to call to get necessary data
-    }
-    else {
-      this.router.navigate(['/login']);
-    }
-  }
+  ngOnInit(): void { }
+
 }
