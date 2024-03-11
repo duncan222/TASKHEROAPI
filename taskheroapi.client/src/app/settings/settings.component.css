@@ -1,0 +1,60 @@
+.settings_container{ 
+    color: #818181;
+    align-items: center;
+    justify-content:flex-start;
+    display:grid;
+    
+}
+
+.settings_container .title{
+    color: #d6d6d665 !important;
+    font-family: "Poppins", sans-serif;
+    
+}
+
+.settings_container .sub_title{
+    color: #818181;
+    font-family: "Poppins", sans-serif;
+    font-size: x-large;
+}
+
+.settings_container .settin-exp{
+    width: 30rem;
+    padding-bottom: 3rem;
+    box-shadow: none;
+    
+}
+.settings_container .seperator{
+    width: 100%; 
+    justify-content: center;
+    border-top: 1px solid  #818181;
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+
+@media only screen and (min-width: 600px) {
+    .settings_container{ 
+        color: #818181;
+        align-items: center;
+        justify-content:flex-start;
+        display:grid;
+        margin-left: 10rem;
+        
+    }
+
+    .settings_container .title{
+        justify-self: start;
+    }
+
+}
+
+@media only screen and (max-width: 600px) {
+
+    .settings_container{ 
+        color: #818181;
+        align-items: center;
+        justify-content:center;
+        display:grid;
+        
+    }
+}
