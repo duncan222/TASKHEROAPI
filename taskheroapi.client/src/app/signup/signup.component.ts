@@ -16,11 +16,17 @@ export class SignupComponent {
     UserName: '',
     Image: 'image1',
     UserSettings: {
-      Security: { Discoverability: false, ScorePrivacyID: 1, FeedPrivacyID: 1 },
-      Personalization: { ThemeId: 1, AvatarId: 1 }
+      Discoverability: false, ScorePrivacyID: 1, FeedPrivacyID: 1, ThemeId: 1, AvatarId: 1
     },
     UserAccount: {
       Email: '', Password: '', PhoneNumber: ''
+    },
+    Friends: {
+      BlockedUserID: [], FreindsUserID: []
+    },
+    UserAchievements: {
+      BadgeID: 1, //idk what to put for this?
+      UnlockedAchievements: [], LockedAchievements: []
     }
   };
   confirmPassword: string = '';

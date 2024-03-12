@@ -6,10 +6,20 @@
   </div>
 
   <div class="user-list">
-    <div *ngFor="let user of displayedUserList" class="user-block">
-      <div class="user-info">
-        <div class="username">{{ user.username }}</div>
-        <div class="points">{{ user.points }} points</div>
+    <div *ngIf="isFriendsActive">
+      <div *ngFor="let user of friendsList" class="user-block">
+        <div class="user-info">
+          <div class="username">{{ user.username }}</div>
+          <div class="points">{{ user.points }} points</div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!isFriendsActive">
+      <div *ngFor="let user of allUsersList" class="user-block">
+        <div class="user-info">
+          <div class="username">{{ user.username }}</div>
+          <div class="points">{{ user.points }} points</div>
+        </div>
       </div>
     </div>
   </div>
@@ -17,8 +27,8 @@
   <div class="search-popup" [class.show]="isSearchPopupOpen" *ngIf="isSearchPopupOpen">
     <button class="close-button" (click)="toggleSearchPopup()">X</button>
     <h3>User Search</h3>
-    <input type="text" id="searchInput" placeholder="Username" />
-    <button class="search-button">Search</button>
+    <input type="text" id="searchInput" placeholder="Username" [(ngModel)]="searchQuery" (input)="onSearchInputChange()" />
+    <button class="search-button" (click)="searchUsers()">Search</button>
 
     <div class="search-results">
       <!-- Test Data -->
