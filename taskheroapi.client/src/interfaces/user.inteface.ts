@@ -12,6 +12,6 @@ export interface IUser {
   UserSettings?: IUserSettings;
   UserAccount: IUsersAccounts;
   Friends?: IUserFriends;
-  Achievements?: IUserAchievements;
+  UserAchievements?: IUserAchievements;
   Tasks?: IUserTasks[];
 }
