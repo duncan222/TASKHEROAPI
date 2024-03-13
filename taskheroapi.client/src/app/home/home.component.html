@@ -8,23 +8,23 @@ also change the font. -- these are edits to be made later once functionality is 
     <div class="row">
         <div class="col-7">
             <div class="row-2"> 
-
                 <mat-card class="dash1">
                     <mat-card-content >
-                        <div style="overflow-y: auto;">
-                            <div class="m-3">
-                                <div class="p-2 shadow">
-                                    <div class="input-group row ps-3">
-                                        <div class="card item" style="margin-right: 1rem;"> Wash The Cat </div>
-                                        <div class="btn col button_des1" style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem; margin-right: 1rem;">
-                                            <img src="/assets/icons/edit_purp.svg" style="height:100%; width: 50%; ">
+                            <div *ngFor="let task of tasks" style="overflow-y: auto;">
+                                <div class="m-3">
+                                    <div class="p-2 shadow">
+                                        <div class="input-group row ps-3">
+                                            <div class="card item" style="margin-right: 1rem;"> {{task.title}} </div>
+                                            <div class="btn col button_des1" style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem; margin-right: 1rem;">
+                                                <img src="/assets/icons/checkg.svg" style="height:100%; width: 50%; ">
+                                            </div>
+                                            <div class="btn col button_des2" style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem;">
+                                                <img src="/assets/icons/trash1.svg" style="height:100%; width: 45%; ">
+                                            </div>                                    
                                         </div>
-                                        <div class="btn col button_des2" style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem;">
-                                            <img src="/assets/icons/trash1.svg" style="height:100%; width: 45%; ">
-                                        </div>                                    </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div> 
+                            </div> 
                     </mat-card-content>
                 </mat-card>
             </div>

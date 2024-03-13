@@ -28,26 +28,24 @@ namespace TASKHEROAPI.Server.Controllers
             return await _context.UserTasks.ToListAsync();
         }
 
+
+
         // GET: api/UserTasks/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserTasks>> GetUserTasks(int id)
+        [HttpGet("{UserId}")]
+        public async Task<ActionResult<UserTasks>> GetUserTasks(int UserId)
         {
-            var userTasks = await _context.UserTasks.FindAsync(id);
-
-            if (userTasks == null)
-            {
-                return NotFound();
-            }
-
-            return userTasks;
+            var userTasks = await _context.UserTasks
+                .Where(ut => ut.UserId == UserId)
+                .ToListAsync();
+            return Ok(userTasks);
         }
 
         // PUT: api/UserTasks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserTasks(int id, UserTasks userTasks)
+        [HttpPut("{TaskId}")]
+        public async Task<IActionResult> PutUserTasks(int TaskId, UserTasks userTasks)
         {
-            if (id != userTasks.UserId)
+            if (TaskId != userTasks.TaskId)
             {
                 return BadRequest();
             }
@@ -60,7 +58,7 @@ namespace TASKHEROAPI.Server.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserTasksExists(id))
+                if (!UserTasksExists(TaskId))
                 {
                     return NotFound();
                 }
@@ -76,19 +74,20 @@ namespace TASKHEROAPI.Server.Controllers
         // POST: api/UserTasks
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<UserTasks>> PostUserTasks(UserTasks userTasks)
+        public async Task<ActionResult<UserTasks>> PostUserTasks(int UserId, UserTasks userTasks)
         {
+            userTasks.UserId = UserId;
             _context.UserTasks.Add(userTasks);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUserTasks", new { id = userTasks.UserId }, userTasks);
+            return CreatedAtAction("GetUserTasks", new { TaskId = userTasks.TaskId }, userTasks);
         }
 
         // DELETE: api/UserTasks/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUserTasks(int id)
+        [HttpDelete("{TaskId}")]
+        public async Task<IActionResult> DeleteUserTasks(int TaskId)
         {
-            var userTasks = await _context.UserTasks.FindAsync(id);
+            var userTasks = await _context.UserTasks.FindAsync(TaskId);
             if (userTasks == null)
             {
                 return NotFound();
@@ -100,9 +99,9 @@ namespace TASKHEROAPI.Server.Controllers
             return NoContent();
         }
 
-        private bool UserTasksExists(int id)
+        private bool UserTasksExists(int TaskId)
         {
-            return _context.UserTasks.Any(e => e.UserId == id);
+            return _context.UserTasks.Any(e => e.TaskId == TaskId);
         }
     }
 }
