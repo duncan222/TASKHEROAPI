@@ -1,0 +1,50 @@
+div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.title {
+    color: #fff;
+}
+
+.avatar-container {
+  flex-direction: row;
+  display: flex;
+  margin-top: 10px;
+}
+
+img {
+  width: 80px;
+  height: 80px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.selected {
+  border: 5px solid #47bf55; /* Add a border to indicate selected avatar */
+}
+
+.buttons {
+  margin-top: 20px;
+  flex-direction: row;
+}
+
+button {
+  margin: 0 10px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  width: 100px;
+}
+
+.cancel-button {
+  background-color: gray;
+  color: white;
+}
+
+.save-button {
+  background-color: #47bf55;
+  color: white;
+}

@@ -38,13 +38,16 @@ export class ProfileComponent {
     this.showEditProf = false; 
   }
 
+  editAvatar() {
+    this.router.navigate(['edit-avatar']);
+  }
 
   redirectEditProfile(){ 
-    this.router.navigate(['/edit'])
+    this.router.navigate(['/edit']);
   }
 
   redirectSettings(){ 
-    this.router.navigate(['/settings'])
+    this.router.navigate(['/settings']);
   }
 
   userProfile: any

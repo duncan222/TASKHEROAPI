@@ -68,7 +68,6 @@ export class EditProfileComponent {
     this.userService.put(this.userEdits).subscribe(
       (response) => {
         console.log("User was updated successfully", response);
-        //this.router.navigate(['/profile'])
       },
       (error) => {
         console.log("Error: User was not updated correctly", error);
