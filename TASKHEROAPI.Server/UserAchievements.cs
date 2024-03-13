@@ -6,7 +6,18 @@ namespace TaskHeroAPI
     public class UserAchievements
     {
         [Key] public int UserId { get; set; }
+
+        //the users badge (level)
         public int BadgeID {  get; set; } 
+
+        public int weeklyProgress { get; set; }
+
+        public int dailyTracker { get; set; }
+
+        public int totalScore { get; set; }
+
+        //this will be a time stamp 
+        [StringLength(20)] public string lastActive { get; set; } = string.Empty;
 
         public string[] UnlockedAchievements { get; set;} = Array.Empty<string>();
 

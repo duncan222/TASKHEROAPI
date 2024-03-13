@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskHeroAPI.Data;
 
@@ -10,9 +11,11 @@ using TaskHeroAPI.Data;
 namespace TASKHEROAPI.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240312204334_newmigration")]
+    partial class newmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,20 +96,6 @@ namespace TASKHEROAPI.Server.Migrations
                     b.Property<string>("UnlockedAchievements")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("dailyTracker")
-                        .HasColumnType("int");
-
-                    b.Property<string>("lastActive")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<int>("totalScore")
-                        .HasColumnType("int");
-
-                    b.Property<int>("weeklyProgress")
-                        .HasColumnType("int");
 
                     b.HasKey("UserId");
 

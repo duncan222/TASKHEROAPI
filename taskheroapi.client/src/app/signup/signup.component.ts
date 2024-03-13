@@ -25,7 +25,11 @@ export class SignupComponent {
       BlockedUserID: [], FreindsUserID: []
     },
     UserAchievements: {
-      BadgeID: 1, //idk what to put for this?
+      BadgeID: 1,
+      weeklyProgress: 0,
+      dailyTracker: 0, 
+      totalScore: 0, 
+      lastActive: "", //idk what to put for this?
       UnlockedAchievements: [], LockedAchievements: []
     }
   };
