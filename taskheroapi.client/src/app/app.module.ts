@@ -21,6 +21,7 @@ import {MatExpansionModule, MatAccordion} from '@angular/material/expansion';
 import { UserService } from '../services/user.service';
 import { SettingsComponent } from './settings/settings.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { EditAvatarComponent } from './edit-avatar/edit-avatar.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
     TasksComponent,
     AchievementsComponent,
     SettingsComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    EditAvatarComponent
   ],
   imports: [
     BrowserModule, ProgressbarModule, MatCardModule, BrowserAnimationsModule,  HttpClientModule,TooltipModule.forRoot(),

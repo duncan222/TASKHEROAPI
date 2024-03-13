@@ -26,6 +26,16 @@
     color: white !important;
 }
 
+.edit-icon {
+  position: absolute;
+  bottom: 5px;
+  right: -10px;
+  width: 20px; /* Adjust the size as needed */
+  height: auto;
+  cursor: pointer;
+  color: #fff;
+}
+
 .settings{
     color: rgb(185, 185, 185);
     background-color: transparent;

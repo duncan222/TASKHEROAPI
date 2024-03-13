@@ -10,6 +10,7 @@ import { AchievementsComponent } from './achievements/achievements.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { SettingsComponent } from './settings/settings.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { EditAvatarComponent } from './edit-avatar/edit-avatar.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -25,7 +26,8 @@ const routes: Routes = [
       { path: 'achievements', component: AchievementsComponent },
       { path: 'tasks', component: TasksComponent },
       { path: 'settings', component: SettingsComponent}, 
-      { path: 'edit', component: EditProfileComponent}
+      { path: 'edit', component: EditProfileComponent },
+      { path: 'edit-avatar', component: EditAvatarComponent }
     ]
   }
 ];
