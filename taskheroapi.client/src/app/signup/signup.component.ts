@@ -14,7 +14,7 @@ export class SignupComponent {
   user: IUser = {
     Score: 0,
     UserName: '',
-    Image: 'image1',
+    Image: 'default',
     UserSettings: {
       Discoverability: false, ScorePrivacyID: 1, FeedPrivacyID: 1, ThemeId: 1, AvatarId: 1
     },

@@ -4,6 +4,7 @@ import { achievementBadge } from '../../interfaces/achievementBadge.interface';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { IUser } from '../../interfaces/user.inteface'
+import { ImageSelectorService } from '../../services/imageSelector.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,21 +12,21 @@ import { IUser } from '../../interfaces/user.inteface'
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
-  constructor(private authService: AuthService, private router: Router, private userService: UserService) { }
+  constructor(private authService: AuthService, private router: Router, private userService: UserService, private imageSelector: ImageSelectorService) { }
 
   // set up a ngonit function to update all the values on the screen to be that of the current user 
 
   profileImageUrl: string | null = null;
   achievementBadges: achievementBadge[] = []
+  currentUser: number | null | undefined;
+
 
   badgeLevel: string = "assets/gis/goldbadge.png";
   friendsNumber: number = 0;
   username: string = "username";
-  fullname: string = "full name"; 
   totalScore: number = 0;
   achievementNumber: number = 0;
-  avatarLink: string = "assets/gis/dog.jpeg";
-  userBio:string = "the user bio goes here";
+  avatarLink: string = "assets/profilePics/default.png";
 
   showEditProf = false; 
 
@@ -48,6 +49,17 @@ export class ProfileComponent {
 
   userProfile: any
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.currentUser = this.authService.getLoggedInUserId();
+    this.userService.getUserById(this.currentUser).subscribe(
+      (userDetails) => {
+        this.username = userDetails.userName;
+        this.totalScore = userDetails.score;
+        this.avatarLink = this.imageSelector.pickPic(userDetails.image);
+        //not sure how to get number of achievements
+        //friends count is work in progress
+      }
+    );
+  }
 
 }

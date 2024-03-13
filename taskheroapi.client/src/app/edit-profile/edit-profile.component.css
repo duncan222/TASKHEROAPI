@@ -18,6 +18,28 @@
     
 }
 
+.button-group{
+    margin-top: 80px;
+}
+
+.cancel-button{
+    background-color: #d6d6d665;
+    color: #fff;
+    margin-right: 10px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.save-button {
+  background-color: #4ba15f;
+  color: #000;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.error-text{
+    color: #ff0000;
+}
 
 .settings_container .label-pos{
     align-self: flex-start;
@@ -29,7 +51,7 @@
     justify-content: center;
     border-top: 1px solid  #818181;
     margin-top: 10px;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
 @media only screen and (min-width: 600px) {
