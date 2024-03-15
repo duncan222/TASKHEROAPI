@@ -6,7 +6,7 @@
       <div class="col-md-6 bg-white shadow">
 
         <div class="card bg-warning mt-4">
-          <h4 class="text-white p-3 pt-2 pb-2">To Do App</h4>
+          <h4 class="text-white p-3 pt-2 pb-2">Task List</h4>
         </div>
 
         <div class="shadow">
@@ -15,8 +15,6 @@
             <button class="btn btn-outline-success" type="button" (click)="addTask()">+</button>
           </div>
         </div>
-
-        <h4 class="text-primary mt-4">Tasks : </h4>
 
         <div style="overflow-y: auto; height: 350px;">
           <div class="m-3" *ngFor="let task of taskArr">

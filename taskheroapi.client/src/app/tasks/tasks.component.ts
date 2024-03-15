@@ -58,10 +58,11 @@ export class TasksComponent implements OnInit {
   }
 
   addTask() {
+    console.log('adding...')
     this.taskObj.task_name = this.addTaskValue;
     this.crudService.addTask(this.taskObj).subscribe(
       (res) => {
-        this.ngOnInit();
+        this.ngOnInit(); 
         this.addTaskValue = '';
       },
       (err) => {
@@ -74,7 +75,7 @@ export class TasksComponent implements OnInit {
     this.taskObj.task_name = this.editTaskValue;
     this.crudService.editTask(this.taskObj).subscribe(
       (res) => {
-        this.ngOnInit();
+        this.ngOnInit(); 
       },
       (err) => {
         console.error("Failed to update task", err);
