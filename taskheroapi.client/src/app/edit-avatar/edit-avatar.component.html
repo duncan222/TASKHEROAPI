@@ -1,0 +1,16 @@
+<div>
+  <h2 class="title">Edit Profile Avatar</h2>
+
+  <div class="avatar-container">
+    <div *ngFor="let avatar of avatars" (click)="selectAvatar(avatar)">
+      <img [src]="avatar" alt="Avatar" [class.selected]="selectedAvatar === avatar" />
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button class="cancel-button" (click)="cancelChanges()">Cancel</button>
+    <button class="save-button" (click)="saveChanges()">Save</button>
+  </div>
+</div>
+
+

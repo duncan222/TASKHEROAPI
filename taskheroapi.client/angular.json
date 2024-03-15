@@ -35,11 +35,17 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              {
+                "input": "node_modules/bootstrap/dist/css/bootstrap.min.css",
+                "inject": true
+              }
             ],
-            "scripts": []
+            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.min.js","node_modules/@popperjs/core/dist/umd/popper.min.js"
+            ]
           },
           "configurations": {
+            "extractCss": true,
             "production": {
               "fileReplacements": [
                 {

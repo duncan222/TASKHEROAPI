@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { IUser } from '../../interfaces/user.inteface'
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service'
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -14,13 +14,23 @@ export class SignupComponent {
   user: IUser = {
     Score: 0,
     UserName: '',
-    Image: 'image1',
+    Image: 'default',
     UserSettings: {
-      Security: { Discoverability: false, ScorePrivacyID: 1, FeedPrivacyID: 1 },
-      Personalization: { ThemeId: 1, AvatarId: 1 }
+      Discoverability: false, ScorePrivacyID: 1, FeedPrivacyID: 1, ThemeId: 1, AvatarId: 1
     },
     UserAccount: {
       Email: '', Password: '', PhoneNumber: ''
+    },
+    Friends: {
+      BlockedUserID: [], FreindsUserID: []
+    },
+    UserAchievements: {
+      BadgeID: 1,
+      weeklyProgress: 0,
+      dailyTracker: 0, 
+      totalScore: 0, 
+      lastActive: "", //idk what to put for this?
+      UnlockedAchievements: [], LockedAchievements: []
     }
   };
   confirmPassword: string = '';

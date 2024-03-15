@@ -9,23 +9,14 @@ namespace TaskHeroAPI
     {
         [Key] public int UserId { get; set; }
 
-
-        // True/False
-        public class Security
-        {
-            public bool Discoverability { get; set; }
+        public bool Discoverability { get; set; }
 
             // friends, no one, everyone. ( 1, 2, or 3) 
-            public int ScorePrivacyID { get; set; }
-            public int FeedPrivacyID { get; set; }
-        }
+        public int ScorePrivacyID { get; set; }
+        public int FeedPrivacyID { get; set; }
 
-        public class Personalization
-        {
-            public int ThemeId { get; set; }
-            public int AvatarId { get; set; }
-
-        }
+        public int ThemeId { get; set; }
+        public int AvatarId { get; set; }
 
 
     }

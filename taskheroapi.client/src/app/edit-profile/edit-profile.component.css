@@ -1,0 +1,82 @@
+.settings_container{ 
+    color: #818181;
+    align-items: center;
+    justify-content:flex-start;
+    display:grid;
+    
+    
+}
+
+.group1{ 
+    display: grid;
+    width: 20rem;
+    padding: 0.5rem;
+}
+.settings_container .title{
+    color: #d6d6d665 !important;
+    font-family: "Poppins", sans-serif;
+    
+}
+
+.button-group{
+    margin-top: 80px;
+}
+
+.cancel-button{
+    background-color: #d6d6d665;
+    color: #fff;
+    margin-right: 10px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.save-button {
+  background-color: #4ba15f;
+  color: #000;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.error-text{
+    color: #ff0000;
+}
+
+.settings_container .label-pos{
+    align-self: flex-start;
+    justify-self: start;
+}
+
+.settings_container .seperator{
+    width: 100%; 
+    justify-content: center;
+    border-top: 1px solid  #818181;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+@media only screen and (min-width: 600px) {
+    .settings_container{ 
+        color: #818181;
+        align-items: center;
+        justify-content:flex-start;
+        display:grid;
+        margin-left: 10rem;
+        
+    }
+
+    .settings_container .title{
+        justify-self: start;
+    }
+
+}
+
+@media only screen and (max-width: 600px) {
+
+    .settings_container{ 
+        color: #818181;
+        align-items: center;
+        justify-content:center;
+        display:grid;
+        
+    }
+}

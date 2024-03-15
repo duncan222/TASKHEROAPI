@@ -94,6 +94,20 @@ namespace TASKHEROAPI.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("dailyTracker")
+                        .HasColumnType("int");
+
+                    b.Property<string>("lastActive")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("totalScore")
+                        .HasColumnType("int");
+
+                    b.Property<int>("weeklyProgress")
+                        .HasColumnType("int");
+
                     b.HasKey("UserId");
 
                     b.ToTable("UserAchievements", "dbo");
@@ -122,6 +136,21 @@ namespace TASKHEROAPI.Server.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<int>("AvatarId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Discoverability")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("FeedPrivacyID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ScorePrivacyID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ThemeId")
+                        .HasColumnType("int");
+
                     b.HasKey("UserId");
 
                     b.ToTable("UserSettings", "dbo");
@@ -129,11 +158,11 @@ namespace TASKHEROAPI.Server.Migrations
 
             modelBuilder.Entity("TaskHeroAPI.UserTasks", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("TaskId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TaskId"));
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
@@ -148,6 +177,11 @@ namespace TASKHEROAPI.Server.Migrations
                     b.Property<int>("Importance")
                         .HasColumnType("int");
 
+                    b.Property<string>("TimeStamp")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -156,15 +190,15 @@ namespace TASKHEROAPI.Server.Migrations
                     b.Property<int>("Urgency")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId1")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.Property<int>("Weight")
                         .HasColumnType("int");
 
-                    b.HasKey("UserId");
+                    b.HasKey("TaskId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserTasks", "dbo");
                 });
@@ -223,7 +257,7 @@ namespace TASKHEROAPI.Server.Migrations
                 {
                     b.HasOne("TaskHeroAPI.User", null)
                         .WithMany("Tasks")
-                        .HasForeignKey("UserId1")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

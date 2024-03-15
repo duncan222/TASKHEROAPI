@@ -32,10 +32,14 @@ export class LoginComponent {
       (response: userAccounts[]) => {
 
         for (const user of response) {
-          
-          if ((user.email == this.email) && (user.password == this.password)) {
-            this.validUser = true;
-            this.authService.setLoggedInUserId(user.userId);
+          if (user.userId !== undefined) {
+            if ((user.email == this.email) && (user.password == this.password)) {
+              this.validUser = true;
+              this.authService.setLoggedInUserId(user.userId);
+            }
+          }
+          else {
+            console.error('User ID is undefined');
           }
         }
 

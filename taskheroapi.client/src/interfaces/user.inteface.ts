@@ -5,13 +5,13 @@ import { IUserSettings } from "./usersettings.interface";
 import { IUserTasks } from "./usertasks.interface";
 
 export interface IUser {
-  UserId?: number;
+  UserId?: number | null;
   Score: number;
   UserName: string;
   Image: string;
   UserSettings?: IUserSettings;
   UserAccount: IUsersAccounts;
   Friends?: IUserFriends;
-  Achievements?: IUserAchievements;
+  UserAchievements?: IUserAchievements;
   Tasks?: IUserTasks[];
 }

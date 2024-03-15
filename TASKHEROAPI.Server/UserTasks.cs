@@ -1,13 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TaskHeroAPI
 {
     public class UserTasks
     {
-        [Key] public int UserId { get; set; } 
+        [Key] public int TaskId { get; set; }
+        [ForeignKey("User")] public int UserId { get; set; } 
 
         [StringLength(100)]
         public string Descripcion { get; set; } = string.Empty;
+
+        [StringLength(20)]
+        public string TimeStamp { get; set; } = string.Empty;
 
         [StringLength(20)]
         public string Title { get; set; } = string.Empty; 

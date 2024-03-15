@@ -1,0 +1,33 @@
+<div class="settings_container">
+
+  <h2 class="title">Edit Profile</h2>
+
+  <div class="seperator"></div>
+
+  <form class="form-class">
+    <div class="form-group group1">
+      <label class="label-pos" for="Username">Username:</label>
+      <input type="text" name="username" class="form-control" id="Username" [(ngModel)]="userEdits.userName">
+    </div>
+    <div class="form-group group1">
+      <label class="label-pos" for="PhoneNumber">Phone Number:</label>
+      <input type="text" name="phone" class="form-control" [(ngModel)]="userEdits.userAccount.phoneNumber">
+    </div>
+    <div class="form-group group1">
+      <label class="label-pos" for="Password">Password:</label>
+      <input type="text" name="password" class="form-control" id="Password" [(ngModel)]="userEdits.userAccount.password">
+    </div>
+    <div class="form-group group1">
+      <label class="label-pos" for="confirmPassword">Confirm Password:</label>
+      <input type="text" name="confirmPassword" class="form-control" id="confirmPassword" [(ngModel)]="confirmPassword">
+    </div>
+  </form>
+
+  <div class="error-text"> {{ errorMessage }}</div>
+
+  <div class="button-group">
+    <button type="button" class="cancel-button" (click)="cancelChanges()">Cancel</button>
+    <button type="button" class="save-button" (click)="saveChanges()">Save Changes</button>
+  </div>
+
+</div>

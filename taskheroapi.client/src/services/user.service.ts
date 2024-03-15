@@ -21,4 +21,14 @@ export class UserService {
     const url = `${this.apiUrl}/Users`;
     return this.http.get(url);
   }
+
+  getUserById(userId: number | null): Observable<any> {
+    const url = `${this.apiUrl}/Users/${userId}`;
+    return this.http.get(url);
+  }
+
+  put(user: any): Observable<any> {
+    const url = `${this.apiUrl}/Users/${user.userId}`;
+    return this.http.put(url, user);
+  }
 }
