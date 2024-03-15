@@ -5,7 +5,7 @@ const PROXY_CONFIG = [
       "/api/Users",
       "/api"
     ],
-    target: "http://localhost:4200",
+    target: "http://localhost:5097",
     secure: false
   }
 ]
