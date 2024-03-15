@@ -11,6 +11,7 @@ import { TasksComponent } from './tasks/tasks.component';
 import { SettingsComponent } from './settings/settings.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { EditAvatarComponent } from './edit-avatar/edit-avatar.component';
+import { AddTaskComponent } from './add-task/add-task.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -27,7 +28,7 @@ const routes: Routes = [
       { path: 'tasks', component: TasksComponent },
       { path: 'settings', component: SettingsComponent}, 
       { path: 'edit', component: EditProfileComponent },
-      { path: 'edit-avatar', component: EditAvatarComponent }
+      { path: 'edit-avatar', component: EditAvatarComponent },
     ]
   }
 ];
