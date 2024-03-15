@@ -1,25 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { Task } from '../model/task'; 
-import { CrudService } from '../service/crud.service'; 
-import { Component } from '@angular/core';
+import { Task } from '../model/task';
+import { CrudService } from '../service/crud.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { userTask } from '../../services/userTasks.service';
 import { IUserTasks } from '../../interfaces/usertasks.interface';
-import { AuthService } from '../../services/auth.service';
+
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.css']
 })
-export class TasksComponent {
+export class TasksComponent implements OnInit {
 
-  constructor(private authService: AuthService,private TaskService: userTask, private router: Router) { }
-
-  //array for all the users tasks 
   tasks: IUserTasks[] = [];
-
-  //the different variables to make up the task interface. 
   currentUser: number = 0;
   description: string = "";
   timeStamp: string = "";
@@ -29,41 +23,27 @@ export class TasksComponent {
   weight: number = 0;
   urgency: number = 0;
 
-  addTask() { 
-    const tempTask: IUserTasks = { 
-      taskId: 0, 
-      userId: 0, 
-      descripcion: this.description, 
-      timeStamp: this.timeStamp, 
-      title: this.title, 
-      dueDate: this.dueDate, 
-      importance: this.importance, 
-      weight: this.weight, 
-      urgency: this.urgency
-    }
-
-    this.TaskService.addTask(this.currentUser, tempTask)
-      .subscribe((addedTask: IUserTasks) => { 
-        console.log('Task added: ', addedTask); 
-        this.getUserTasks(); 
-      })
-  }
-export class TasksComponent implements OnInit {
-
   taskObj: Task = new Task();
   taskArr: Task[] = [];
-
   addTaskValue: string = '';
   editTaskValue: string = '';
 
-  constructor(private crudService: CrudService) { }
+  constructor(
+    private authService: AuthService,
+    private TaskService: userTask,
+    private router: Router,
+    private crudService: CrudService
+  ) { }
 
   ngOnInit(): void {
-    this.editTaskValue = '';
-    this.addTaskValue = '';
-    this.taskObj = new Task();
-    this.taskArr = [];
-    this.getAllTask();
+    if (this.authService.isLoggedIn()) {
+      const loggedInUserId = Number(this.authService.getLoggedInUserId());
+      this.currentUser = loggedInUserId;
+      this.getAllTask();
+      this.getUserTasks();
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
   getAllTask() {
@@ -113,29 +93,14 @@ export class TasksComponent implements OnInit {
     );
   }
 
-  getUserTasks(){ 
-    this.TaskService.getUserTasks(this.currentUser)
-      .subscribe(tasks => { 
-        this.tasks = tasks; 
-      })
+  getUserTasks() {
+    this.TaskService.getUserTasks(this.currentUser).subscribe(tasks => {
+      this.tasks = tasks;
+    });
   }
 
-  ngOnInit() { 
-    if(this.authService.getLoggedInUserId != null){
-      this.currentUser = Number(this.authService.getLoggedInUserId());
   call(etask: Task) {
     this.taskObj = etask;
     this.editTaskValue = etask.task_name;
-  }
-  ngOnInit(): void {
-    if (this.authService.isLoggedIn()) {
-      //Get logged-in user
-      const loggedInUserId = this.authService.getLoggedInUserId();
-      //From here call whatever endpoints you need to call to get necessary data
-    }
-    else {
-      this.router.navigate(['/login']);
-    }
-
   }
 }
