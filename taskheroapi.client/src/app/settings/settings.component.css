@@ -12,6 +12,19 @@
     
 }
 
+.little{ 
+    width: 2rem;
+    transition: all 0.3s ease-out;
+    padding-left: .5rem;
+}
+
+.logout{ 
+    border-color: #818181;
+    color:#818181;
+    width: 8rem;
+    justify-self: center;
+}
+
 .settings_container .sub_title{
     color: #818181;
     font-family: "Poppins", sans-serif;
