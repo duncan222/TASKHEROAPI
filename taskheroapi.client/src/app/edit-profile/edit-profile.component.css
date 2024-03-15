@@ -28,6 +28,11 @@
     margin-right: 10px;
     border-radius: 5px;
     padding: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.cancel-button:hover{
+    transform: scale(1.05);
 }
 
 .save-button {
@@ -35,6 +40,12 @@
   color: #000;
   border-radius: 5px;
   padding: 10px;
+  transition: all 0.3s ease-in-out;
+
+}
+
+.save-button:hover{
+    transform: scale(1.05);
 }
 
 .error-text{

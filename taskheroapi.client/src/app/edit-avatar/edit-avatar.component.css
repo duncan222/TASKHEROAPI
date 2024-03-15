@@ -9,11 +9,6 @@ div {
     color: #fff;
 }
 
-.avatar-container {
-  flex-direction: row;
-  display: flex;
-  margin-top: 10px;
-}
 
 img {
   width: 80px;
@@ -47,4 +42,24 @@ button {
 .save-button {
   background-color: #47bf55;
   color: white;
+}
+
+@media only screen and (min-width: 600px) {
+  .avatar-container {
+    flex-direction: row;
+    display: flex;
+    margin-top: 10px;
+  }
+
+}
+
+@media only screen and (max-width: 600px) {
+
+  .avatar-container {
+    flex-direction:row;
+    flex-wrap: wrap;
+    display: flex;
+    margin-top: 10px;
+  }
+  
 }
