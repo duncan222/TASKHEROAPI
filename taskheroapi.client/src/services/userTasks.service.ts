@@ -14,6 +14,7 @@ import { IUserTasks } from '../interfaces/usertasks.interface';
 
 export class userTask {
   private apiUrl = environment.apiUrl;
+    id: any;
 
   constructor(private http: HttpClient) { }
 

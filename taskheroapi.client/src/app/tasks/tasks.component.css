@@ -1,157 +1,51 @@
-#tasks:hover {
-  transform: scale(1.01);
+/* Custom CSS */
+.bg-gray {
+  background-color: #f0f0f0; /* Light gray */
 }
 
-.container-fluid.bg-light {
-  background-color: #FF48A6;
+.bg-blue {
+  background-color: #007bff; /* Blue */
 }
 
-.container.bg-light {
-  background-color: #FF48A6;
+.bg-pink {
+  background-color: #e83e8c; /* Pink */
 }
 
-.row.mt-4 {
-  margin-top: 4rem;
+.bg-white {
+  background-color: #fff; /* White */
 }
 
-.col-md-6.bg-white.shadow {
-  background-color: #23232e;
-  box-shadow: 0px 0px 10px 0px #A8EFFF;
-  border-radius: 1rem;
+.bg-gray,
+.bg-blue,
+.bg-pink,
+.bg-white {
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.card.bg-warning.mt-4 {
-  background-color: #FF48A6;
-  color: #ffffff;
-  border-radius: 1rem;
+.btn-blue {
+  background-color: #007bff; /* Blue */
+  color: #fff; /* White */
 }
 
-.input-group.p-4 {
-  padding: 1rem !important;
-}
-
-  .input-group.p-4 input.form-control {
-    border: none;
-    border-bottom: 1px solid #000000;
-    border-radius: 0;
-    background-color: transparent;
-    color: #FF48A6; 
+  .btn-blue:hover {
+    background-color: #0056b3; /* Darker blue on hover */
   }
 
-    .input-group.p-4 input.form-control::placeholder {
-      color:#FF48A6 
-    }
+.btn-pink {
+  background-color: #e83e8c; /* Pink */
+  color: #fff; /* White */
+}
 
-  .input-group.p-4 button.btn.btn-outline-success {
-    color: #FF48A6; 
-    background-color: #28a745;
-    border-color: #28a745;
+  .btn-pink:hover {
+    background-color: #d63375; /* Darker pink on hover */
   }
 
-    .input-group.p-4 button.btn.btn-outline-success:hover {
-      background-color: #218838;
-      border-color: #1e7e34;
-    }
-
-    .input-group.p-4 button.btn.btn-outline-success:focus {
-      box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.5);
-    }
-
-.m-3 {
-  margin: 1rem !important;
-  background-color: #ffffffba;
-  border-color: #ffffffba;
-  box-shadow: 0px 0px 10px 0px #ffffffba;
+.btn-gray {
+  background-color: #ccc; /* Gray */
+  color: #333; /* Dark gray */
 }
 
-.input-group.row.ps-3 {
-  padding-left: 1rem !important;
-}
-
-.card.col-md-10.border-0 {
-  border: none;
-  background-color: transparent;
-}
-
-.btn.btn-outline-primary.col.me-2 {
-  color: #007bff;
-  border-color: #007bff;
-}
-
-  .btn.btn-outline-primary.col.me-2:hover {
-    background-color: #0069d9;
-    border-color: #0062cc;
+  .btn-gray:hover {
+    background-color: #b3b3b3; /* Darker gray on hover */
   }
-
-  .btn.btn-outline-primary.col.me-2:focus {
-    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.5);
-  }
-
-.btn.btn-outline-danger.col {
-  color: #dc3545;
-  border-color: #dc3545;
-}
-
-  .btn.btn-outline-danger.col:hover {
-    background-color: #c82333;
-    border-color: #bd2130;
-  }
-
-  .btn.btn-outline-danger.col:focus {
-    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.5);
-  }
-
-.modal.fade {
-  opacity: 1 !important;
-}
-
-.modal-dialog {
-  max-width: 100%;
-}
-
-.modal-content {
-  background-color: #ffffff;
-  box-shadow: 0px 0px 10px 0px #A8EFFF;
-  border-radius: 1rem;
-}
-
-.modal-header {
-  background-color: #FF48A6;
-  color: #ffffff;
-  border-radius: 1rem 1rem 0 0;
-}
-
-  .modal-header .btn-close {
-    color: #FF48A6;
-  }
-
-.modal-body {
-  padding: 1rem !important;
-}
-
-  .modal-body .input-group.p-4 input.form-control {
-    border: none;
-    border-bottom: 1px solid #000000;
-    border-radius: 0;
-    background-color: transparent;
-    color: #ffffff;
-  }
-
-    .modal-body .input-group.p-4 input.form-control::placeholder {
-      color: #ffffff;
-    }
-
-  .modal-body .input-group.p-4 button.btn.btn-outline-success {
-    color: #ffffff;
-    background-color: #28a745;
-    border-color: #28a745;
-  }
-
-    .modal-body .input-group.p-4 button.btn.btn-outline-success:hover {
-      background-color: #218838;
-      border-color: #1e7e34;
-    }
-
-    .modal-body .input-group.p-4 button.btn.btn-outline-success:focus {
-      box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.5);
-    }

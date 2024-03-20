@@ -7,6 +7,7 @@ import { Task } from '../model/task.model';
   providedIn: 'root'
 })
 export class CrudService {
+  [x: string]: any;
 
   serviceURL: string;
 

@@ -6,13 +6,15 @@ import { Router } from '@angular/router';
 import { userTask } from '../../services/userTasks.service';
 import { IUserTasks } from '../../interfaces/usertasks.interface';
 import { Subscription } from 'rxjs';
+import { IUserTasks } from '../interfaces/usertasks.interface';
+import { CrudService } from '../service/crud.service';
 
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.css']
 })
-export class TasksComponent implements OnInit, OnDestroy {
+export class TasksComponent implements OnInit {
 
   tasks: IUserTasks[] = [];
   currentUser: number = 0;
@@ -22,31 +24,17 @@ export class TasksComponent implements OnInit, OnDestroy {
   editTaskValue: string = '';
   taskSubscription: Subscription | undefined;
 
-  constructor(
-    private crudService: CrudService,
-    private authService: AuthService,
-    private router: Router,
-    private TaskService: userTask
-  ) { }
-
   ngOnInit(): void {
-    if (this.authService.isLoggedIn()) {
-      const loggedInUserId = Number(this.authService.getLoggedInUserId());
-      this.currentUser = loggedInUserId;
-      this.getAllTask();
-      this.getUserTasks();
-    } else {
-      this.router.navigate(['/login']);
-    }
+    this.getAllTasks();
   }
 
-  getAllTask() {
-    this.taskSubscription = this.crudService.getAllTask().subscribe({
-      next: (res: Task[]) => {
-        this.taskArr = res;
+  getAllTasks() {
+    this.subscription = this.crudService['getAllTasks']().subscribe({
+      next: (tasks: IUserTasks[]): void => {
+        this.taskArr = tasks;
       },
-      error: (err) => {
-        console.error("Unable to get list of tasks", err);
+      error: (error: any) => {
+        console.error('Unable to fetch tasks:', error);
       }
     });
   }
@@ -79,42 +67,37 @@ export class TasksComponent implements OnInit, OnDestroy {
       next: (res) => {
         this.ngOnInit();
       },
-      error: (err) => {
-        console.error("Failed to update task", err);
+      error: (error) => {
+        console.error('Failed to add task:', error);
       }
     });
   }
 
-  deleteTask(etask: Task) {
-    this.crudService.deleteTask(etask).subscribe({
-      next: (res) => {
-        this.ngOnInit();
+  editTask(task: IUserTasks) {
+    this.subscription = this.crudService.editTask(task).subscribe({
+      next: (updatedTask) => {
+        // Handle edit success if needed
       },
-      error: (err) => {
-        console.error("Failed to delete task", err);
+      error: (error) => {
+        console.error('Failed to update task:', error);
       }
     });
   }
 
-  getUserTasks() {
-    this.TaskService.getUserTasks(this.currentUser).subscribe({
-      next: (tasks: IUserTasks[]) => {
-        this.tasks = tasks;
+  deleteTask(taskId: number): void {
+    this.subscription = this.crudService.deleteTask(taskId).subscribe({
+      next: () => {
+        this.taskArr = this.taskArr.filter(t => t.id !== taskId);
       },
-      error: (err) => {
-        console.error("Failed to get user tasks", err);
+      error: (error) => {
+        console.error('Failed to delete task:', error);
       }
     });
-  }
-
-  call(etask: Task) {
-    this.taskObj = etask;
-    this.editTaskValue = etask.task_name;
   }
 
   ngOnDestroy() {
-    if (this.taskSubscription) {
-      this.taskSubscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
   }
 }
