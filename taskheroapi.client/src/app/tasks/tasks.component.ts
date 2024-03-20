@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Task } from '../model/task';
+import { Task } from '../model/task.model';
 import { CrudService } from '../service/crud.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -16,14 +16,6 @@ export class TasksComponent implements OnInit, OnDestroy {
 
   tasks: IUserTasks[] = [];
   currentUser: number = 0;
-  description: string = "";
-  timeStamp: string = "";
-  title: string = "";
-  dueDate: string = "";
-  importance: number = 0;
-  weight: number = 0;
-  urgency: number = 0;
-
   taskObj: Task = new Task();
   taskArr: Task[] = [];
   addTaskValue: string = '';
@@ -62,6 +54,14 @@ export class TasksComponent implements OnInit, OnDestroy {
   addTask() {
     console.log('adding...')
     this.taskObj.task_name = this.addTaskValue;
+    this.taskObj.description = ''; // Add description here
+    this.taskObj.timeStamp = ''; // Add timeStamp here
+    this.taskObj.title = ''; // Add title here
+    this.taskObj.dueDate = ''; // Add dueDate here
+    this.taskObj.importance = 0; // Add importance here
+    this.taskObj.weight = 0; // Add weight here
+    this.taskObj.urgency = 0; // Add urgency here
+
     this.crudService.addTask(this.taskObj).subscribe({
       next: (res) => {
         this.ngOnInit();

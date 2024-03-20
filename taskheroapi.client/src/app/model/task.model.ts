@@ -1,6 +1,5 @@
-export interface IUserTasks {
-  taskId?: number;
-  userId?: number | null | undefined;
+export interface Task {
+  task_name: string;
   description: string;
   timeStamp: string;
   title: string;

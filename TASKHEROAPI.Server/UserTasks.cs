@@ -9,7 +9,7 @@ namespace TaskHeroAPI
         [ForeignKey("User")] public int UserId { get; set; } 
 
         [StringLength(100)]
-        public string Descripcion { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
 
         [StringLength(20)]
         public string TimeStamp { get; set; } = string.Empty;

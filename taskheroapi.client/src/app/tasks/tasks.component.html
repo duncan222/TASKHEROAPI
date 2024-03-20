@@ -1,33 +1,44 @@
 <div class="container-fluid bg-light">
   <div class="container bg-light">
-
     <div class="row mt-4" style="height: 500px;">
       <div class="col"></div>
       <div class="col-md-6 bg-white shadow">
-
         <div class="card bg-warning mt-4">
           <h4 class="text-white p-3 pt-2 pb-2">Task List</h4>
         </div>
-
         <div class="shadow">
           <div class="input-group p-4">
-            <input type="text" class="form-control" placeholder="Enter task " name="task" [(ngModel)]="addTaskValue">
+            <input type="text" class="form-control" placeholder="Task Name" [(ngModel)]="addTaskValue">
+            <input type="text" class="form-control" placeholder="Description" [(ngModel)]="taskObj.description">
+            <input type="text" class="form-control" placeholder="Time Stamp" [(ngModel)]="taskObj.timeStamp">
+            <input type="text" class="form-control" placeholder="Title" [(ngModel)]="taskObj.title">
+            <input type="date" class="form-control" [(ngModel)]="taskObj.dueDate">
+            <input type="number" class="form-control" placeholder="Importance" [(ngModel)]="taskObj.importance">
+            <input type="number" class="form-control" placeholder="Weight" [(ngModel)]="taskObj.weight">
+            <input type="number" class="form-control" placeholder="Urgency" [(ngModel)]="taskObj.urgency">
             <button class="btn btn-outline-success" type="button" (click)="addTask()">+</button>
           </div>
         </div>
-
         <div style="overflow-y: auto; height: 350px;">
           <div class="m-3" *ngFor="let task of taskArr">
             <div class="p-2 shadow border" id="tasks">
               <div class="input-group row ps-3">
-                <div class="card col-md-10 border-0"> {{task.task_name}} </div>
-                <button class="btn btn-outline-primary col me-2" data-bs-toggle="modal" type="button" data-bs-target="#exampleModal" (click)="call(task)">e</button>
-                <div class="btn btn-outline-danger col" (click)="deleteTask(task)">X</div>
+                <div class="card col-md-10 border-0">
+                  <div>Task: {{task.task_name}}</div>
+                  <div>Description: {{task.description}}</div>
+                  <div>Time Stamp: {{task.timeStamp}}</div>
+                  <div>Title: {{task.title}}</div>
+                  <div>Due Date: {{task.dueDate}}</div>
+                  <div>Importance: {{task.importance}}</div>
+                  <div>Weight: {{task.weight}}</div>
+                  <div>Urgency: {{task.urgency}}</div>
+                </div>
+                <button class="btn btn-outline-primary col me-2" data-bs-toggle="modal" type="button" data-bs-target="#exampleModal" (click)="call(task)">Edit</button>
+                <div class="btn btn-outline-danger col" (click)="deleteTask(task)">Delete</div>
               </div>
             </div>
           </div>
         </div>
-
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -44,11 +55,8 @@
             </div>
           </div>
         </div>
-
       </div>
       <div class="col"></div>
-
     </div>
-
   </div>
 </div>
