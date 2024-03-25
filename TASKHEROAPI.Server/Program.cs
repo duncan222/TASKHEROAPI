@@ -1,12 +1,21 @@
 using Microsoft.EntityFrameworkCore;
 using TaskHeroAPI.Data;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 var myAllowSpecificOrgins = "_myAllowSpecificOrgins";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+    {
+        // Configure Newtonsoft.Json serialization settings here
+        options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+        // Other serialization settings can be configured here if needed
+    });
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
