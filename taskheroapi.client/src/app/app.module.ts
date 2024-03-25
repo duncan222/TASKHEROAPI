@@ -26,7 +26,8 @@ import { AddTaskComponent } from './add-task/add-task.component';
 import {MatDatepickerModule, MatCalendar, MatCalendarHeader, MatDatepicker} from '@angular/material/datepicker';
 import { MatFormField } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import { MatIconModule } from '@angular/material/icon';
+import { MatRadioModule } from '@angular/material/radio'; 
 
 @NgModule({
   declarations: [
@@ -45,8 +46,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     AddTaskComponent
   ],
   imports: [
-    BrowserModule, ProgressbarModule, MatCardModule, BrowserAnimationsModule,  HttpClientModule,TooltipModule.forRoot(),
-    AppRoutingModule, FormsModule, ReactiveFormsModule, MatExpansionModule, MatAccordion, MatDatepickerModule, MatFormField, MatDatepicker, MatCalendar, MatNativeDateModule
+    BrowserModule, MatRadioModule, ProgressbarModule, MatCardModule, BrowserAnimationsModule,  HttpClientModule,TooltipModule.forRoot(),
+    AppRoutingModule, MatIconModule, FormsModule, ReactiveFormsModule, MatExpansionModule, MatAccordion, MatDatepickerModule, MatFormField, MatDatepicker, MatCalendar, MatNativeDateModule
   ],
   providers: [UserService,
     provideAnimationsAsync()

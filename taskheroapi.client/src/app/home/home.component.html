@@ -5,9 +5,9 @@ also change the buttons so they are not edit and delete, but rather delete and m
 also change the font. -- these are edits to be made later once functionality is achieved.  -->
 
 <div class="home">
-    <div class="row">
-        <div class="col-7">
-            <div class="row-2"> 
+    <div class="dynamic-row">
+        <div class="dynamic-col-7 scrolly">
+            <div class="dynamic-row-2"> 
                 <mat-card class="dash1">
                     <mat-card-content >
                             <div *ngFor="let task of tasks" style="overflow-y: auto;">
@@ -28,22 +28,25 @@ also change the font. -- these are edits to be made later once functionality is 
                     </mat-card-content>
                 </mat-card>
             </div>
-            <div class="row-2" style="padding-top: 2rem;"> 
+            <div class="dynamic-row-2" style="padding-top: 2rem;"> 
                 <mat-card class="dash1">
+                    <mat-card-header class="fire-header"> 
+                        <div class="to-the-right">
+                            <div class="p-2">
+                              <span>{{streak}}</span>
+                              <img src="/assets/icons/fire.svg" style="height:2rem; width: 90%;"/>
+                            </div>
+                        </div>
+                    </mat-card-header>
                     <mat-card-content>
                         <div style="overflow-y: auto; overflow-x: hidden;">
                             <div class="m-3">
-                                <div class="p-2 shadow">
-                                  <img src="/assets/icons/fire.svg" style="height:2rem; width: 50%;"/>
-                                </div>
-                            </div>
-                            <div class="m-3">
-                                <div class="p-2 shadow">
-                                  <progressbar [type]="'warning'" [value]="40" style="margin-bottom: 1rem;;">
+                                <div class="p-2">
+                                  <progressbar class="achieve" [type]="'warning'" [value]="40" style="margin-bottom: 1rem;;">
                                   </progressbar>
                                 </div>
-                                <div class="p-2 shadow">
-                                    <progressbar [type]="'warning'" [value]="40">
+                                <div class="p-2">
+                                    <progressbar class="achieve" [type]="'warning'" [value]="40">
                                     </progressbar>
                                   </div>
                             </div>
@@ -52,12 +55,12 @@ also change the font. -- these are edits to be made later once functionality is 
                 </mat-card>
             </div>
         </div>
-        <div class="col-5" style="padding-left: 3rem;">
-            <div class="row">
+        <div class="dynamic-col-5" style="padding-left: 4rem;">
+            <div class="dynamic-row-other">
                 <mat-card class="dash2">
                     <mat-card-content>
                         <div class="container">
-                            <progressbar class="vertical" [value]="60" style="min-width: 25rem; height: 3rem;"> 
+                            <progressbar class="vertical" [value]="60"> 
                             </progressbar>
                         </div>
                         <!-- <div class="prog_container"> -->

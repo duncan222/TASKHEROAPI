@@ -14,7 +14,7 @@ export class HomeComponent {
 
   currentUser: number = 0; 
   tasks: IUserTasks[] = []; 
-
+  streak: number = 58;
 
   getUserTasks(){ 
     this.TaskService.getUserTasks(this.currentUser)

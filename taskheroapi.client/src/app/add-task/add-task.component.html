@@ -15,20 +15,20 @@
         </div>
     </div>
     <div class="card-content">
-        <form class="task-content">
+        <form class="task-content" [formGroup]="taskGroup" (ngSubmit)="onSubmit()">
             <div class="form-row title feilds">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Title" aria-label="Task Title">
+                    <input id="title" type="text" class="form-control" placeholder="Title" aria-label="Task Title">
                 </div>
             </div>
             <div class="form-row description feilds">
                 <div class="input-group mb-3">
-                    <textarea type="text" class="form-control" rows="3" placeholder="Description..."></textarea>
+                    <textarea id="description" type="text" class="form-control" rows="3" placeholder="Description..."></textarea>
                 </div>
             </div>
             <div class="form-row description">
                 <div class="input-group mb-3 feilds">
-                        <input class="form-control feilds" matInput [min]="minDate" [matDatepicker]="basicDatepicker" placeholder="Select Due Date...">
+                        <input formControlName="date" class="form-control feilds" matInput [min]="minDate" [matDatepicker]="basicDatepicker" placeholder="Select Due Date...">
                         <div class="input-group-append append">
                                 <mat-datepicker-toggle class="duedate" matSuffix [for]="basicDatepicker"></mat-datepicker-toggle>
                                 <mat-datepicker [startAt]="startDate" #basicDatepicker></mat-datepicker>
@@ -38,24 +38,26 @@
 
             <div class="form-row feilds" style="padding-bottom: 2rem;">
                 <label class="form-check-label" style="padding-right: 1rem;" for="inlineRadio1">Priority: </label>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                <mat-radio-group formControlName="priority">
+                    <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
                     <label class="form-check-label" for="inlineRadio1">low</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                    <label class="form-check-label" for="inlineRadio2">medium</label>
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2">
+                    <label class="form-check-label" for="inlineRadio2">Medium</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3">
                     <label class="form-check-label" for="inlineRadio3">high</label>
-                </div>
+                  </div>
+                </mat-radio-group>
             </div>
         
         </form>
     </div>
     <div class="card-footer" style="padding-bottom: 1rem;">
-        <button class="btn btn-success task">
+        <button class="btn btn-success task" [disabled]="taskGroup.invalid" type="submit">
             <img src="/assets/icons/plus.png" class="add">
         </button>
     </div>
