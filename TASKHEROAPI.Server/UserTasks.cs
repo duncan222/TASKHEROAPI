@@ -22,10 +22,10 @@ namespace TaskHeroAPI
 
         public int Importance { get; set; } 
 
-        public int Weight { get; set; }
+        public float Weight { get; set; }
 
         //changes within certain frames before duedate
-        public int Urgency { get; set; }
+        public float Urgency { get; set; }
 
     }
 }
