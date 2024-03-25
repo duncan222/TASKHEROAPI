@@ -4,7 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
-import { FriendsService } from '../../services/friends.service';
+import { FollowerService } from '../../services/follower.service';
+import { ImageSelectorService } from '../../services/imageSelector.service';
 
 @Component({
   selector: 'app-social',
@@ -18,11 +19,11 @@ export class SocialComponent implements OnInit {
   isSearchPopupOpen: boolean = false;
   isFriendAddedOpen: boolean = false;
   searchQuery: string = '';
-  friendsList: any[] = [];
+  followingList: any[] = [];
   allUsersList: any[] = [];
   searchTestData: any[] = [];
 
-  constructor(private authService: AuthService, private router: Router, private friendsService: FriendsService, private userService: UserService) { }
+  constructor(private authService: AuthService, private router: Router, private followerService: FollowerService, private userService: UserService, private imageSelector: ImageSelectorService) { }
 
   ngOnInit() {
     // Set the initial state when the component is initialized
@@ -31,21 +32,22 @@ export class SocialComponent implements OnInit {
     this.userService.get().subscribe(
       (users) => {
         for (const user of users) {
-          this.allUsersList.push({ username: user.userName, points: user.score })
+          this.allUsersList.push({ id: user.userId, avatar: this.imageSelector.pickPic(user.image), username: user.userName, points: user.score })
         }
       }
     );
-    //populate Friends List - work in progress
+    //populate Friends List
     this.currentUser = this.authService.getLoggedInUserId();
-    this.friendsService.getById(this.currentUser).subscribe(
-      (userDetails) => {
-        this.handleUserFriends(userDetails);
+    this.followerService.getFollowingById(this.currentUser).subscribe(
+      (followedUsers) => {
+        for (const followedUser of followedUsers) {
+          this.followingList.push({ id: followedUser.userId, avatar: this.imageSelector.pickPic(followedUser.image), username: followedUser.userName, points: followedUser.score })
+        }
       },
       (error) => {
         console.error('Error fetching friends for user', error);
       }
     );
-    this.friendsList.push({ username: 'Friend1', points: 100 })
   }
 
   showFriends() {
@@ -79,22 +81,6 @@ export class SocialComponent implements OnInit {
     this.activeBarLeft = this.isFriendsActive ? '15%' : '65%';
   }
 
-  private handleUserFriends(userDetails: any): void {
-    const friendIds = userDetails.freindsUserId || [];
-
-    //need to rethink friend data layout
-
-    /**
-    for (const id in friendIds) {
-      this.userService.getUserById(Number(id)).subscribe(
-        (userInfo) => {
-          console.log(userInfo);
-        }
-      );
-    }
-    **/
-  }
-
   onSearchInputChange() {
 
   }
@@ -109,6 +95,10 @@ export class SocialComponent implements OnInit {
     this.searchTestData = matchingUsers;
 
     this.searchQuery = '';
+  }
+
+  viewUserProfile(userId: number) {
+    this.router.navigate(['/user-profile', userId])
   }
 }
 
