@@ -12,6 +12,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { EditAvatarComponent } from './edit-avatar/edit-avatar.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { AddTaskComponent } from './add-task/add-task.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },

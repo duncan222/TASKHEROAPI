@@ -21,6 +21,7 @@ export class ProfileComponent {
   achievementBadges: achievementBadge[] = []
   currentUser: number | null | undefined;
 
+  
 
   badgeLevel: string = "assets/gis/goldbadge.png";
   followersNumber: number = 0;
@@ -50,6 +51,8 @@ export class ProfileComponent {
   redirectSettings(){ 
     this.router.navigate(['/settings']);
   }
+
+
 
   userProfile: any
 
