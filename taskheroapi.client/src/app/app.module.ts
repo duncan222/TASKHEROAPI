@@ -22,6 +22,7 @@ import { UserService } from '../services/user.service';
 import { SettingsComponent } from './settings/settings.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { EditAvatarComponent } from './edit-avatar/edit-avatar.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { EditAvatarComponent } from './edit-avatar/edit-avatar.component';
     AchievementsComponent,
     SettingsComponent,
     EditProfileComponent,
-    EditAvatarComponent
+    EditAvatarComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule, ProgressbarModule, MatCardModule, BrowserAnimationsModule,  HttpClientModule,TooltipModule.forRoot(),
