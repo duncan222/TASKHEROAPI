@@ -86,7 +86,16 @@ svg:hover {
 
 .username {
   font-weight: bold;
-  margin-right: 10px
+  margin-right: 10px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.search-username {
+  font-weight: bold;
+  margin-right: 10px;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .points {

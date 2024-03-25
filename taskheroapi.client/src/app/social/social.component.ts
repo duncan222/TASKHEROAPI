@@ -32,16 +32,16 @@ export class SocialComponent implements OnInit {
     this.userService.get().subscribe(
       (users) => {
         for (const user of users) {
-          this.allUsersList.push({ avatar: this.imageSelector.pickPic(user.image), username: user.userName, points: user.score })
+          this.allUsersList.push({ id: user.userId, avatar: this.imageSelector.pickPic(user.image), username: user.userName, points: user.score })
         }
       }
     );
-    //populate Friends List - work in progress
+    //populate Friends List
     this.currentUser = this.authService.getLoggedInUserId();
     this.followerService.getFollowingById(this.currentUser).subscribe(
       (followedUsers) => {
         for (const followedUser of followedUsers) {
-          this.followingList.push({ avatar: this.imageSelector.pickPic(followedUser.image), username: followedUser.userName, points: followedUser.score })
+          this.followingList.push({ id: followedUser.userId, avatar: this.imageSelector.pickPic(followedUser.image), username: followedUser.userName, points: followedUser.score })
         }
       },
       (error) => {
@@ -95,6 +95,10 @@ export class SocialComponent implements OnInit {
     this.searchTestData = matchingUsers;
 
     this.searchQuery = '';
+  }
+
+  viewUserProfile(userId: number) {
+    this.router.navigate(['/user-profile', userId])
   }
 }
 

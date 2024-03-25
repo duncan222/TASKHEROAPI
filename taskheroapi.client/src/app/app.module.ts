@@ -22,6 +22,7 @@ import { UserService } from '../services/user.service';
 import { SettingsComponent } from './settings/settings.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { EditAvatarComponent } from './edit-avatar/edit-avatar.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import {MatDatepickerModule, MatCalendar, MatCalendarHeader, MatDatepicker} from '@angular/material/datepicker';
 import { MatFormField } from '@angular/material/form-field';
@@ -42,6 +43,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     SettingsComponent,
     EditProfileComponent,
     EditAvatarComponent,
+    UserProfileComponent,
     AddTaskComponent
   ],
   imports: [

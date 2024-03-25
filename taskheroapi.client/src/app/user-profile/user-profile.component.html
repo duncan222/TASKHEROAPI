@@ -1,0 +1,36 @@
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+<div class="new_container">
+  <body>
+    <div class="header__wrapper">
+      <header></header>
+      <div class="cols__container">
+        <div class="left__col">
+          <div class="img__container">
+            <img src={{avatarLink}} alt="Choose Avatar" />
+          </div>
+          <button (click)="addFollower()" class="btn follow-user" style="background-color: rgb(185, 185, 185);">Follow this User</button>
+          <h2>{{username}}</h2>
+          <ul class="about">
+            <li><span>{{followersNumber}}</span>Follower</li>
+            <li><span>{{totalScore}}</span>Points</li>
+            <li><span>{{achievementNumber}}</span>Achievements</li>
+          </ul>
+        </div>
+        <div class="right__col">
+          <div class="Achievements">
+            <img src={{badgeLevel}} alt="Photo" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="follow-popup" [class.show]="isFollowerAddedOpen" *ngIf="isFollowerAddedOpen" [ngStyle]="{ 'background-color': notifText.toLowerCase().includes('error') ? 'salmon' : 'lightgreen' }">
+      <div class="follower-notif">
+        <h2>{{ notifText }}</h2>
+      </div>
+    </div>
+  </body>
+</div>
+
