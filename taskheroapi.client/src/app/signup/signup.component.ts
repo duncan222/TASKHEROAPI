@@ -21,9 +21,6 @@ export class SignupComponent {
     UserAccount: {
       Email: '', Password: '', PhoneNumber: ''
     },
-    Friends: {
-      BlockedUserID: [], FreindsUserID: []
-    },
     UserAchievements: {
       BadgeID: 1,
       weeklyProgress: 0,
