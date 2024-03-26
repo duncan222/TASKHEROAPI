@@ -23,7 +23,12 @@
     justify-content: center;
 }
 
-
+.below{
+    align-self:center;
+    justify-self:center;
+    margin-bottom: -35rem;
+    position: fixed;
+}
 
 .task-card{
     background-color: #23232e;
