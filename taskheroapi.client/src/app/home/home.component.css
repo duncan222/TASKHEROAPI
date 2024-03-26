@@ -34,7 +34,9 @@
     justify-content: end;
 }
 
-
+.image-streak{ 
+    border-radius: 10rem;
+}
 .button_des1 { 
     z-index: 0;
     border-color: #99C44F !important;
@@ -114,7 +116,7 @@
         /* border: 1px solid #FF48A6; */
         box-shadow: 0px 0px 10px 0px #A8EFFF;
         border-radius: 1rem;
-        height: 15rem;
+        height: auto;
         color: rgb(196, 196, 196);
         width: 100%;
     }

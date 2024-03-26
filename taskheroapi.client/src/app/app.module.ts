@@ -28,7 +28,8 @@ import {MatDatepickerModule, MatCalendar, MatCalendarHeader, MatDatepicker} from
 import { MatFormField } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
-import { MatRadioModule } from '@angular/material/radio'; 
+import { MatRadioModule } from '@angular/material/radio';
+import { NotificationComponent } from './notification/notification.component'; 
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { MatRadioModule } from '@angular/material/radio';
     EditProfileComponent,
     EditAvatarComponent,
     UserProfileComponent,
-    AddTaskComponent
+    AddTaskComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule, MatRadioModule, ProgressbarModule, MatCardModule, BrowserAnimationsModule,  HttpClientModule,TooltipModule.forRoot(),

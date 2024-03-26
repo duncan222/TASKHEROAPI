@@ -27,15 +27,15 @@ export class TasksComponent {
 
   addTask() { 
     const tempTask: IUserTasks = { 
-      taskId: 0, 
-      userId: 0, 
-      descripcion: this.description, 
-      timeStamp: this.timeStamp, 
-      title: this.title, 
-      dueDate: this.dueDate, 
-      importance: this.importance, 
-      weight: this.weight, 
-      urgency: this.urgency
+      TaskId: 0, 
+      UserId: 0, 
+      Description: this.description, 
+      TimeStamp: this.timeStamp, 
+      Title: this.title, 
+      DueDate: this.dueDate, 
+      Importance: this.importance, 
+      Weight: this.weight, 
+      Urgency: this.urgency
     }
 
     this.TaskService.addTask(this.currentUser, tempTask)

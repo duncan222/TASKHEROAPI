@@ -8,24 +8,24 @@ namespace TaskHeroAPI
         [Key] public int TaskId { get; set; }
         [ForeignKey("User")] public int UserId { get; set; } 
 
-        [StringLength(100)]
-        public string Descripcion { get; set; } = string.Empty;
+        [StringLength(500)]
+        public string Description { get; set; } = string.Empty;
 
-        [StringLength(20)]
+        [StringLength(100)]
         public string TimeStamp { get; set; } = string.Empty;
 
-        [StringLength(20)]
+        [StringLength(50)]
         public string Title { get; set; } = string.Empty; 
 
-        [StringLength(20)]
+        [StringLength(100)]
         public string DueDate { get; set; } = string.Empty;
 
         public int Importance { get; set; } 
 
-        public float Weight { get; set; }
+        public double Weight { get; set; }
 
         //changes within certain frames before duedate
-        public float Urgency { get; set; }
+        public double Urgency { get; set; }
 
     }
 }

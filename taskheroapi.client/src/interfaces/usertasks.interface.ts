@@ -1,11 +1,11 @@
 export interface IUserTasks {
-  taskId?: number;
-  userId?: number |null | undefined;
-  descripcion: string;
-  timeStamp: string;
-  title: string;
-  dueDate: string;
-  importance: number;
-  weight: number;
-  urgency: number;
+  TaskId?: number;
+  UserId?: number |null | undefined;
+  Description: string;
+  TimeStamp: string;
+  Title: string;
+  DueDate: string;
+  Importance: number;
+  Weight: number;
+  Urgency: number;
 }
