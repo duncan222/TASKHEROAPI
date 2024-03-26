@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { UserAccountService } from '../../services/userAccount.service'
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service'
+import { LoadingComponent } from '../loading/loading.component';
+import { LoadingService } from '../../services/loading.service';
 
 interface userAccounts {
   userId?: number;
@@ -23,7 +25,7 @@ export class LoginComponent {
   password: string = '';
   validUser = false;
 
-  constructor(private userAccountService: UserAccountService, private router: Router, private authService: AuthService) { }
+  constructor(private userAccountService: UserAccountService, private router: Router, private authService: AuthService, private loadingService: LoadingService) { }
 
   onLogIn() {
     console.log('onLogIn triggerd')

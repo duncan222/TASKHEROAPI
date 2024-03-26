@@ -30,6 +30,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { NotificationComponent } from './notification/notification.component'; 
+import { LoadingComponent } from './loading/loading.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -46,12 +48,13 @@ import { NotificationComponent } from './notification/notification.component';
     EditProfileComponent,
     EditAvatarComponent,
     UserProfileComponent,
+    LoadingComponent,
     AddTaskComponent,
     NotificationComponent
   ],
   imports: [
-    BrowserModule, MatRadioModule, ProgressbarModule, MatCardModule, BrowserAnimationsModule,  HttpClientModule,TooltipModule.forRoot(),
-    AppRoutingModule, MatIconModule, FormsModule, ReactiveFormsModule, MatExpansionModule, MatAccordion, MatDatepickerModule, MatFormField, MatDatepicker, MatCalendar, MatNativeDateModule
+    BrowserModule, ProgressbarModule, MatCardModule, BrowserAnimationsModule,  HttpClientModule,TooltipModule.forRoot(),
+    AppRoutingModule, FormsModule, ReactiveFormsModule, MatExpansionModule, MatAccordion, MatDatepickerModule, MatFormField, MatIconModule, MatDatepicker, MatRadioModule, MatCalendar, MatNativeDateModule, MatProgressSpinnerModule
   ],
   providers: [UserService,
     provideAnimationsAsync()

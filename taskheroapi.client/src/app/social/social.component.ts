@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { FollowerService } from '../../services/follower.service';
 import { ImageSelectorService } from '../../services/imageSelector.service';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-social',
@@ -23,9 +24,10 @@ export class SocialComponent implements OnInit {
   allUsersList: any[] = [];
   searchTestData: any[] = [];
 
-  constructor(private authService: AuthService, private router: Router, private followerService: FollowerService, private userService: UserService, private imageSelector: ImageSelectorService) { }
+  constructor(private authService: AuthService, private router: Router, private followerService: FollowerService, private userService: UserService, private imageSelector: ImageSelectorService, private loadingService: LoadingService) { }
 
   ngOnInit() {
+    this.loadingService.show();
     // Set the initial state when the component is initialized
     this.updateActiveBar();
     //populate All Users List
@@ -34,6 +36,8 @@ export class SocialComponent implements OnInit {
         for (const user of users) {
           this.allUsersList.push({ id: user.userId, avatar: this.imageSelector.pickPic(user.image), username: user.userName, points: user.score })
         }
+        this.allUsersList.sort((a, b) => b.points - a.points);
+        this.loadingService.hide();
       }
     );
     //populate Friends List
@@ -43,9 +47,12 @@ export class SocialComponent implements OnInit {
         for (const followedUser of followedUsers) {
           this.followingList.push({ id: followedUser.userId, avatar: this.imageSelector.pickPic(followedUser.image), username: followedUser.userName, points: followedUser.score })
         }
+        this.followingList.sort((a, b) => b.points - a.points);
+        this.loadingService.hide();
       },
       (error) => {
         console.error('Error fetching friends for user', error);
+        this.loadingService.hide();
       }
     );
   }

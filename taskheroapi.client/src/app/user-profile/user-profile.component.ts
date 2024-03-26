@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { ImageSelectorService } from '../../services/imageSelector.service';
 import { FollowerService } from '../../services/follower.service';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -23,9 +24,11 @@ export class UserProfileComponent implements OnInit {
   notifText: string = "";
   isFollowerAddedOpen: boolean = false;
 
-  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private userService: UserService, private imageSelector: ImageSelectorService, private followerService: FollowerService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private userService: UserService,
+    private imageSelector: ImageSelectorService, private followerService: FollowerService, private loadingService: LoadingService) { }
 
   ngOnInit(): void {
+    this.loadingService.show();
     this.currentLoggedInUserId = this.authService.getLoggedInUserId();
     this.pageUserId = Number(this.route.snapshot.params['userId']);
     this.userService.getUserById(this.pageUserId).subscribe(
@@ -34,6 +37,7 @@ export class UserProfileComponent implements OnInit {
         this.totalScore = pageUserDetails.score;
         this.avatarLink = this.imageSelector.pickPic(pageUserDetails.image);
         //not sure how to get number of achievements
+        this.loadingService.hide();
       }
     );
     this.followerService.getFollowersById(this.pageUserId).subscribe(
@@ -41,6 +45,7 @@ export class UserProfileComponent implements OnInit {
         for (const followedUser of pageUserFollowers) {
           this.followersNumber++;
         }
+        this.loadingService.hide();
       }
     );
   }
@@ -62,15 +67,6 @@ export class UserProfileComponent implements OnInit {
       }
     );
     this.showFollowNotif();
-    //below not working?
-    this.followersNumber = 0;
-    this.followerService.getFollowersById(this.pageUserId).subscribe(
-      (pageUserFollowers) => {
-        for (const followedUser of pageUserFollowers) {
-          this.followersNumber++;
-        }
-      }
-    );
   }
 
   showFollowNotif(): void {

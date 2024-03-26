@@ -1,25 +1,32 @@
 <div class="social-container">
   <div class="buttons-container" [class.active]="isFriendsActive">
-    <button class="social-button" (click)="showFriends()">Friends</button>
+    <button class="social-button" (click)="showFriends()">Following</button>
     <button class="social-button" (click)="showAllUsers()">All Users</button>
     <div class="active-bar" [style.left]="activeBarLeft"></div>
   </div>
 
   <div class="user-list">
     <div *ngIf="isFriendsActive">
-      <div *ngFor="let user of followingList" class="user-block">
-        <div class="user-info">
-          <div class="avatar-container">
-            <img src="{{ user.avatar}}" alt="User Avatar" class="avatar" />
-          </div>
-          <div class="username" (click)="viewUserProfile(user.id)">{{ user.username }}</div>
-          <div class="points">{{ user.points }} points</div>
-        </div>
+      <div class="empty-list-message" *ngIf="followingList.length === 0; else followList">
+        <p class="zeroFollowsText">You aren't following anyone yet! To follow another user, check out their profile under the "All Users" tab or search for a specific user you want to add!</p>
       </div>
+      <ng-template #followList>
+        <div *ngFor="let user of followingList; let i = index" class="user-block">
+          <div class="user-info">
+            <div class="index">{{ i + 1 }}</div>
+            <div class="avatar-container">
+              <img src="{{ user.avatar}}" alt="User Avatar" class="avatar" />
+            </div>
+            <div class="username" (click)="viewUserProfile(user.id)">{{ user.username }}</div>
+            <div class="points">{{ user.points }} points</div>
+          </div>
+        </div>
+      </ng-template>
     </div>
     <div *ngIf="!isFriendsActive">
-      <div *ngFor="let user of allUsersList" class="user-block">
+      <div *ngFor="let user of allUsersList; let i = index" class="user-block">
         <div class="user-info">
+          <div class="index">{{ i + 1 }}</div>
           <div class="avatar-container">
             <img src="{{ user.avatar}}" alt="User Avatar" class="avatar" />
           </div>
