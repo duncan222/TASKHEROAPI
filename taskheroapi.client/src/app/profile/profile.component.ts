@@ -6,6 +6,7 @@ import { UserService } from '../../services/user.service';
 import { IUser } from '../../interfaces/user.inteface'
 import { ImageSelectorService } from '../../services/imageSelector.service';
 import { FollowerService } from '../../services/follower.service';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-profile',
@@ -13,7 +14,7 @@ import { FollowerService } from '../../services/follower.service';
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
-  constructor(private authService: AuthService, private router: Router, private userService: UserService, private imageSelector: ImageSelectorService, private followerService: FollowerService) { }
+  constructor(private authService: AuthService, private router: Router, private userService: UserService, private imageSelector: ImageSelectorService, private followerService: FollowerService, private loadingService: LoadingService) { }
 
   // set up a ngonit function to update all the values on the screen to be that of the current user 
 
@@ -57,6 +58,7 @@ export class ProfileComponent {
   userProfile: any
 
   ngOnInit(): void {
+    this.loadingService.show();
     this.currentUser = this.authService.getLoggedInUserId();
     this.userService.getUserById(this.currentUser).subscribe(
       (userDetails) => {
@@ -64,6 +66,7 @@ export class ProfileComponent {
         this.totalScore = userDetails.score;
         this.avatarLink = this.imageSelector.pickPic(userDetails.image);
         //not sure how to get number of achievements
+        this.loadingService.hide();
       }
     );
     this.followerService.getFollowersById(this.currentUser).subscribe(
@@ -71,6 +74,7 @@ export class ProfileComponent {
         for (const followedUser of userFollowers) {
           this.followersNumber++;
         }
+        this.loadingService.hide();
       }
     );
   }
