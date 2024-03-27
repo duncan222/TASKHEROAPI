@@ -16,6 +16,7 @@ import { LoadingService } from '../../services/loading.service';
 export class SocialComponent implements OnInit {
   currentUser: number | null | undefined;
   isFriendsActive: boolean = true;
+  SearchActive: boolean = false;
   activeBarLeft: string = '0%';
   isSearchPopupOpen: boolean = false;
   isFriendAddedOpen: boolean = false;
@@ -58,17 +59,21 @@ export class SocialComponent implements OnInit {
   }
 
   showFriends() {
+    this.SearchActive = false;
     this.isFriendsActive = true;
     this.updateActiveBar();
   }
 
   showAllUsers() {
+    this.SearchActive = false;
     this.isFriendsActive = false;
     this.updateActiveBar();
   }
 
-  toggleSearchPopup() {
-    this.isSearchPopupOpen = !this.isSearchPopupOpen;
+  toggleSearch() {
+    this.searchTestData = [];
+    this.SearchActive = true;
+    this.activeBarLeft = '74.8%';
   }
 
   toggleFriendAdded() {
@@ -85,7 +90,7 @@ export class SocialComponent implements OnInit {
 
   private updateActiveBar() {
     // Update the activeBarLeft based on the isFriendsActive state
-    this.activeBarLeft = this.isFriendsActive ? '15%' : '65%';
+    this.activeBarLeft = this.isFriendsActive ? '9%' : '41.2%';
   }
 
   onSearchInputChange() {

@@ -2,7 +2,10 @@
 
 .social-container {
   max-width: 800px;
-  margin: 20px auto;
+  margin: 2rem auto;
+  color: #282828;
+  letter-spacing: .5px;
+  font-family: "Poppins", sans-serif;
 }
 
 .buttons-container {
@@ -13,41 +16,42 @@
 }
 
 .social-button {
-  background-color: lightblue;
-  color: black;
-  border: none;
+  background-color: #A8EFFF;
+  box-shadow: 0px 0px 10px 0px #A8EFFF;
+  color: #282828;
+  border: #16d4ff;
+  border-width: 5rem;
   padding: 15px 4%;
   border-radius: 15px;
   font-size: 18px;
-  cursor: pointer;
   display: flex;
 }
 
 .active-bar {
   position: absolute;
+  box-shadow: 0px 0px 10px 0px #A8EFFF;
   bottom: -40px;
   height: 5px;
-  background-color: lightblue;
+  background-color: #A8EFFF;
   transition: left 0.3s ease;
-  width: 20%;
+  width: 15%;
   visibility: visible;
   border-radius: 15px;
   margin-bottom: 25px;
 }
 
 svg:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .empty-list-message {
   background-color: #9250bf;
   border-radius: 10px;
   padding: 10px; 
-  margin-bottom: 20px;
-  margin-left: 200px;
-  margin-right: 200px;
-  color: black;
-  width: 400px;
+  padding-top: 1rem;
+  margin-bottom: 1rem;
+  color: #23232e;
+  width: auto;
 }
 
 .friend-popup {
@@ -61,8 +65,30 @@ svg:hover {
   border-radius: 15px;
 }
 
+.x{ 
+  width: 1.5rem;
+  align-self: center;
+}
+
+
 .user-list {
   margin-top: 55px;
+  height: 30rem;
+  width: auto;
+  background-color: #23232e;
+  overflow: hidden;
+  padding-top: .5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 0.1rem;
+  box-shadow: 0px 0px 10px 0px #A8EFFF;
+  border-radius: 1rem;
+  align-items: center;
+}
+
+.user-list-content{
+  overflow-y: auto;
+  padding-bottom: 5rem;
 }
 
 .index {
@@ -71,20 +97,33 @@ svg:hover {
 }
 
 .user-block {
+  justify-self: center;
   background-color: #c675d5;
   color: black;
   border: 1px solid #ccc;
   padding: 2%;
-  margin: 1%;
   margin-top: 20px;
   min-width: 300px;
-  width: 100%;
+  width: 90%;
+  margin-left: 2rem;
   border-radius: 15px;
+}
+
+.separator {
+  position: relative;
+  justify-self: center;
+  left: 0;
+  width: 100%;
+  height: .1rem; /* Adjust the thickness of the separator */
+  background-color: #383847; /* Adjust the color of the separator */
 }
 
 .user-info {
   display: flex;
+  width: 100%;
   align-items: center;
+  justify-content:space-between;
+  overflow-x: hidden;
 }
 
 .avatar-container {
@@ -110,9 +149,10 @@ svg:hover {
 
 .search-username {
   font-weight: bold;
-  margin-right: 10px;
+  display: flex;
   text-decoration: underline;
   cursor: pointer;
+  margin-right: auto;
 }
 
 .points {
@@ -120,93 +160,174 @@ svg:hover {
   margin-left: auto;
 }
 
-.search-box {
-  position: absolute;
-  top: 42px; /* Add some space above */
-  right: 30px; /* Add some space to the right */
-  background-color: lightgreen;
-  color: black;
-  border: none;
-  padding: 15px 4%;
-  border-radius: 15px;
-  font-size: 18px;
-  cursor: pointer;
+.search-contents{
   display: flex;
-}
-
-.search-content {
-  display: flex;
-  align-items: center;
+  height: 20rem;
+  width: 100%;
+  margin-left: -1rem;
+  margin-top: .2rem;
+  justify-content: flex-start;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .search-points {
-  margin-left: 300px;
+  align-self: end;
+  justify-self: end;
 }
 
-.search-content span {
-  margin-right: 10px;
+.searchImg{
+  filter: grayscale(0%);
 }
 
 .search-popup {
-  width: 600px;
-  height: 400px;
-  position: fixed; /* Position the popup relative to its parent */
-  top: 50%; /* Adjust the vertical position from the top */
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #3e3939; /* Set the background color to light gray */
+  justify-self: center;
+  align-items: center;
   padding: 15px; /* Add some padding inside the popup */
-  border-radius: 5px; /* Add rounded corners */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
-  z-index: 10; /* Ensure the popup is displayed above other elements */
-  display: none; /* Hide the popup initially */
+  overflow-y: hidden;
 }
 
-  .search-popup.show { /* Apply styles when the popup is open */
-    display: block; /* Make the popup visible */
-  }
 
-  .search-popup h3 {
-      color: white;
-  }
+.search-contents::-webkit-scrollbar{ 
+  width: 0.25rem;
+}
 
-  .search-popup input {
-      width: 60%;
-      height: 40px;
-      border-radius: 10px;
-      color: #000;
-  }
+.search-contents::-webkit-scrollbar-track{
+  background: #1e1e24;
+}
+
+.search-contents::-webkit-scrollbar-thumb{
+  background: #6649b8;
+}
+
+.search-popup h3 {
+    color: white;
+}
+
+.search-popup input {
+    width: 60%;
+    height: 40px;
+    border-radius: 10px;
+    color: #000;
+}
 
 .search-button {
-  width: 15%;
+  width: auto;
   height: 40px;
-  background-color: lightblue; /* Set the background color to light blue */
+  background-color: lightgreen; /* Set the background color to light blue */
+  box-shadow: 0px 0px 3px 0px lightgreen;
   border: none;
   border-radius: 10px; /* Add rounded edges to the button */
   color: black; /* Set the text color to black */
   cursor: pointer;
   margin-left: 10px;
-}
-
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #e06666;
-  color: black;
-  border: 2px solid black; /* Add a white outline */
-  border-radius: 8px; /* Adjust the border-radius for a square shape */
-  font-size: 24px; /* Increase the font size for a larger button */
-  width: 40px; /* Set a specific width */
-  height: 40px; /* Set a specific height */
-  display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
 }
+
+.search-input{
+  background-color:rgb(15, 15, 15);
+  color: whitesmoke !important;
+  box-shadow: 0px 0px 3px 0px whitesmoke;
+  caret-color: whitesmoke;
+}
+
+.search-input::placeholder {
+  color: rgb(90, 90, 90) !important;
+}
+
 
 .search-results {
-    margin: 10px;
+    width: 100%;
 }
 
 
+@media only screen and (max-width: 600px){ 
+
+  .separator{
+    margin-top: 2px;
+  }
+
+  .header-class{
+    display: flex;
+    padding-bottom: 1rem;
+    justify-content: center;
+  }
+  
+  .social-container {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+  
+  .header-pos2{
+    margin-top: -1.7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .user-list-content::-webkit-scrollbar{ 
+    width: .2rem;
+    border-radius: 5rem;
+    background: transparent;
+  }
+  
+  .user-list-content::-webkit-scrollbar-track{
+    background: transparent;
+  }
+  
+  .user-list-content::-webkit-scrollbar-thumb{
+    background: #6649b8;
+  }
+
+  .user-list-content{
+    width: 100%;
+  }
+
+}
+
+
+
+@media only screen and (min-width: 600px) { 
+  .header-class{
+    display: flex;
+    justify-content: center;
+  }
+
+  .separator{
+    margin-top: 1rem;
+  }
+
+  .user-list-content{
+    width: 100%;
+    padding-right: 0rem;
+  }
+
+  .user-list-content::-webkit-scrollbar{ 
+    width: 0.25rem;
+    border-radius: 5rem;
+  
+    background: transparent;
+
+  }
+  
+  .user-list-content::-webkit-scrollbar-track{
+    background: transparent;
+  }
+  
+  .user-list-content::-webkit-scrollbar-thumb{
+    background: #6649b8;
+  }
+  
+  .social-container {
+    margin-left: 9rem;
+    margin-right: 2rem;
+  }
+
+  
+  .header-pos2{
+    display: flex;
+    margin-top: -1.7rem;
+    justify-content: center;
+  }
+}
