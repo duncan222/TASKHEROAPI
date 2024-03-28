@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbProgressbar } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../services/auth.service'
 import { Router } from '@angular/router';
@@ -9,11 +9,12 @@ import { IUserTasks } from '../../interfaces/usertasks.interface';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {
-  constructor(private authService: AuthService, private TaskService: userTask, private router: Router) { }
+export class HomeComponent implements OnInit{
+  constructor(private authService: AuthService, private TaskService: userTask, private router: Router) { 
+  }
 
   currentUser: number = 0; 
-  tasks: IUserTasks[] = []; 
+  tasks: any[] = []; 
   streak: number = 50;
   ending: string = "";
   streakPicture: string = "";
@@ -54,11 +55,14 @@ export class HomeComponent {
     }
   }
 
-  getUserTasks(){ 
+  getUserTasks(): void{ 
     this.TaskService.getUserTasks(this.currentUser)
-      .subscribe(tasks => { 
+      .subscribe((tasks) => { 
         this.tasks = tasks; 
+        console.log(this.tasks)
+
       })
+    
   }
 
   getAchievments(){ 
@@ -78,6 +82,8 @@ export class HomeComponent {
 
       // update the daily streak 
   }
+
+  
 
   // needs to be dynamic, based on when deadlines are considered (weakly by default )
   calculateProgress(){ 
@@ -103,8 +109,19 @@ export class HomeComponent {
     if(this.authService.getLoggedInUserId != null){
       this.currentUser = Number(this.authService.getLoggedInUserId());
     }
-    // this.getUserTasks(); 
-    console.log(this.tasks)
+    this.TaskService.getUserTasks(this.currentUser)
+    .subscribe({
+      next: (tasks) => {
+        this.tasks = tasks;
+      },
+      error: (error) => {
+        console.error('An error occurred:', error);
+      },
+      complete: () => {
+        console.log(this.tasks[2].title);
+        console.log(Object.keys(this.tasks[1]))
+      }
+    });
 
     this.streakFeatures();
   }

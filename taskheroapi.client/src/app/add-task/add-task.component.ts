@@ -65,6 +65,7 @@ export class AddTaskComponent implements OnInit{
         console.log(taskInstance);
         this.taskService.addTask(this.currentUser, taskInstance).subscribe(
           response => {
+            console.log("added")
             this.taskGroup.reset();
             this.notificationMessage = "Task Added!"
             this.color = "#198754";
