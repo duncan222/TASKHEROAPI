@@ -13,11 +13,26 @@ export class HomeComponent implements OnInit{
   constructor(private authService: AuthService, private TaskService: userTask, private router: Router) { 
   }
 
+  comicExpressions: string[] = ['/assets/icons/kaboom.png', '/assets/icons/boom.png', '/assets/icons/pow.png', '/assets/icons/kapow.png', '/assets/icons/bang.png'];
   currentUser: number = 0; 
   tasks: any[] = []; 
   streak: number = 50;
   ending: string = "";
   streakPicture: string = "";
+  showImagePop = false;
+  comicChoice: string = "";
+
+
+//when task is complete, display notification from comic expressions 
+//call the remove task API service, reposition the top three tasks
+  CompleteTaskClick(){ 
+    //randomly choosing an expression
+    this.comicChoice = this.comicExpressions[Math.floor(Math.random() * 5)];
+    this.showImagePop = true;
+    setTimeout(() => {
+      this.showImagePop = false;
+    }, 5000); 
+  }
 
   streakFeatures(){
     if(this.streak == 0){ 

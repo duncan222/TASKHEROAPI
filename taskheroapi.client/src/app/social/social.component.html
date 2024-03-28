@@ -11,6 +11,8 @@
       <div *ngIf="isFriendsActive && !SearchActive">
         <div class="empty-list-message" *ngIf="followingList.length === 0; else followList">
           <p class="zeroFollowsText">You aren't following anyone yet! To follow another user, check out their profile under the "All Users" tab or search for a specific user you want to add!</p>
+          <img src="/assets/icons/sad-taskhero.png" class="sad-img">
+        
         </div>
         <ng-template #followList>
           <div *ngFor="let user of followingList; let i = index" class="user-block">
