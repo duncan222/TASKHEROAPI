@@ -9,7 +9,5 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\app\login\" />
-    <Folder Include="src\app\service\" />
-    <Folder Include="src\interfaces\" />
   </ItemGroup>
 </Project>

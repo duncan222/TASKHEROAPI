@@ -1,39 +1,4 @@
-.dash1{
-    background-color: #23232e;
-    /* border: 1px solid #FF48A6; */
-    box-shadow: 0px 0px 10px 0px #A8EFFF;
-    border-radius: 1rem;
-    height: 15rem;
-    color: rgb(196, 196, 196);
-}
 
-
-
-.vertical{
-    -ms-transform: rotate(-90deg); 
-    -webkit-transform: rotate(-90deg);
-    transform: rotate(-90deg);
-    /* background-image:image-set('/assets/gis/pink.gif'); */
-
-}
-
-.progress-bar{ 
-
-    background-color: red !important;
-
-}
-
-.dash2{
-    background-color: #23232e;
-    color: rgb(196, 196, 196);
-    /* border: 1px solid #A8EFFF; */
-    box-shadow: 0px 0px 10px 0px #FF48A6;
-    max-width: 13rem;
-    border-radius: 0.5rem;
-    align-items: center;
-    height: 32rem;
-    
-}
 
 .item{ 
     width: 30rem !important;
@@ -48,10 +13,29 @@
     font-weight: bolder;
     color: #282828;
     letter-spacing: .5px;
-    /*change font at some point */
     font-family: "Poppins", sans-serif;
 }
 
+.to-the-right{ 
+    
+    display: flex;
+    justify-content: end;
+    margin-top: -1rem;
+    justify-self: end;
+    font-weight: bolder;
+    color: #bebebe;
+    letter-spacing: .5px;
+    font-family: "Poppins", sans-serif;
+}
+
+.fire-header{ 
+    display: flex;
+    justify-content: end;
+}
+
+.image-streak{ 
+    border-radius: 10rem;
+}
 .button_des1 { 
     z-index: 0;
     border-color: #99C44F !important;
@@ -86,13 +70,6 @@
     padding: 0;
 }
 
-.m-3{ 
-    background-color: #23232e;
-    box-shadow: 0px 0px 10px 0px #23232e;
-    border-radius: 1rem;
-    width: 40rem;
-    min-width: 10rem;
-}
 
 .button_des2:hover {
     filter: hue-rotate(203deg);
@@ -101,6 +78,8 @@
 .button_des2:focus {
     filter: grayscale(10%);
 }
+
+
 
 /* .static_img{ 
     z-index: -1;
@@ -117,34 +96,238 @@
     background-position:center center; 
     background-repeat:no-repeat; 
 } */
-.prog_container{
-    object-fit:scale-down;
-    overflow: hidden;
-    margin-top: 2rem;
-    z-index: 0;
-    background-color: #FF48A6;
-    width: 2rem;
-    height: 25rem;
-    box-shadow: 0px 0px 10px 0px #FF48A6;
-    border-radius: 1rem;
-    background-size:cover; 
-    background-position:center center; 
-    background-repeat:no-repeat; 
-    /* background-image:image-set('/assets/gis/pink.gif'); */
-    filter: grayscale(50%)
-}
-.home{ 
-    z-index: 0;
-    margin-top: 2rem;
-    margin-left: 8rem;
-    margin-right: 1rem;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    align-items: center;
-    backdrop-filter: blur(0.8);
+
+
+
+@media only screen and (min-width: 600px) { 
+
+
+    .m-3{ 
+        background-color: #23232e;
+        box-shadow: 0px 0px 10px 0px #23232e;
+        border-radius: 1rem;
+        width: 90%;
+        min-width: 10rem;
+    }
+
+    .dash1{
+        background-color: #23232e;
+        /* border: 1px solid #FF48A6; */
+        box-shadow: 0px 0px 10px 0px #A8EFFF;
+        border-radius: 1rem;
+        height: auto;
+        color: rgb(196, 196, 196);
+        width: 100%;
+    }
+
+    .dynamic-row-other{
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px; /* Adjust as needed for negative margins */
+        margin-left: -15px; /* Adjust as needed for negative margins */
+    }
+    
+    .dynamic-row-2{ 
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px; /* Adjust as needed for negative margins */
+        margin-left: -15px; /* Adjust as needed for negative margins */
+    }
+
+    .dynamic-row-2 > * {
+        flex-grow: 1;
+        flex-basis: 50%;
+        padding: 15px; /* Adjust padding as needed */
+    }
+    
+    .home{ 
+        z-index: 0;
+        margin-top: 2rem;
+        margin-left: 8rem;
+        margin-right: 1rem;
+        margin-bottom: 1rem;
+        padding: 1rem;
+        align-items: center;
+        backdrop-filter: blur(0.8);
+    }
+
+    .dynamic-row{ 
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px; /* Adjust as needed for negative margins */
+        margin-left: -15px; /* Adjust as needed for negative margins */
+    }
+
+    .dynamic-col-7{ 
+        flex: 0 0 58.333333%;
+        max-width: 58.333333%;
+    }
+
+    .dynamic-col-5{
+        flex: 0 0 41.666667%;
+        max-width: 41.666667%;
+    }
+    
+
+    .vertical{
+        -ms-transform: rotate(-90deg); 
+        -webkit-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+        /* background-image:image-set('/assets/gis/pink.gif'); */
+        min-width: 25rem; 
+        height: 3rem;    
+    }
+    
+    .progress-bar{ 
+    
+        background-color: red !important;
+    
+    }
+    
+    .dash2{
+        background-color: #23232e;
+        color: rgb(196, 196, 196);
+        /* border: 1px solid #A8EFFF; */
+        box-shadow: 0px 0px 10px 0px #FF48A6;
+        max-width: 13rem;
+        border-radius: 0.5rem;
+        align-items: center;
+        height: 32rem;
+        width: 90%;
+        
+    }
+
+    .container{ 
+        margin-top: 15rem;
+    }
+    
 }
 
-.container{ 
+@media only screen and (max-width: 600px){ 
 
-    margin-top: 15rem;
+
+    .dash1{
+        background-color: #23232e;
+        /* border: 1px solid #FF48A6; */
+        box-shadow: 0px 0px 10px 0px #A8EFFF;
+        border-radius: 1rem;
+        height: auto;
+        color: rgb(196, 196, 196);
+        width: 90%;
+
+    }
+    
+    .m-3{ 
+        background-color: transparent;
+        width: 90%;
+        min-width: 10rem;
+        border-color: none;
+    }
+        
+    .dynamic-row-2{ 
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px; /* Adjust as needed for negative margins */
+        margin-left: -15px; /* Adjust as needed for negative margins */
+    }
+
+    .dynamic-row-2 > * {
+        flex-grow: 1;
+        flex-basis: 50%;
+        padding: 15px; /* Adjust padding as needed */
+    }
+    
+    .dynamic-row > * {
+        flex-grow: 1;
+        flex-basis: 50%;
+        padding: 15px; /* Adjust padding as needed */
+    }
+
+    .dynamic-row{ 
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px; /* Adjust as needed for negative margins */
+        margin-left: -15px; /* Adjust as needed for negative margins */
+    }
+
+
+    .dynamic-col-5{
+        background-color: #121212; /* Dark background color */
+        color: #fff; /* Light text color */
+        padding: 20px;
+        position: fixed; /* Fixed positioning */
+        width: 96%; /* Full width */
+        top: 0; /* Fixed to the top */
+        z-index: 0; 
+        height: 6.2rem;
+        box-shadow: 0px 0px 10px 8px #121212;
+        justify-content: start;
+        margin-left: -2.2rem;
+    }
+
+    .container{
+        width: 100%;
+    }
+
+
+    
+    .progress-bar{ 
+        background-color: red !important;
+    }
+    
+    .dash2{
+        background-color: #23232e;
+        color: rgb(196, 196, 196);
+        /* border: 1px solid #A8EFFF; */
+        box-shadow: 0px 0px 10px 0px #FF48A6;
+        max-width: 100%;
+        border-radius: 0.5rem;
+        justify-content: center;
+        height: 5rem;
+        display: flex;
+        width: 110%;
+    }
+
+    .vertical{ 
+        height: 2rem;
+        width: 100%;
+    }
+
+    .dynamic-row-other{ 
+        width: 102%;
+    }
+
+    .home{ 
+        padding: 1rem;
+        z-index: 0;
+        align-items: center;
+        backdrop-filter: blur(0.8);
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
+    .achieve{ 
+        height: .8rem;
+    }
+
+    .scrolly { 
+        position: relative;
+        margin-top: 5rem;
+        margin-left: 2rem;
+        margin-right: 2rem;
+        width: 70%;
+    }
+
+    .scrolly::-webkit-scrollbar{ 
+        width: 0.25rem;
+    }
+    
+    .scrolly::-webkit-scrollbar-track{
+        background: #1e1e24;
+    }
+    
+    .scrolly::-webkit-scrollbar-thumb{
+        background: #6649b8;
+    }
+
 }

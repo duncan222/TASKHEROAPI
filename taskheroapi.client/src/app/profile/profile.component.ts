@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { IUser } from '../../interfaces/user.inteface'
 import { ImageSelectorService } from '../../services/imageSelector.service';
+import { FollowerService } from '../../services/follower.service';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,7 +14,7 @@ import { ImageSelectorService } from '../../services/imageSelector.service';
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
-  constructor(private authService: AuthService, private router: Router, private userService: UserService, private imageSelector: ImageSelectorService) { }
+  constructor(private authService: AuthService, private router: Router, private userService: UserService, private imageSelector: ImageSelectorService, private followerService: FollowerService, private loadingService: LoadingService) { }
 
   // set up a ngonit function to update all the values on the screen to be that of the current user 
 
@@ -23,7 +25,7 @@ export class ProfileComponent {
   
 
   badgeLevel: string = "assets/gis/goldbadge.png";
-  friendsNumber: number = 0;
+  followersNumber: number = 0;
   username: string = "username";
   totalScore: number = 0;
   achievementNumber: number = 0;
@@ -56,6 +58,7 @@ export class ProfileComponent {
   userProfile: any
 
   ngOnInit(): void {
+    this.loadingService.show();
     this.currentUser = this.authService.getLoggedInUserId();
     this.userService.getUserById(this.currentUser).subscribe(
       (userDetails) => {
@@ -63,7 +66,15 @@ export class ProfileComponent {
         this.totalScore = userDetails.score;
         this.avatarLink = this.imageSelector.pickPic(userDetails.image);
         //not sure how to get number of achievements
-        //friends count is work in progress
+        this.loadingService.hide();
+      }
+    );
+    this.followerService.getFollowersById(this.currentUser).subscribe(
+      (userFollowers) => {
+        for (const followedUser of userFollowers) {
+          this.followersNumber++;
+        }
+        this.loadingService.hide();
       }
     );
   }

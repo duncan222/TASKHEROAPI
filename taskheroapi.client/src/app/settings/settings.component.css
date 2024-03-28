@@ -35,8 +35,17 @@
     width: 30rem;
     padding-bottom: 3rem;
     box-shadow: none;
+    background-color: transparent;
+    color: whitesmoke;
+
     
 }
+
+.toggle{ 
+    align-self: center;
+}
+
+
 .settings_container .seperator{
     width: 100%; 
     justify-content: center;

@@ -43,6 +43,55 @@ namespace TASKHEROAPI.Server.Controllers
             return user;
         }
 
+        // GET: api/User/{userId}/followers
+        [HttpGet("{userId}/followers")]
+        public async Task<ActionResult<IEnumerable<User>>> GetUserFollowers(int userId)
+        {
+            var user = await _context.Users
+                .Include(u => u.Followers)
+                .Where(u => u.UserId == userId)
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var followers = user.Followers.Select(f => new
+            {
+                f.UserId,
+                f.UserName,
+                f.Image,
+                f.Score
+            });
+
+            return Ok(followers);
+        }
+
+        // GET: api/Users/5/following
+        [HttpGet("{userId}/following")]
+        public async Task<ActionResult> GetFollowing(int userId)
+        {
+            var user = await _context.Users
+                .Include(u => u.Following)
+                .FirstOrDefaultAsync(u => u.UserId == userId);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var followingUsers = user.Following.Select(f => new
+            {
+                f.UserId,
+                f.UserName,
+                f.Image,
+                f.Score
+            });
+
+            return Ok(followingUsers);
+        }
+
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

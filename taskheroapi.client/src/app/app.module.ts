@@ -22,12 +22,16 @@ import { UserService } from '../services/user.service';
 import { SettingsComponent } from './settings/settings.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { EditAvatarComponent } from './edit-avatar/edit-avatar.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import {MatDatepickerModule, MatCalendar, MatCalendarHeader, MatDatepicker} from '@angular/material/datepicker';
 import { MatFormField } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
-
-
+import { MatIconModule } from '@angular/material/icon';
+import { MatRadioModule } from '@angular/material/radio';
+import { NotificationComponent } from './notification/notification.component'; 
+import { LoadingComponent } from './loading/loading.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,11 +46,14 @@ import { MatNativeDateModule } from '@angular/material/core';
     SettingsComponent,
     EditProfileComponent,
     EditAvatarComponent,
-    AddTaskComponent
+    UserProfileComponent,
+    LoadingComponent,
+    AddTaskComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule, ProgressbarModule, MatCardModule, BrowserAnimationsModule,  HttpClientModule,TooltipModule.forRoot(),
-    AppRoutingModule, FormsModule, ReactiveFormsModule, MatExpansionModule, MatAccordion, MatDatepickerModule, MatFormField, MatDatepicker, MatCalendar, MatNativeDateModule
+    AppRoutingModule, FormsModule, ReactiveFormsModule, MatExpansionModule, MatAccordion, MatDatepickerModule, MatFormField, MatIconModule, MatDatepicker, MatRadioModule, MatCalendar, MatNativeDateModule, MatProgressSpinnerModule
   ],
   providers: [UserService,
     provideAnimationsAsync()

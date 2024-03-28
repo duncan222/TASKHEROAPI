@@ -1,0 +1,26 @@
+.notification{ 
+    position: relative;
+    color: #fff; 
+    padding: 10px; 
+    border-radius: 5px; 
+    animation: fadeOut 5s ease;
+    z-index: 2;
+    background-color: #198754;
+
+}
+
+.error{
+    background-color: rgb(243, 54, 54);
+}
+
+@keyframes fadeOut {
+    0% { 
+        opacity: 1;
+    }
+
+    100%{ 
+        opacity: 0; 
+        display: none;
+    }
+    
+}

@@ -4,7 +4,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
-import { FriendsService } from '../../services/friends.service';
+import { FollowerService } from '../../services/follower.service';
+import { ImageSelectorService } from '../../services/imageSelector.service';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-social',
@@ -14,52 +16,64 @@ import { FriendsService } from '../../services/friends.service';
 export class SocialComponent implements OnInit {
   currentUser: number | null | undefined;
   isFriendsActive: boolean = true;
+  SearchActive: boolean = false;
   activeBarLeft: string = '0%';
   isSearchPopupOpen: boolean = false;
   isFriendAddedOpen: boolean = false;
   searchQuery: string = '';
-  friendsList: any[] = [];
+  followingList: any[] = [];
   allUsersList: any[] = [];
   searchTestData: any[] = [];
 
-  constructor(private authService: AuthService, private router: Router, private friendsService: FriendsService, private userService: UserService) { }
+  constructor(private authService: AuthService, private router: Router, private followerService: FollowerService, private userService: UserService, private imageSelector: ImageSelectorService, private loadingService: LoadingService) { }
 
   ngOnInit() {
+    this.loadingService.show();
     // Set the initial state when the component is initialized
     this.updateActiveBar();
     //populate All Users List
     this.userService.get().subscribe(
       (users) => {
         for (const user of users) {
-          this.allUsersList.push({ username: user.userName, points: user.score })
+          this.allUsersList.push({ id: user.userId, avatar: this.imageSelector.pickPic(user.image), username: user.userName, points: user.score })
         }
+        this.allUsersList.sort((a, b) => b.points - a.points);
+        this.loadingService.hide();
       }
     );
-    //populate Friends List - work in progress
+    //populate Friends List
     this.currentUser = this.authService.getLoggedInUserId();
-    this.friendsService.getById(this.currentUser).subscribe(
-      (userDetails) => {
-        this.handleUserFriends(userDetails);
+    this.followerService.getFollowingById(this.currentUser).subscribe(
+      (followedUsers) => {
+        for (const followedUser of followedUsers) {
+          this.followingList.push({ id: followedUser.userId, avatar: this.imageSelector.pickPic(followedUser.image), username: followedUser.userName, points: followedUser.score })
+        }
+        this.followingList.sort((a, b) => b.points - a.points);
+        this.loadingService.hide();
       },
       (error) => {
         console.error('Error fetching friends for user', error);
+        this.loadingService.hide();
       }
     );
-    this.friendsList.push({ username: 'Friend1', points: 100 })
   }
 
   showFriends() {
+    this.SearchActive = false;
     this.isFriendsActive = true;
     this.updateActiveBar();
   }
 
   showAllUsers() {
+    this.SearchActive = false;
     this.isFriendsActive = false;
     this.updateActiveBar();
   }
 
-  toggleSearchPopup() {
-    this.isSearchPopupOpen = !this.isSearchPopupOpen;
+  toggleSearch() {
+    this.searchTestData = [];
+    this.SearchActive = true;
+    this.activeBarLeft = '74.8%';
   }
 
   toggleFriendAdded() {
@@ -76,23 +90,7 @@ export class SocialComponent implements OnInit {
 
   private updateActiveBar() {
     // Update the activeBarLeft based on the isFriendsActive state
-    this.activeBarLeft = this.isFriendsActive ? '15%' : '65%';
-  }
-
-  private handleUserFriends(userDetails: any): void {
-    const friendIds = userDetails.freindsUserId || [];
-
-    //need to rethink friend data layout
-
-    /**
-    for (const id in friendIds) {
-      this.userService.getUserById(Number(id)).subscribe(
-        (userInfo) => {
-          console.log(userInfo);
-        }
-      );
-    }
-    **/
+    this.activeBarLeft = this.isFriendsActive ? '9%' : '41.2%';
   }
 
   onSearchInputChange() {
@@ -109,6 +107,10 @@ export class SocialComponent implements OnInit {
     this.searchTestData = matchingUsers;
 
     this.searchQuery = '';
+  }
+
+  viewUserProfile(userId: number) {
+    this.router.navigate(['/user-profile', userId])
   }
 }
 

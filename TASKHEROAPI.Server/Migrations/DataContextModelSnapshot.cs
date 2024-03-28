@@ -113,22 +113,27 @@ namespace TASKHEROAPI.Server.Migrations
                     b.ToTable("UserAchievements", "dbo");
                 });
 
-            modelBuilder.Entity("TaskHeroAPI.UserFriends", b =>
+            modelBuilder.Entity("TaskHeroAPI.UserFollows", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("BlockedUserID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("FreindsUserID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("FollowerId")
+                        .HasColumnType("int");
 
-                    b.HasKey("UserId");
+                    b.Property<int>("FollowingId")
+                        .HasColumnType("int");
 
-                    b.ToTable("UserFriends", "dbo");
+                    b.HasKey("Id");
+
+                    b.HasIndex("FollowerId");
+
+                    b.HasIndex("FollowingId");
+
+                    b.ToTable("UserFollows", "dbo");
                 });
 
             modelBuilder.Entity("TaskHeroAPI.UserSettings", b =>
@@ -164,37 +169,37 @@ namespace TASKHEROAPI.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TaskId"));
 
-                    b.Property<string>("Descripcion")
+                    b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("DueDate")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("Importance")
                         .HasColumnType("int");
 
                     b.Property<string>("TimeStamp")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("Urgency")
-                        .HasColumnType("int");
+                    b.Property<double>("Urgency")
+                        .HasColumnType("float");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Weight")
-                        .HasColumnType("int");
+                    b.Property<double>("Weight")
+                        .HasColumnType("float");
 
                     b.HasKey("TaskId");
 
@@ -235,13 +240,23 @@ namespace TASKHEROAPI.Server.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TaskHeroAPI.UserFriends", b =>
+            modelBuilder.Entity("TaskHeroAPI.UserFollows", b =>
                 {
-                    b.HasOne("TaskHeroAPI.User", null)
-                        .WithOne("Friends")
-                        .HasForeignKey("TaskHeroAPI.UserFriends", "UserId")
+                    b.HasOne("TaskHeroAPI.User", "Follower")
+                        .WithMany()
+                        .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("TaskHeroAPI.User", "Following")
+                        .WithMany()
+                        .HasForeignKey("FollowingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Follower");
+
+                    b.Navigation("Following");
                 });
 
             modelBuilder.Entity("TaskHeroAPI.UserSettings", b =>
@@ -274,8 +289,6 @@ namespace TASKHEROAPI.Server.Migrations
             modelBuilder.Entity("TaskHeroAPI.User", b =>
                 {
                     b.Navigation("Achievements");
-
-                    b.Navigation("Friends");
 
                     b.Navigation("Tasks");
 

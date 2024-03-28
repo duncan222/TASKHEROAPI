@@ -24,42 +24,18 @@ export class TasksComponent implements OnInit {
   editTaskValue: string = '';
   taskSubscription: Subscription | undefined;
 
-  ngOnInit(): void {
-    this.getAllTasks();
-  }
-
-  getAllTasks() {
-    this.subscription = this.crudService['getAllTasks']().subscribe({
-      next: (tasks: IUserTasks[]): void => {
-        this.taskArr = tasks;
-      },
-      error: (error: any) => {
-        console.error('Unable to fetch tasks:', error);
-      }
-    });
-  }
-
-  addTask() {
-    console.log('adding...')
-    this.taskObj.task_name = this.addTaskValue;
-    this.taskObj.description = ''; // Add description here
-    this.taskObj.timeStamp = ''; // Add timeStamp here
-    this.taskObj.title = ''; // Add title here
-    this.taskObj.dueDate = ''; // Add dueDate here
-    this.taskObj.importance = 0; // Add importance here
-    this.taskObj.weight = 0; // Add weight here
-    this.taskObj.urgency = 0; // Add urgency here
-
-    this.crudService.addTask(this.taskObj).subscribe({
-      next: (res) => {
-        this.ngOnInit();
-        this.addTaskValue = '';
-      },
-      error: (err) => {
-        console.error("Failed to add task", err);
-      }
-    });
-  }
+  addTask() { 
+    const tempTask: IUserTasks = { 
+      TaskId: 0, 
+      UserId: 0, 
+      Description: this.description, 
+      TimeStamp: this.timeStamp, 
+      Title: this.title, 
+      DueDate: this.dueDate, 
+      Importance: this.importance, 
+      Weight: this.weight, 
+      Urgency: this.urgency
+    }
 
   editTask() {
     this.taskObj.task_name = this.editTaskValue;
