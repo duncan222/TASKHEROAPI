@@ -33,4 +33,16 @@ export class FollowerService {
     }
     return this.http.post(url, {}, { params: params });
   }
+
+  unfollowUser(currentUserId: number | null, idToUnfollow: number | null): Observable<any> {
+    const url = `${this.apiUrl}/UserFollows/Unfollow`;
+    let params = new HttpParams();
+    if (currentUserId !== null) {
+      params = params.set('currentUserId', currentUserId.toString());
+    }
+    if (idToUnfollow !== null) {
+      params = params.set('idToUnfollow', idToUnfollow.toString());
+    }
+    return this.http.post(url, {}, { params: params });
+  }
 }

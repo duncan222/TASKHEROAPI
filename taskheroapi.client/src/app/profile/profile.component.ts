@@ -53,8 +53,6 @@ export class ProfileComponent {
     this.router.navigate(['/settings']);
   }
 
-
-
   userProfile: any
 
   ngOnInit(): void {

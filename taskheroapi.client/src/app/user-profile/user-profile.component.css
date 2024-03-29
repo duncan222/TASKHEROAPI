@@ -1,22 +1,32 @@
-.follow-user {
-  width: auto;
-  margin-top: 1rem;
-  margin-left: 5rem;
-  background-color: transparent !important;
+.user-buttons-container {
+  display: flex;
+  justify-content: flex-end; /* Align items to the right */
+  margin-right: 2.5rem; /* Adjust margin to move the buttons to the right */
+}
+
+.follow-user,
+.unfollow-user {
+  height: 40px; /* Adjust width as needed */
+  margin: 1rem 0.5rem;
   border-color: rgb(185, 185, 185);
-  color: rgb(185, 185, 185);
+  color: black;
   transition: all 0.3s ease-in-out;
 }
 
-  .follow-user:hover {
-    color: antiquewhite;
+  .follow-user:hover,
+  .unfollow-user:hover {
     border-color: antiquewhite;
     transform: scale(1.01);
   }
 
-  .follow-user:focus {
+  .follow-user:focus,
+  .unfollow-user:focus {
     box-shadow: none;
   }
+
+.unfollow-user {
+  margin-top: 59px;
+}
 
 .container {
   text-align: start;
@@ -50,6 +60,17 @@ a {
 }
 
 .follow-popup {
+  position: fixed;
+  bottom: 5%;
+  left: 37%;
+  width: 600px;
+  z-index: 100;
+  background-color: lightgreen;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.unfollow-popup {
   position: fixed;
   bottom: 5%;
   left: 37%;

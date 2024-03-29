@@ -56,6 +56,40 @@ namespace TASKHEROAPI.Server.Controllers
             return Ok(userFollows);
         }
 
+        // POST: api/UserFollows/Unfollow
+        [HttpPost("Unfollow")]
+        public async Task<ActionResult> UnfollowUser(int currentUserId, int idToUnfollow)
+        {
+            // Find the user being followed
+            var followedUser = await _context.Users.FindAsync(currentUserId);
+            if (followedUser == null)
+            {
+                return NotFound("User to unfollow not found.");
+            }
+
+            // Find the follower
+            var follower = await _context.Users.FindAsync(idToUnfollow);
+            if (follower == null)
+            {
+                return NotFound("Follower not found.");
+            }
+
+            // Check if the relationship exists
+            var existingFollow = await _context.UserFollows
+                .FirstOrDefaultAsync(uf => uf.FollowerId == idToUnfollow && uf.FollowingId == currentUserId);
+
+            if (existingFollow == null)
+            {
+                return Conflict("User is not currently following this user.");
+            }
+
+            // Remove the follower relationship
+            _context.UserFollows.Remove(existingFollow);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "User unfollowed successfully" });
+        }
+
         // GET: api/UserFollows/5
         [HttpGet("{id}")]
         public async Task<ActionResult<UserFollows>> GetFollower(int id)
