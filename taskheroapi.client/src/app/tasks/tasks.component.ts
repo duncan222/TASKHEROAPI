@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Injectable } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Task } from '../model/task.model';
 import { Subscription } from 'rxjs';
 import { IUserTasks } from '../../interfaces/usertasks.interface';
@@ -10,17 +10,7 @@ import { CrudService } from '../service/crud.service';
   styleUrls: ['./tasks.component.css']
 })
 export class TasksComponent implements OnInit, OnDestroy {
-  taskObj: Task = {
-      id: 0,
-      task_name: '',
-      description: '',
-      timeStamp: '',
-      title: '',
-      dueDate: '',
-      importance: 0,
-      weight: 0,
-      urgency: 0
-  };
+
   tasks: IUserTasks[] = [];
   taskArr: Task[] = [];
   editTaskObj: Task = {
@@ -36,17 +26,17 @@ export class TasksComponent implements OnInit, OnDestroy {
   };
   addTaskValue: string = '';
   editTaskValue: string = '';
-  //taskObj: IUserTasks = { 
-  //  TaskId: 0,
-  //  UserId: 0,
-  //  Description: '',
-  //  TimeStamp: '',
-  //  Title: '',
-  //  DueDate: '',
-  //  Importance: 0,
-  //  Weight: 0,
-  //  Urgency: 0
-  //};
+  taskObj: IUserTasks = { 
+    TaskId: 0,
+    UserId: 0,
+    Description: '',
+    TimeStamp: '',
+    Title: '',
+    DueDate: '',
+    Importance: 0,
+    Weight: 0,
+    Urgency: 0
+  };
   taskSubscription: Subscription | undefined;
 
   constructor(private crudService: CrudService) { }
@@ -58,28 +48,17 @@ export class TasksComponent implements OnInit, OnDestroy {
   }
 
   addTask() {
-    //const tempTask: IUserTasks = {
-    //  TaskId: 0,
-    //  UserId: 0,
-    //  Description: this.addTaskValue,
-    //  TimeStamp: new Date().toISOString(),
-    //  Title: '',
-    //  DueDate: new Date().toISOString(),
-    //  Importance: 0,
-    //  Weight: 0,
-    //  Urgency: 0
-    //};
-
-    this.taskObj.task_name = this.addTaskValue;
-    this.crudService.addTask(this.taskObj).subscribe(
-      (res) => {
-        this.ngOnInit();
-        this.addTaskValue = '';
-      },
-      (err) => {
-        console.error("Failed to add task", err);
-      }
-    );
+    const tempTask: IUserTasks = {
+      TaskId: 0,
+      UserId: 0,
+      Description: this.addTaskValue,
+      TimeStamp: new Date().toISOString(),
+      Title: '',
+      DueDate: new Date().toISOString(),
+      Importance: 0,
+      Weight: 0,
+      Urgency: 0
+    };
   }
 
   editTask(task: Task) {

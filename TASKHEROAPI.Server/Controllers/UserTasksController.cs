@@ -7,13 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaskHeroAPI;
 using TaskHeroAPI.Data;
-using System.Web.Http.Cors;
 
 namespace TASKHEROAPI.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class UserTasksController : ControllerBase
     {
         private readonly DataContext _context;
