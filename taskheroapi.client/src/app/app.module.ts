@@ -32,9 +32,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { NotificationComponent } from './notification/notification.component'; 
 import { LoadingComponent } from './loading/loading.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { CrudService } from './service/crud.service';
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +55,7 @@ import { CrudService } from './service/crud.service';
     BrowserModule, ProgressbarModule, MatCardModule, BrowserAnimationsModule,  HttpClientModule,TooltipModule.forRoot(),
     AppRoutingModule, FormsModule, ReactiveFormsModule, MatExpansionModule, MatAccordion, MatDatepickerModule, MatFormField, MatIconModule, MatDatepicker, MatRadioModule, MatCalendar, MatNativeDateModule, MatProgressSpinnerModule
   ],
-  providers: [UserService, CrudService,
+  providers: [UserService,
     provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
