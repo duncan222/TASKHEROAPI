@@ -19,15 +19,23 @@ export class EditAvatarComponent {
     'assets/profilePics/3.png',
     'assets/profilePics/4.png',
     'assets/profilePics/5.png',
+    'assets/profilePics/6.png',
+    'assets/profilePics/7.png',
+    'assets/profilePics/8.png',
+    'assets/profilePics/9.png',
+    'assets/profilePics/10.png',
   ];
   selectedAvatar: string = '';
   currentUserId: number | null | undefined;
+  errorText: string = "";
   user: any = {
     userId: this.authService.getLoggedInUserId(),
     userName: '',
     score: 0,
     image: ''
   }
+
+  requiredPoints: number[] = [0, 0, 0, 0, 0, 100, 150, 200, 250, 300];
 
   ngOnInit() {
     this.currentUserId = this.authService.getLoggedInUserId();
@@ -41,8 +49,14 @@ export class EditAvatarComponent {
     );
   }
 
-  selectAvatar(avatar: string): void {
-    this.selectedAvatar = avatar;
+  selectAvatar(avatar: string, requiredPoints: number): void {
+    if (this.user.score >= requiredPoints) {
+      this.selectedAvatar = avatar;
+      this.errorText = "";
+    }
+    else {
+      this.errorText = "You do not have enough points for this avatar";
+    }
   }
 
   cancelChanges(): void {
