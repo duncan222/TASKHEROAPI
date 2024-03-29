@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Task } from '../model/task.model';
+import { IUserTasks } from '../../interfaces/usertasks.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,8 @@ export class CrudService {
     return this.http.post<Task>(this.serviceURL, task);
   }
 
-  getAllTask(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.serviceURL);
+  getAllTasks(): Observable<IUserTasks[]> {
+    return this.http.get<IUserTasks[]>(this.serviceURL);
   }
 
   deleteTask(task: Task): Observable<Task> {
