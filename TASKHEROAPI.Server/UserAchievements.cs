@@ -23,5 +23,7 @@ namespace TaskHeroAPI
 
         public string[] LockedAchievements { get; set; } = Array.Empty<string>();
 
+        public int weeklytasks { get; set; }
+
     }
 }

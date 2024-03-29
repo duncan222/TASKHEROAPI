@@ -27,8 +27,8 @@ export class SignupComponent {
       weeklyProgress: 0,
       dailyTracker: 0, 
       totalScore: 0, 
-      lastActive: "", //idk what to put for this?
-      UnlockedAchievements: [], LockedAchievements: []
+      lastActive: "", //idk what to put for this? --> nothing, it is useless. i just dont feel like deleteing it rn cuz tht takes work
+      UnlockedAchievements: [], LockedAchievements: [], weeklytasks: 0
     }
   };
   confirmPassword: string = '';

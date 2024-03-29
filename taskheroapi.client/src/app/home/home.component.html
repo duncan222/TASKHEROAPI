@@ -16,7 +16,7 @@ also change the font. -- these are edits to be made later once functionality is 
                                         <div class="input-group ps-3"  style="overflow-x: hidden;">
                                             <div class="card item" >{{task.title}} </div>
                                             <div class="col place-end">
-                                                <div class="btn col button_des1" (click)="CompleteTaskClick()"  style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem;">
+                                                <div class="btn col button_des1" (click)="CompleteTaskClick(task)"  style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem;">
                                                     <img src="/assets/icons/checkg.svg" style="height:100%; width: 50%; ">
                                                 </div>
                                                 <div class="seperate"></div>
@@ -63,7 +63,7 @@ also change the font. -- these are edits to be made later once functionality is 
                 <mat-card class="dash2">
                     <mat-card-content>
                         <div class="container">
-                            <progressbar class="vertical" [value]="60"> 
+                            <progressbar class="vertical" [value]="progressValue"> 
                             </progressbar>
                         </div>
                         <!-- <div class="prog_container"> -->

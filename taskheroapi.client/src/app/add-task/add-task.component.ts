@@ -12,6 +12,8 @@ import { IUserTasks } from '../../interfaces/usertasks.interface';
 })
 
 
+// need to add functionality when adding task to see if the task ur adding is before the next sunday, and then increment the acheivements. 
+
 export class AddTaskComponent implements OnInit{
   currentUser: number = 0; 
   taskGroup: FormGroup;
