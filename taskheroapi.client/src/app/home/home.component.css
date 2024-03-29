@@ -1,13 +1,14 @@
 
 
 .item{ 
-    width: 30rem !important;
+    width: 60%;
     border-radius: 1rem;
-    height: auto;
+    height: 80%;
     background-color: #ffffffba;
     border-color:  #ffffffba;
     box-shadow: 0px 0px 10px 0px #ffffffba;
     text-align: center;
+    align-content: center;
     align-items: center;
     font-size: large;
     font-weight: bolder;
@@ -42,9 +43,9 @@
     box-shadow: 0px 0px 10px 0px #99C44F;
     overflow: hidden !important;
     border-radius: 1rem !important;
-    align-items: center !important;
-    align-content: center !important;
+    padding-left: 1rem;
     padding: 0;
+    margin-top: -.5rem;
     filter: brightness(100%);
     transition: all 0.3s ease-in-out;
 }
@@ -52,6 +53,15 @@
 .button_des1:hover {
     filter: brightness(200%);
     transform: scale(1.05);
+}
+
+.place-end{ 
+    display: flex;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    justify-content: flex-end;
+    padding-top: .5rem;
+    align-items: center;
 }
 
 .button_des1:focus {
@@ -65,9 +75,17 @@
     box-shadow: 0px 0px 10px 0px #F76E6E;
     overflow: hidden !important;
     border-radius: 1rem !important;
-    align-items: center !important;
-    align-content: center !important;
+    margin-top: -.5rem;
     padding: 0;
+}
+
+.streak-box{ 
+    background-color: rgb(74, 74, 74);
+    box-shadow: 0px 0px 10px 0px yellow;
+}
+.seperate{ 
+    display: flex;
+    width: 1rem;
 }
 
 
@@ -77,6 +95,12 @@
 
 .button_des2:focus {
     filter: grayscale(10%);
+}
+
+.popup-container{ 
+    align-self:center;
+    justify-self:center;
+    position: fixed;
 }
 
 
@@ -106,8 +130,29 @@
         background-color: #23232e;
         box-shadow: 0px 0px 10px 0px #23232e;
         border-radius: 1rem;
+        align-content: center;
         width: 90%;
+        height: 100%;
         min-width: 10rem;
+    }
+
+    .input-group{ 
+        height: 3rem !important;
+        width: 100%;
+        display: flex !important;
+        align-content: center;
+        justify-content: space-between;
+    }
+    .ps-3{
+        height: 100%;
+        width: 100%;
+    }
+
+    .contained{
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
     }
 
     .dash1{
@@ -119,7 +164,7 @@
         color: rgb(196, 196, 196);
         width: 100%;
     }
-
+    
     .dynamic-row-other{
         display: flex;
         flex-wrap: wrap;
@@ -216,7 +261,16 @@
         width: 90%;
 
     }
+
+
     
+    .input-group{ 
+        height: 100% !important;
+        width: 100%;
+        display: flex !important;
+        justify-content: space-between;
+    }
+
     .m-3{ 
         background-color: transparent;
         width: 90%;

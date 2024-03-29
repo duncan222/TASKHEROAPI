@@ -1,0 +1,23 @@
+.notification{ 
+
+    position: absolute;
+    height: auto;
+    width: 2rem;
+    border-color: transparent;
+    background-color: transparent;
+    animation: fadeOut 5s ease;
+    transition: all 0.3s ease-in-out;
+    z-index: 10;
+}
+
+@keyframes fadeOut {
+    0% { 
+        opacity: 1;
+    }
+
+    100%{ 
+        opacity: 0; 
+        display: none;
+    }
+    
+}

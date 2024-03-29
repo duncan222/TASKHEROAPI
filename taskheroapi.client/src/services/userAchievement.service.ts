@@ -31,7 +31,7 @@ export class userAchievements {
   }
 
   update (userId: number, achievement: IUserAchievements): Observable<IUserAchievements> {
-    const url = `${this.apiUrl}/UserAchievements?UserId=${userId}`; 
+    const url = `${this.apiUrl}/UserAchievements/${userId}`; 
 
     const headers = new HttpHeaders({
         'Content-Type': 'application/json', 
@@ -41,11 +41,9 @@ export class userAchievements {
   }
 
 
-  getUserTasks(userId: number): Observable<IUserAchievements[]> {
+  getAchievements(userId: number): Observable<IUserAchievements[]> {
     return this.http.get<IUserAchievements[]>(`${this.apiUrl}/UserAchievements/${userId}`);
   }
 
-  deleteTask(userID: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/UserAchievements/${userID}`);
-  }
+
 }

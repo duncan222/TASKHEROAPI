@@ -9,18 +9,21 @@ also change the font. -- these are edits to be made later once functionality is 
         <div class="dynamic-col-7 scrolly">
             <div class="dynamic-row-2"> 
                 <mat-card class="dash1">
-                    <mat-card-content >
-                            <div *ngFor="let task of tasks" style="overflow-y: auto;">
+                    <mat-card-content class="dash1-content">
+                            <div *ngFor="let task of tasks" class="tasks-list" style="overflow-x: hidden; overflow-y: hidden;" >
                                 <div class="m-3">
-                                    <div class="p-2 shadow">
-                                        <div class="input-group row ps-3">
-                                            <div class="card item" style="margin-right: 1rem;"> {{task.Title}} </div>
-                                            <div class="btn col button_des1" style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem; margin-right: 1rem;">
-                                                <img src="/assets/icons/checkg.svg" style="height:100%; width: 50%; ">
-                                            </div>
-                                            <div class="btn col button_des2" style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem;">
-                                                <img src="/assets/icons/trash1.svg" style="height:100%; width: 45%; ">
-                                            </div>                                    
+                                    <div class="contained" >
+                                        <div class="input-group ps-3"  style="overflow-x: hidden;">
+                                            <div class="card item" >{{task.title}} </div>
+                                            <div class="col place-end">
+                                                <div class="btn col button_des1" (click)="CompleteTaskClick(task)"  style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem;">
+                                                    <img src="/assets/icons/checkg.svg" style="height:100%; width: 50%; ">
+                                                </div>
+                                                <div class="seperate"></div>
+                                                <div class="btn col button_des2" style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem;">
+                                                    <img src="/assets/icons/trash1.svg" style="height:100%; width: 45%; ">
+                                                </div>        
+                                            </div>                            
                                         </div>
                                     </div>
                                 </div>
@@ -32,7 +35,7 @@ also change the font. -- these are edits to be made later once functionality is 
                 <mat-card class="dash1">
                     <mat-card-header class="fire-header"> 
                         <div class="to-the-right">
-                            <div class="p-2">
+                            <div class="p-2 streak-box">
                               <span>{{streak + ending}}</span>
                               <img src="{{streakPicture}}" class="image-streak" style="height:auto; width: 6rem;"/>
                             </div>
@@ -60,7 +63,7 @@ also change the font. -- these are edits to be made later once functionality is 
                 <mat-card class="dash2">
                     <mat-card-content>
                         <div class="container">
-                            <progressbar class="vertical" [value]="60"> 
+                            <progressbar class="vertical" [value]="progressValue"> 
                             </progressbar>
                         </div>
                         <!-- <div class="prog_container"> -->
@@ -72,3 +75,5 @@ also change the font. -- these are edits to be made later once functionality is 
         </div>
     </div>
 </div>
+
+<app-image-pop *ngIf="showImagePop" [image]="comicChoice"></app-image-pop>
