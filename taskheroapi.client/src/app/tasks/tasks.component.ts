@@ -1,114 +1,120 @@
-import { Component, OnInit } from '@angular/core';
-import { AddTask } from '../../services/addtask.service';
-import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
-import { userTask } from '../../services/userTasks.service';
-import { AuthService } from '../../services/auth.service'
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IUserTasks } from '../../interfaces/usertasks.interface';
+import { CrudService } from '../service/crud.service';
 
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
-  styleUrl: './tasks.component.css'
+  styleUrls: ['./tasks.component.css']
 })
+export class TasksComponent implements OnInit, OnDestroy {
 
-
-export class TasksComponent implements OnInit {
-  currentUser: number = 0;
-  taskGroup: FormGroup;
-  descriptionTemp: String = '';
+  tasks: IUserTasks[] = [];
+  taskForm: FormGroup;
+  taskSubscription: Subscription | undefined;
   showNotification = false;
   notificationMessage = "";
-  color = ""
+  color = "";
 
-  constructor(private AddTask: AddTask, private fb: FormBuilder, private taskService: userTask, private authService: AuthService) {
-    this.taskGroup = this.fb.group({
-      title: new FormControl(''),
-      description: new FormControl(''),
-      date: new FormControl(new Date()),
-      priority: new FormControl('')
+  constructor(private crudService: CrudService, private fb: FormBuilder) {
+    this.taskForm = this.fb.group({
+      description: ['', Validators.required],
+      title: ['', Validators.required],
+      dueDate: [new Date().toISOString(), Validators.required],
+      priority: ['', Validators.required]
     });
   }
 
-  startDate = new Date();
-  minDate = new Date();
-
   ngOnInit(): void {
-
-    if (this.authService.getLoggedInUserId != null) {
-      this.currentUser = Number(this.authService.getLoggedInUserId());
-    }
+    this.crudService.getAllTasks().subscribe((tasks: IUserTasks[]) => {
+      this.tasks = tasks;
+    });
   }
 
   onSubmit(): void {
-    if (this.taskGroup.valid && this.taskGroup != null) {
-      const descriptionControl = this.taskGroup.get('description');
-      const dueControl = this.taskGroup.get('date');
-      const titleControl = this.taskGroup.get('title');
-      const priorityControl = this.taskGroup.get('priority');
+    if (this.taskForm.valid) {
+      const { description, title, dueDate, priority } = this.taskForm.value;
+      const newTask: IUserTasks = {
+        TaskId: 0,
+        UserId: 0,
+        Description: description,
+        TimeStamp: new Date().toISOString(),
+        Title: title,
+        DueDate: dueDate,
+        Importance: priority,
+        Weight: 0,
+        Urgency: 0
+      };
 
-      if (descriptionControl && dueControl && titleControl && priorityControl) {
-
-        const urgency = this.Urgency(new Date(), dueControl.value);
-        const weight = this.Weight(urgency, priorityControl.value);
-        const taskInstance: IUserTasks = {
-          TaskId: 0,
-          UserId: this.currentUser,
-          Description: descriptionControl.value,
-          TimeStamp: new Date().toString(),
-          Title: titleControl.value,
-          DueDate: dueControl.value.toString(),
-          Importance: priorityControl.value,
-          Weight: weight,
-          Urgency: urgency,
+      this.taskSubscription = this.crudService.addTask(newTask).subscribe({
+        next: (task) => {
+          this.tasks.push(task);
+          this.taskForm.reset();
+          this.notificationMessage = "Task Added!";
+          this.color = "#198754";
+          this.showNotification = true;
+          setTimeout(() => {
+            this.showNotification = false;
+          }, 5000);
+        },
+        error: (error) => {
+          console.error('Error adding task:', error);
+          this.notificationMessage = "Error adding task";
+          this.color = "#dc3545";
+          this.showNotification = true;
         }
+      });
+    }
+  }
 
-        console.log(taskInstance);
-        this.taskService.addTask(this.currentUser, taskInstance).subscribe(
-          response => {
-            this.taskGroup.reset();
-            this.notificationMessage = "Task Added!"
-            this.color = "#198754";
-            this.showNotification = true;
-            setTimeout(() => {
-              this.showNotification = false;
-            }, 5000);
-          },
-          error => {
-            console.error('Error saving todo:', error);
-          }
-
-        )
+  editTask(task: IUserTasks) {
+    this.crudService.editTask(task).subscribe({
+      next: (updatedTask) => {
+        const index = this.tasks.findIndex(t => t.TaskId === updatedTask.TaskId);
+        if (index !== -1) {
+          this.tasks[index] = updatedTask;
+          this.notificationMessage = "Task Updated!";
+          this.color = "#0dcaf0";
+          this.showNotification = true;
+          setTimeout(() => {
+            this.showNotification = false;
+          }, 5000);
+        }
+      },
+      error: (error) => {
+        console.error('Failed to update task:', error);
+        this.notificationMessage = "Failed to update task";
+        this.color = "#dc3545";
+        this.showNotification = true;
       }
+    });
+  }
+
+  deleteTask(task: IUserTasks): void {
+    this.crudService.deleteTask(task).subscribe({
+      next: () => {
+        this.tasks = this.tasks.filter(t => t.TaskId !== task.TaskId);
+        this.notificationMessage = "Task Deleted!";
+        this.color = "#dc3545";
+        this.showNotification = true;
+        setTimeout(() => {
+          this.showNotification = false;
+        }, 5000);
+      },
+      error: (error) => {
+        console.error('Failed to delete task:', error);
+        this.notificationMessage = "Failed to delete task";
+        this.color = "#dc3545";
+        this.showNotification = true;
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.taskSubscription) {
+      this.taskSubscription.unsubscribe();
     }
-    else {
-    }
   }
-
-  //computing the urgency by comparing the difference of the current time vs due date and creation time vs due date. 
-  //urgency once is supasses the .8 mark should over ride the prioritys.  
-  Urgency(date1: Date, date2: Date): number {
-    const mSecPerDay = 1000 * 60 * 60 * 24;
-    const timeDiffMs = date2.getTime() - date1.getTime();
-    const timeDiffFromNow = date2.getTime() - (new Date()).getTime();
-    const urgency = 1 - ((timeDiffFromNow / mSecPerDay) / (timeDiffMs / mSecPerDay));
-    return urgency;
-  }
-
-  //computing weight based on the urgency and the priority
-  Weight(urgency: number, priority: number): number {
-    const UrgencyWeight = .8;
-    const PriorityWeight = .2;
-    //normalizing 
-    const NormalizePriority = Math.max(0, Math.min(1, priority));
-    const NormalizeUrgency = Math.max(0, Math.min(1, urgency));
-    //compute weight 
-    const weight = (UrgencyWeight * NormalizeUrgency) + (PriorityWeight * NormalizePriority);
-    return weight;
-  }
-
-
-  closeModal() {
-    this.AddTask.toggleModal();
-  }
-
 }

@@ -13,17 +13,17 @@ export class UserAccountService {
   constructor(private http: HttpClient) { }
 
   get(): Observable<any> {
-    const url = `${this.apiUrl}/UserAccounts`;
+    const url = `${this.apiUrl}/UsersAccounts`;
     return this.http.get(url);
   }
 
   getById(id: number | null): Observable<any> {
-    const url = `${this.apiUrl}/UserAccounts/${id}`;
+    const url = `${this.apiUrl}/UsersAccounts/${id}`;
     return this.http.get(url);
   }
 
   put(userAccount: any): Observable<any> {
-    const url = `${this.apiUrl}/UserAccounts/${userAccount.userId}`;
+    const url = `${this.apiUrl}/UsersAccounts/${userAccount.userId}`;
     return this.http.put(url, userAccount)
   }
 }
