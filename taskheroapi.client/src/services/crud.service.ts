@@ -1,31 +1,31 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IUserTasks } from '../interfaces/usertasks.interface'; // Update the import statement
+import { IUserTasks } from '../interfaces/usertasks.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CrudService {
 
-  private apiUrl = '/api/tasks'; // Update this to match your backend endpoint
+  private apiUrl = '/api/tasks';
 
   constructor(private http: HttpClient) { }
 
-  getAllTasks(): Observable<IUserTasks[]> { // Update the return type
+  getAllTasks(): Observable<IUserTasks[]> {
     return this.http.get<IUserTasks[]>(this.apiUrl);
   }
 
-  addTask(task: IUserTasks): Observable<IUserTasks> { // Update the parameter and return type
+  addTask(task: IUserTasks): Observable<IUserTasks> {
     return this.http.post<IUserTasks>(this.apiUrl, task);
   }
 
-  editTask(task: IUserTasks): Observable<IUserTasks> { // Update the parameter and return type
-    const url = `${this.apiUrl}/${task.taskId}`; // Assuming task has an id
+  editTask(task: IUserTasks): Observable<IUserTasks> {
+    const url = `${this.apiUrl}/${task.TaskId}`; // Changed task.taskId to task.TaskId
     return this.http.put<IUserTasks>(url, task);
   }
 
-  deleteTask(taskId: number): Observable<void> { // Update the parameter type
+  deleteTask(taskId: number): Observable<void> {
     const url = `${this.apiUrl}/${taskId}`;
     return this.http.delete<void>(url);
   }

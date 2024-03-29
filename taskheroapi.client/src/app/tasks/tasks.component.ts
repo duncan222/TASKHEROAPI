@@ -1,12 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Task } from '../model/task.model';
-import { CrudService } from '../service/crud.service';
-import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
-import { userTask } from '../../services/userTasks.service';
-import { IUserTasks } from '../../interfaces/usertasks.interface';
 import { Subscription } from 'rxjs';
-import { IUserTasks } from '../interfaces/usertasks.interface';
+import { IUserTasks } from '../../interfaces/usertasks.interface';
 import { CrudService } from '../service/crud.service';
 
 @Component({
@@ -14,45 +9,61 @@ import { CrudService } from '../service/crud.service';
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.css']
 })
-export class TasksComponent implements OnInit {
+export class TasksComponent implements OnInit, OnDestroy {
 
   tasks: IUserTasks[] = [];
-  currentUser: number = 0;
-  taskObj: Task = new Task();
   taskArr: Task[] = [];
+  editTaskObj: Task = {
+      id: 0,
+      task_name: '',
+      description: '',
+      timeStamp: '',
+      title: '',
+      dueDate: '',
+      importance: 0,
+      weight: 0,
+      urgency: 0
+  };
   addTaskValue: string = '';
   editTaskValue: string = '';
+  taskObj: IUserTasks = { 
+    TaskId: 0,
+    UserId: 0,
+    Description: '',
+    TimeStamp: '',
+    Title: '',
+    DueDate: '',
+    Importance: 0,
+    Weight: 0,
+    Urgency: 0
+  };
   taskSubscription: Subscription | undefined;
 
-  addTask() { 
-    const tempTask: IUserTasks = { 
-      TaskId: 0, 
-      UserId: 0, 
-      Description: this.description, 
-      TimeStamp: this.timeStamp, 
-      Title: this.title, 
-      DueDate: this.dueDate, 
-      Importance: this.importance, 
-      Weight: this.weight, 
-      Urgency: this.urgency
-    }
+  constructor(private crudService: CrudService) { }
 
-  editTask() {
-    this.taskObj.task_name = this.editTaskValue;
-    this.crudService.editTask(this.taskObj).subscribe({
-      next: (res) => {
-        this.ngOnInit();
-      },
-      error: (error) => {
-        console.error('Failed to add task:', error);
-      }
+  ngOnInit(): void {
+    this.crudService['getAllTasks']().subscribe((tasks: IUserTasks[]) => {
+      this.tasks = tasks;
     });
   }
 
-  editTask(task: IUserTasks) {
-    this.subscription = this.crudService.editTask(task).subscribe({
+  addTask() {
+    const tempTask: IUserTasks = {
+      TaskId: 0,
+      UserId: 0,
+      Description: this.addTaskValue,
+      TimeStamp: new Date().toISOString(),
+      Title: '',
+      DueDate: new Date().toISOString(),
+      Importance: 0,
+      Weight: 0,
+      Urgency: 0
+    };
+  }
+
+  editTask(task: Task) {
+    this.taskSubscription = this.crudService.editTask(task).subscribe({
       next: (updatedTask) => {
-        // Handle edit success if needed
       },
       error: (error) => {
         console.error('Failed to update task:', error);
@@ -60,20 +71,26 @@ export class TasksComponent implements OnInit {
     });
   }
 
-  deleteTask(taskId: number): void {
-    this.subscription = this.crudService.deleteTask(taskId).subscribe({
-      next: () => {
-        this.taskArr = this.taskArr.filter(t => t.id !== taskId);
-      },
-      error: (error) => {
-        console.error('Failed to delete task:', error);
-      }
-    });
+  deleteTask(task: IUserTasks | any): void {
+    if (task && task.TaskId !== undefined) { 
+      this.taskSubscription = this.crudService.deleteTask(task).subscribe({
+        next: () => {
+          this.tasks = this.tasks.filter(t => t.TaskId !== task.TaskId);
+        },
+        error: (error) => {
+          console.error('Failed to delete task:', error);
+        }
+      });
+    }
+  }
+
+  call(task: Task) {
+    // Implement your logic here for the 'call' method
   }
 
   ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
+    if (this.taskSubscription) {
+      this.taskSubscription.unsubscribe();
     }
   }
 }
