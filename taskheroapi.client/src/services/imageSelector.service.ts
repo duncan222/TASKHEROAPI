@@ -20,6 +20,16 @@ export class ImageSelectorService {
         return "assets/profilePics/4.png";
       case "image5":
         return "assets/profilePics/5.png";
+      case "image6":
+        return "assets/profilePics/6.png";
+      case "image7":
+        return "assets/profilePics/7.png";
+      case "image8":
+        return "assets/profilePics/8.png";
+      case "image9":
+        return "assets/profilePics/9.png";
+      case "image10":
+        return "assets/profilePics/10.png";
       default:
         return "assets/profilePics/default.png";
     }
@@ -37,6 +47,16 @@ export class ImageSelectorService {
         return "image4";
       case "assets/profilePics/5.png":
         return "image5";
+      case "assets/profilePics/6.png":
+        return "image6";
+      case "assets/profilePics/7.png":
+        return "image7";
+      case "assets/profilePics/8.png":
+        return "image8";
+      case "assets/profilePics/9.png":
+        return "image9";
+      case "assets/profilePics/10.png":
+        return "image10";
       default:
         return "default";
     }
