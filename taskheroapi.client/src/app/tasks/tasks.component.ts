@@ -1,96 +1,114 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Task } from '../model/task.model';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { AddTask } from '../../services/addtask.service';
+import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
+import { userTask } from '../../services/userTasks.service';
+import { AuthService } from '../../services/auth.service'
 import { IUserTasks } from '../../interfaces/usertasks.interface';
-import { CrudService } from '../service/crud.service';
 
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
-  styleUrls: ['./tasks.component.css']
+  styleUrl: './tasks.component.css'
 })
-export class TasksComponent implements OnInit, OnDestroy {
 
-  tasks: IUserTasks[] = [];
-  taskArr: Task[] = [];
-  editTaskObj: Task = {
-      id: 0,
-      task_name: '',
-      description: '',
-      timeStamp: '',
-      title: '',
-      dueDate: '',
-      importance: 0,
-      weight: 0,
-      urgency: 0
-  };
-  addTaskValue: string = '';
-  editTaskValue: string = '';
-  taskObj: IUserTasks = { 
-    TaskId: 0,
-    UserId: 0,
-    Description: '',
-    TimeStamp: '',
-    Title: '',
-    DueDate: '',
-    Importance: 0,
-    Weight: 0,
-    Urgency: 0
-  };
-  taskSubscription: Subscription | undefined;
 
-  constructor(private crudService: CrudService) { }
+export class TasksComponent implements OnInit {
+  currentUser: number = 0;
+  taskGroup: FormGroup;
+  descriptionTemp: String = '';
+  showNotification = false;
+  notificationMessage = "";
+  color = ""
+
+  constructor(private AddTask: AddTask, private fb: FormBuilder, private taskService: userTask, private authService: AuthService) {
+    this.taskGroup = this.fb.group({
+      title: new FormControl(''),
+      description: new FormControl(''),
+      date: new FormControl(new Date()),
+      priority: new FormControl('')
+    });
+  }
+
+  startDate = new Date();
+  minDate = new Date();
 
   ngOnInit(): void {
-    this.crudService['getAllTasks']().subscribe((tasks: IUserTasks[]) => {
-      this.tasks = tasks;
-    });
+
+    if (this.authService.getLoggedInUserId != null) {
+      this.currentUser = Number(this.authService.getLoggedInUserId());
+    }
   }
 
-  addTask() {
-    const tempTask: IUserTasks = {
-      TaskId: 0,
-      UserId: 0,
-      Description: this.addTaskValue,
-      TimeStamp: new Date().toISOString(),
-      Title: '',
-      DueDate: new Date().toISOString(),
-      Importance: 0,
-      Weight: 0,
-      Urgency: 0
-    };
-  }
+  onSubmit(): void {
+    if (this.taskGroup.valid && this.taskGroup != null) {
+      const descriptionControl = this.taskGroup.get('description');
+      const dueControl = this.taskGroup.get('date');
+      const titleControl = this.taskGroup.get('title');
+      const priorityControl = this.taskGroup.get('priority');
 
-  editTask(task: Task) {
-    this.taskSubscription = this.crudService.editTask(task).subscribe({
-      next: (updatedTask) => {
-      },
-      error: (error) => {
-        console.error('Failed to update task:', error);
-      }
-    });
-  }
+      if (descriptionControl && dueControl && titleControl && priorityControl) {
 
-  deleteTask(task: IUserTasks | any): void {
-    if (task && task.TaskId !== undefined) { 
-      this.taskSubscription = this.crudService.deleteTask(task).subscribe({
-        next: () => {
-          this.tasks = this.tasks.filter(t => t.TaskId !== task.TaskId);
-        },
-        error: (error) => {
-          console.error('Failed to delete task:', error);
+        const urgency = this.Urgency(new Date(), dueControl.value);
+        const weight = this.Weight(urgency, priorityControl.value);
+        const taskInstance: IUserTasks = {
+          TaskId: 0,
+          UserId: this.currentUser,
+          Description: descriptionControl.value,
+          TimeStamp: new Date().toString(),
+          Title: titleControl.value,
+          DueDate: dueControl.value.toString(),
+          Importance: priorityControl.value,
+          Weight: weight,
+          Urgency: urgency,
         }
-      });
+
+        console.log(taskInstance);
+        this.taskService.addTask(this.currentUser, taskInstance).subscribe(
+          response => {
+            this.taskGroup.reset();
+            this.notificationMessage = "Task Added!"
+            this.color = "#198754";
+            this.showNotification = true;
+            setTimeout(() => {
+              this.showNotification = false;
+            }, 5000);
+          },
+          error => {
+            console.error('Error saving todo:', error);
+          }
+
+        )
+      }
+    }
+    else {
     }
   }
 
-  call(task: Task) {
-    // Implement your logic here for the 'call' method
+  //computing the urgency by comparing the difference of the current time vs due date and creation time vs due date. 
+  //urgency once is supasses the .8 mark should over ride the prioritys.  
+  Urgency(date1: Date, date2: Date): number {
+    const mSecPerDay = 1000 * 60 * 60 * 24;
+    const timeDiffMs = date2.getTime() - date1.getTime();
+    const timeDiffFromNow = date2.getTime() - (new Date()).getTime();
+    const urgency = 1 - ((timeDiffFromNow / mSecPerDay) / (timeDiffMs / mSecPerDay));
+    return urgency;
   }
 
-  ngOnDestroy() {
-    if (this.taskSubscription) {
-      this.taskSubscription.unsubscribe();
-    }
+  //computing weight based on the urgency and the priority
+  Weight(urgency: number, priority: number): number {
+    const UrgencyWeight = .8;
+    const PriorityWeight = .2;
+    //normalizing 
+    const NormalizePriority = Math.max(0, Math.min(1, priority));
+    const NormalizeUrgency = Math.max(0, Math.min(1, urgency));
+    //compute weight 
+    const weight = (UrgencyWeight * NormalizeUrgency) + (PriorityWeight * NormalizePriority);
+    return weight;
   }
+
+
+  closeModal() {
+    this.AddTask.toggleModal();
+  }
+
 }

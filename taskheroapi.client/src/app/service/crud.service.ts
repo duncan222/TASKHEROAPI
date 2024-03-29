@@ -1,34 +1,32 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Task } from '../model/task.model';
+import { IUserTasks } from '../../interfaces/usertasks.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CrudService {
-  [x: string]: any;
 
-  serviceURL: string;
+  private apiUrl = '/api/tasks';
 
-  constructor(private http: HttpClient) {
-    this.serviceURL = "http://localhost:4200/tasks"
+  constructor(private http: HttpClient) { }
+
+  getAllTasks(): Observable<IUserTasks[]> {
+    return this.http.get<IUserTasks[]>(this.apiUrl);
   }
 
-  addTask(task: Task): Observable<Task> {
-    return this.http.post<Task>(this.serviceURL, task);
+  addTask(task: IUserTasks): Observable<IUserTasks> {
+    return this.http.post<IUserTasks>(this.apiUrl, task);
   }
 
-  getAllTask(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.serviceURL);
+  editTask(task: IUserTasks): Observable<IUserTasks> {
+    const url = `${this.apiUrl}/${task.TaskId}`; // Changed task.taskId to task.TaskId
+    return this.http.put<IUserTasks>(url, task);
   }
 
-  deleteTask(task: Task): Observable<Task> {
-    return this.http.delete<Task>(this.serviceURL + '/' + task.id);
+  deleteTask(taskId: number): Observable<void> {
+    const url = `${this.apiUrl}/${taskId}`;
+    return this.http.delete<void>(url);
   }
-
-  editTask(task: Task): Observable<Task> {
-    return this.http.put<Task>(this.serviceURL + '/' + task.id, task);
-  }
-
 }
