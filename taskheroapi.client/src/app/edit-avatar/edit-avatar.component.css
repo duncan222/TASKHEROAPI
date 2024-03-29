@@ -44,11 +44,45 @@ button {
   color: white;
 }
 
+.error-text {
+  color: #e03131;
+  font-weight: bold;
+}
+
+.avatar-wrapper {
+    position: relative;
+    margin: 5px;
+}
+
+.avatar-wrapper img {
+    cursor: pointer;
+}
+
+.locked-info {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.locked-text {
+  color: #ff0000;
+  font-weight: bold;
+}
+
+.required-points {
+  color: #ff0000;
+}
+
+.user-points {
+  color: #fff;
+  font-size: 20px;
+}
+
 @media only screen and (min-width: 600px) {
   .avatar-container {
     flex-direction: row;
     display: flex;
     margin-top: 10px;
+    align-items: flex-start;
   }
 
 }
@@ -60,6 +94,7 @@ button {
     flex-wrap: wrap;
     display: flex;
     margin-top: 10px;
+    align-items: flex-start;
   }
   
 }
