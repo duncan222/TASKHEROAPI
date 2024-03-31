@@ -100,7 +100,7 @@ svg:hover {
 
 .user-block {
   justify-self: center;
-  background-color: #c675d5;
+  background-color: #bcbcda;
   color: black;
   border: 1px solid #ccc;
   padding: 2%;
@@ -109,6 +109,8 @@ svg:hover {
   width: 90%;
   margin-left: 2rem;
   border-radius: 15px;
+  box-shadow: 0px 0px 10px 0px #FF48A6;
+
 }
 
 .separator {
@@ -126,6 +128,7 @@ svg:hover {
   align-items: center;
   justify-content:space-between;
   overflow-x: hidden;
+  
 }
 
 .avatar-container {
@@ -171,6 +174,7 @@ svg:hover {
   justify-content: flex-start;
   overflow-y: auto;
   overflow-x: hidden;
+  
 }
 
 .search-points {

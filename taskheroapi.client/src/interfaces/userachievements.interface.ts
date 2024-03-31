@@ -8,4 +8,5 @@ export interface IUserAchievements {
   UnlockedAchievements: string[];
   LockedAchievements: string[];
   weeklytasks: number;
+  tasksCompleted: number;
 }

@@ -8,6 +8,9 @@ import { FollowerService } from '../../services/follower.service';
 import { ImageSelectorService } from '../../services/imageSelector.service';
 import { LoadingService } from '../../services/loading.service';
 
+
+// note to duncan: add top three leaderboard in social 
+
 @Component({
   selector: 'app-social',
   templateUrl: './social.component.html',

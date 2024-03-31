@@ -28,6 +28,16 @@ export class userTask {
     return this.http.post<IUserTasks>(url, task, {headers: headers});
   }
 
+  update (userId: number, task: IUserTasks): Observable<IUserTasks> {
+    const url = `${this.apiUrl}/UserTasks/${userId}`; 
+
+    const headers = new HttpHeaders({
+        'Content-Type': 'application/json', 
+        'Accept':'text/plain'
+    });
+    return this.http.put<IUserTasks>(url, task, {headers: headers});
+  }
+
   getUserTasks(userId: number): Observable<IUserTasks[]> {
     return this.http.get<IUserTasks[]>(`${this.apiUrl}/UserTasks/${userId}`);
   }
