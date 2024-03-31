@@ -23,6 +23,8 @@ export class UserProfileComponent implements OnInit {
   avatarLink: string = "assets/profilePics/default.png";
   notifText: string = "";
   isFollowerAddedOpen: boolean = false;
+  isUnfollowedOpen: boolean = false;
+  unfollowNotifText: string = "";
 
   constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private userService: UserService,
     private imageSelector: ImageSelectorService, private followerService: FollowerService, private loadingService: LoadingService) { }
@@ -51,28 +53,54 @@ export class UserProfileComponent implements OnInit {
   }
 
   addFollower(): void {
-    console.log(this.currentLoggedInUserId, this.pageUserId);
     this.followerService.addFollower(this.pageUserId, this.currentLoggedInUserId).subscribe(
       (response) => {
         console.log("Following successfully", response);
         this.notifText = `Now Following ${this.username}!`;
+        this.followersNumber++;
       },
       (error) => {
         console.log("Error:", error);
         if (error.status === 409) {
           this.notifText = "Error: You are already following this user";
         } else {
-          this.notifText = "An error occured while attempting to follow user";
+          this.notifText = "An error occured while attempting to follow this user";
         }
       }
     );
     this.showFollowNotif();
   }
 
+  deleteFollower(): void {
+    this.followerService.unfollowUser(this.currentLoggedInUserId, this.pageUserId).subscribe(
+      (response) => {
+        console.log("Unfollowed successfully", response);
+        this.unfollowNotifText = `Unfollowed ${this.username}!`;
+        this.followersNumber--;
+      },
+      (error) => {
+        console.log("Error:", error);
+        if (error.status === 409) {
+          this.unfollowNotifText = "Error: You are not currently following this user";
+        } else {
+          this.unfollowNotifText = "An error occured while attempting to unfollow this user"
+        }
+      }
+    );
+    this.showUnfollowNotif();
+  }
+
   showFollowNotif(): void {
     this.isFollowerAddedOpen = true;
     setTimeout(() => {
       this.isFollowerAddedOpen = false;
+    }, 5000);
+  }
+
+  showUnfollowNotif(): void {
+    this.isUnfollowedOpen = true;
+    setTimeout(() => {
+      this.isUnfollowedOpen = false;
     }, 5000);
   }
 }

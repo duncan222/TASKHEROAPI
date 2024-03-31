@@ -11,10 +11,13 @@
           <div class="img__container">
             <img src={{avatarLink}} alt="Choose Avatar" />
           </div>
-          <button (click)="addFollower()" class="btn follow-user" style="background-color: rgb(185, 185, 185);">Follow this User</button>
+          <div class="user-buttons-container">
+            <button (click)="addFollower()" class="btn follow-user" style="background-color: lightgreen;">Follow</button>
+            <button (click)="deleteFollower()" class="btn unfollow-user" style="background-color: salmon">UnFollow</button>
+          </div>
           <h2>{{username}}</h2>
           <ul class="about">
-            <li><span>{{followersNumber}}</span>Follower</li>
+            <li><span>{{followersNumber}}</span>Followers</li>
             <li><span>{{totalScore}}</span>Points</li>
             <li><span>{{achievementNumber}}</span>Achievements</li>
           </ul>
@@ -29,6 +32,11 @@
     <div class="follow-popup" [class.show]="isFollowerAddedOpen" *ngIf="isFollowerAddedOpen" [ngStyle]="{ 'background-color': notifText.toLowerCase().includes('error') ? 'salmon' : 'lightgreen' }">
       <div class="follower-notif">
         <h2>{{ notifText }}</h2>
+      </div>
+    </div>
+    <div class="unfollow-popup" [class.show]="isUnfollowedOpen" *ngIf="isUnfollowedOpen" [ngStyle]="{ 'background-color': unfollowNotifText.toLowerCase().includes('error') ? 'salmon' : 'lightgreen' }">
+      <div class="unfollow-notif">
+        <h2>{{ unfollowNotifText }}</h2>
       </div>
     </div>
   </body>
