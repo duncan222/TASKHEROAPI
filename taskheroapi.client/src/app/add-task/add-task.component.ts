@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from
 import { userTask } from '../../services/userTasks.service';
 import { AuthService } from '../../services/auth.service'
 import { IUserTasks } from '../../interfaces/usertasks.interface';
+import { userAchievements } from '../../services/userAchievement.service';
+import { IUserAchievements } from '../../interfaces/userachievements.interface';
 
 @Component({
   selector: 'app-add-task',
@@ -21,8 +23,10 @@ export class AddTaskComponent implements OnInit{
   showNotification = false;
   notificationMessage = "";
   color = ""
+  user_achievements: any; 
+  weeklytasks = 0;
 
-  constructor(private AddTask: AddTask, private fb: FormBuilder, private taskService: userTask, private authService: AuthService) {
+  constructor(private AddTask: AddTask, private fb: FormBuilder, private taskService: userTask, private authService: AuthService, private Achievements: userAchievements) {
     this.taskGroup = this.fb.group({
       title: new FormControl('') , 
       description: new FormControl(''),
@@ -39,6 +43,7 @@ export class AddTaskComponent implements OnInit{
     if(this.authService.getLoggedInUserId != null){
       this.currentUser = Number(this.authService.getLoggedInUserId());
     }
+    this.getAchievments()
   }
 
   onSubmit(): void {
@@ -64,6 +69,21 @@ export class AddTaskComponent implements OnInit{
           Urgency: urgency, 
         }
 
+        if(this.calculateSunday(dueControl.value.toString())){
+          var AchievemtUpdate: IUserAchievements = {
+            UserId: this.currentUser,
+            BadgeID: this.user_achievements.badgeID,
+            weeklyProgress: this.user_achievements.weeklyProgress,
+            dailyTracker: this.user_achievements.dailyTracker,
+            totalScore: this.user_achievements.totalScore,
+            lastActive: this.user_achievements.lastActive,
+            UnlockedAchievements: this.user_achievements.unlockedAchievements,
+            LockedAchievements: this.user_achievements.lockedAchievements,
+            weeklytasks: this.user_achievements.weeklytasks + 1, 
+            tasksCompleted: this.user_achievements.tasksCompleted
+          }
+          this.updateAchievements(this.currentUser, AchievemtUpdate);
+        }
         console.log(taskInstance);
         this.taskService.addTask(this.currentUser, taskInstance).subscribe(
           response => {
@@ -85,6 +105,60 @@ export class AddTaskComponent implements OnInit{
     }
     else {
     }
+  }
+
+
+  updateAchievements(currentUser: number, acheivement: IUserAchievements): void{ 
+    this.Achievements.update(currentUser, acheivement)
+    .subscribe({
+      next: () => {
+        //successfully updates values of the users ahcievements 
+        this.getAchievments(); 
+      }
+      , 
+      error: error => {
+        console.log('error updating', error);
+      }
+    });
+
+  }
+
+  calculateSunday(due: string): boolean{
+    // getting the date value of 'next sunday'
+    const today = new Date(); 
+    const daysOfWeek = today.getDay(); 
+    const daysUntilSunday = daysOfWeek === 0 ? 7 : 7 - daysOfWeek; 
+    const nextSunday = new Date(today); 
+    nextSunday.setDate(today.getDate() + daysUntilSunday);
+    nextSunday.setHours(0, 0, 0, 0);
+    //returning the length of the filtered tasks... all that for that. has to be easier way 
+    return new Date(due) < nextSunday;
+  }
+
+  hasSundaySinceDate(startDate: Date): boolean {
+    const currentDate = new Date();
+    let currentDateToCheck = new Date(startDate);
+    while (currentDateToCheck <= currentDate) {
+      if (currentDateToCheck.getDay() === 0) {
+        return true; 
+      }
+      currentDateToCheck.setDate(currentDateToCheck.getDate() + 1);
+    }
+    return false;
+  }
+
+  getAchievments(){ 
+    this.Achievements.getAchievements(this.currentUser)
+    .subscribe({
+      next: (acheivements) => {
+        this.user_achievements = acheivements;
+      },
+      error: (error) => {
+        console.error('An error occurred:', error);
+      },
+      complete: () => {}
+    }
+    );
   }
 
   //computing the urgency by comparing the difference of the current time vs due date and creation time vs due date. 

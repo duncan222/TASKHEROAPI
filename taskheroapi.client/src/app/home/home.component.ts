@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit{
   ProgressCount: number = 0;
   progressValue: number = 0;
   userScore: number = 0; 
+  userBadge: string = "/assets/icons/novice.png";
 
 //when task is complete, display notification from comic expressions 
 //call the remove task API service, reposition the top three tasks
@@ -74,7 +75,8 @@ export class HomeComponent implements OnInit{
       lastActive: new Date().toDateString(),
       UnlockedAchievements: this.user_achievements.unlockedAchievements,
       LockedAchievements: this.user_achievements.lockedAchievements,
-      weeklytasks: this.user_achievements.weeklytasks
+      weeklytasks: this.user_achievements.weeklytasks,
+      tasksCompleted: this.user_achievements.tasksCompleted + 1
     }
 
     
@@ -209,7 +211,8 @@ export class HomeComponent implements OnInit{
               lastActive: this.user_achievements.lastActive,
               UnlockedAchievements: this.user_achievements.unlockedAchievements,
               LockedAchievements: this.user_achievements.lockedAchievements,
-              weeklytasks: taskCount
+              weeklytasks: taskCount, 
+              tasksCompleted: this.user_achievements.tasksCompleted
             }
           );
           if(taskCount != 0){

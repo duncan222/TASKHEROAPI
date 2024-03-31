@@ -25,5 +25,7 @@ namespace TaskHeroAPI
 
         public int weeklytasks { get; set; }
 
+        public int tasksCompleted { get; set; }
+
     }
 }

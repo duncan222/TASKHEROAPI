@@ -7,9 +7,32 @@ also change the font. -- these are edits to be made later once functionality is 
 <div class="home">
     <div class="dynamic-row">
         <div class="dynamic-col-7 scrolly">
+            <div class="dynamic-row-2" style="padding-bottom: 2rem;"> 
+                <mat-card class="dash1">
+                    <mat-card-header class="fire-header"> 
+                        <div class="left-score">
+                            <span class="score"> 
+                                Score: {{userScore}}
+                            </span>
+                        </div>
+                        <div class="to-the-right">
+                            <div class="p-2 streak-box">
+                              <span>{{streak + ending}}</span>
+                              <img src="{{streakPicture}}" class="image-streak" style="height:auto; width: 6rem;"/>
+                            </div>
+                        </div>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div style="overflow-y: auto; overflow-x: hidden;">
+                            <img src="{{userBadge}}" class="badge-img">
+                        </div> 
+                    </mat-card-content>
+                </mat-card>
+            </div>
             <div class="dynamic-row-2"> 
                 <mat-card class="dash1">
                     <mat-card-content class="dash1-content">
+                        <div *ngIf="tasks.length != 0; else elseBlock">
                             <div *ngFor="let task of tasks" class="tasks-list" style="overflow-x: hidden; overflow-y: hidden;" >
                                 <div class="m-3">
                                     <div class="contained" >
@@ -28,35 +51,15 @@ also change the font. -- these are edits to be made later once functionality is 
                                     </div>
                                 </div>
                             </div> 
-                    </mat-card-content>
-                </mat-card>
-            </div>
-            <div class="dynamic-row-2" style="padding-top: 2rem;"> 
-                <mat-card class="dash1">
-                    <mat-card-header class="fire-header"> 
-                        <div class="to-the-right">
-                            <div class="p-2 streak-box">
-                              <span>{{streak + ending}}</span>
-                              <img src="{{streakPicture}}" class="image-streak" style="height:auto; width: 6rem;"/>
-                            </div>
                         </div>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <div style="overflow-y: auto; overflow-x: hidden;">
-                            <div class="m-3">
-                                <div class="p-2">
-                                  <progressbar class="achieve" [type]="'warning'" [value]="40" style="margin-bottom: 1rem;;">
-                                  </progressbar>
-                                </div>
-                                <div class="p-2">
-                                    <progressbar class="achieve" [type]="'warning'" [value]="40">
-                                    </progressbar>
-                                  </div>
-                            </div>
-                        </div> 
+                        <ng-template #elseBlock>
+                            <span class="empty-message">Looks a little empty over here...</span>
+                            <img src="/assets/icons/sleepyhero.png" class="sleepy-hero">
+                        </ng-template>
                     </mat-card-content>
                 </mat-card>
             </div>
+
         </div>
         <div class="dynamic-col-5" style="padding-left: 4rem;">
             <div class="dynamic-row-other">
