@@ -24,12 +24,22 @@
     color: rgba(245, 245, 245, 0.836);
     letter-spacing: .5px;
     font-family: "Poppins", sans-serif;
+    text-align: center;
+    padding: 2rem;
+
+}
+
+.image-and-score{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .left-score{
     display: flex;
-    justify-content: start;
-    justify-self: start;
-
+    margin-right: auto;
+    align-items: center;
+    align-content: center;
+    text-align: center;
 }
 
 .to-the-right{ 
@@ -274,6 +284,21 @@
         
     }
 
+    .web-only{
+        display: block;
+    }
+
+    .web-only h2{ 
+        font-size: 18px;
+        display: flex;
+        justify-content: end;
+        justify-self: end;
+        font-weight: bolder;
+        color: #bebebe;
+        letter-spacing: .5px;
+        font-family: "Poppins", sans-serif;
+    }
+
     .container{ 
         margin-top: 15rem;
     }
@@ -282,7 +307,9 @@
 
 @media only screen and (max-width: 600px){ 
 
-
+    .web-only{
+        display: none;
+    }
     .dash1{
         background-color: #23232e;
         /* border: 1px solid #FF48A6; */

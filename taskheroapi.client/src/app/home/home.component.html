@@ -11,22 +11,20 @@ also change the font. -- these are edits to be made later once functionality is 
                 <mat-card class="dash1">
                     <mat-card-header class="fire-header"> 
                         <div class="left-score">
-                            <span class="score"> 
-                                Score: {{userScore}}
-                            </span>
+                            <div class="col image-and-score" style="overflow-y: auto; overflow-x: hidden;">
+                                <img src="{{userBadge}}" class="badge-img">
+                                <span class="row score"> 
+                                    Score: {{this.user_achievements.totalScore}}
+                                </span>
+                            </div> 
                         </div>
                         <div class="to-the-right">
-                            <div class="p-2 streak-box">
-                              <span>{{streak + ending}}</span>
+                            <div class="p-2">
+                              <span>{{this.user_achievements.dailyTracker + ending}}</span>
                               <img src="{{streakPicture}}" class="image-streak" style="height:auto; width: 6rem;"/>
                             </div>
                         </div>
                     </mat-card-header>
-                    <mat-card-content>
-                        <div style="overflow-y: auto; overflow-x: hidden;">
-                            <img src="{{userBadge}}" class="badge-img">
-                        </div> 
-                    </mat-card-content>
                 </mat-card>
             </div>
             <div class="dynamic-row-2"> 
@@ -64,6 +62,9 @@ also change the font. -- these are edits to be made later once functionality is 
         <div class="dynamic-col-5" style="padding-left: 4rem;">
             <div class="dynamic-row-other">
                 <mat-card class="dash2">
+                    <mat-card-header class="web-only">
+                        <h2>Weekly Health</h2>
+                    </mat-card-header>
                     <mat-card-content>
                         <div class="container">
                             <progressbar class="vertical" [value]="progressValue"> 

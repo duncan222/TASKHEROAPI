@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service'
 import { IUserTasks } from '../../interfaces/usertasks.interface';
 import { userAchievements } from '../../services/userAchievement.service';
 import { IUserAchievements } from '../../interfaces/userachievements.interface';
+import { Achievements } from '../../services/achievements.service';
 
 @Component({
   selector: 'app-add-task',
@@ -26,7 +27,7 @@ export class AddTaskComponent implements OnInit{
   user_achievements: any; 
   weeklytasks = 0;
 
-  constructor(private AddTask: AddTask, private fb: FormBuilder, private taskService: userTask, private authService: AuthService, private Achievements: userAchievements) {
+  constructor(private AddTask: AddTask, private fb: FormBuilder, private taskService: userTask, private authService: AuthService, private Achievements: userAchievements, private achievements: Achievements) {
     this.taskGroup = this.fb.group({
       title: new FormControl('') , 
       description: new FormControl(''),
@@ -69,21 +70,35 @@ export class AddTaskComponent implements OnInit{
           Urgency: urgency, 
         }
 
+        var locked_and_unlocked = this.achievements.determineAcheivements(
+          this.user_achievements.unlockedAchievements,
+          this.user_achievements.lockedAchievements, 
+          this.user_achievements.dailyTracker, 
+          "add task", 
+          this.user_achievements.tasksCompleted
+        );
+
+        var weeklytask = 0; 
+
         if(this.calculateSunday(dueControl.value.toString())){
-          var AchievemtUpdate: IUserAchievements = {
-            UserId: this.currentUser,
-            BadgeID: this.user_achievements.badgeID,
-            weeklyProgress: this.user_achievements.weeklyProgress,
-            dailyTracker: this.user_achievements.dailyTracker,
-            totalScore: this.user_achievements.totalScore,
-            lastActive: this.user_achievements.lastActive,
-            UnlockedAchievements: this.user_achievements.unlockedAchievements,
-            LockedAchievements: this.user_achievements.lockedAchievements,
-            weeklytasks: this.user_achievements.weeklytasks + 1, 
-            tasksCompleted: this.user_achievements.tasksCompleted
-          }
-          this.updateAchievements(this.currentUser, AchievemtUpdate);
+          weeklytask = 1; 
         }
+
+        var AchievemtUpdate: IUserAchievements = {
+          UserId: this.currentUser,
+          BadgeID: this.user_achievements.badgeID,
+          weeklyProgress: this.user_achievements.weeklyProgress,
+          dailyTracker: this.user_achievements.dailyTracker,
+          totalScore: this.user_achievements.totalScore,
+          lastActive: this.user_achievements.lastActive,
+          UnlockedAchievements: locked_and_unlocked[0],
+          LockedAchievements: locked_and_unlocked[1],
+          weeklytasks: this.user_achievements.weeklytasks + weeklytask, 
+          tasksCompleted: this.user_achievements.tasksCompleted
+        }
+
+        this.updateAchievements(this.currentUser, AchievemtUpdate);
+
         console.log(taskInstance);
         this.taskService.addTask(this.currentUser, taskInstance).subscribe(
           response => {
