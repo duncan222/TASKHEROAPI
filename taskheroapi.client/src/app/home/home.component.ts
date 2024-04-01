@@ -9,6 +9,10 @@ import { IUserAchievements } from '../../interfaces/userachievements.interface';
 import { achievementBadge } from '../../interfaces/achievementBadge.interface';
 import { Achievements } from '../../services/achievements.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { ProgressbarType } from 'ngx-bootstrap/progressbar';
+import { UserService } from '../../services/user.service';
+import { ImageSelectorService } from '../../services/imageSelector.service';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-home',
@@ -27,14 +31,17 @@ import { ChangeDetectorRef } from '@angular/core';
 
 
 export class HomeComponent implements OnInit{
-  constructor(private authService: AuthService, private TaskService: userTask, private router: Router, private AchievementService: userAchievements,private cdr: ChangeDetectorRef, private achievements: Achievements) { 
+  constructor(private authService: AuthService,  private imageSelector: ImageSelectorService, private loadingService: LoadingService, private userService: UserService, private TaskService: userTask, private router: Router, private AchievementService: userAchievements,private cdr: ChangeDetectorRef, private achievements: Achievements) { 
   }
 
   comicExpressions: string[] = ['/assets/icons/kaboom.png', '/assets/icons/boom.png', '/assets/icons/pow.png', '/assets/icons/kapow.png', '/assets/icons/bang.png'];
   currentUser: number = 0; 
+  username: string = "";
   tasks: any[] = []; 
   achievementBadges: achievementBadge[] = [];
   user_achievements: any; 
+  avatarLink: string = "assets/profilePics/default.png";
+  enemyLink: string = "";
   //makes more sense for streak to be number of tasks done on time. 
   ending: string = "";
   streakPicture: string = "";
@@ -45,8 +52,10 @@ export class HomeComponent implements OnInit{
   userScore: number = 0; 
   userBadge: string = "";
   badgeLevel: string = "";
-
-
+  healthStatus: ProgressbarType | undefined= "danger";
+  enemyStatus: ProgressbarType | undefined= "success";
+  enemyList: string[][] = [['/assets/icons/mondayprof.png', 'Monday Inc.'], ['/assets/icons/sundayprof.png', 'Sunday Knight']];
+  enemyName: string = "";
 
 //when task is complete, display notification from comic expressions 
 //call the remove task API service, reposition the top three tasks
@@ -84,6 +93,12 @@ export class HomeComponent implements OnInit{
       this.ProgressCount = 0;
     }
 
+    var add_to_progress_count = 0; 
+
+    if(this.IsDueBeforeSunday(task.dueDate)){
+      add_to_progress_count = 1;
+    }
+
     var locked_and_unlocked = this.achievements.determineAcheivements(
       this.user_achievements.unlockedAchievements,
       this.user_achievements.lockedAchievements, 
@@ -96,14 +111,15 @@ export class HomeComponent implements OnInit{
     var AchievemtUpdate: IUserAchievements = {
       UserId: this.currentUser,
       BadgeID: this.user_achievements.badgeID,
-      weeklyProgress: this.ProgressCount + 1,
+      weeklyProgress: this.ProgressCount + add_to_progress_count,
       dailyTracker: this.user_achievements.dailyTracker,
       totalScore: this.user_achievements.totalScore + (task.importance * multiplier),
       lastActive: new Date().toDateString(),
       UnlockedAchievements: locked_and_unlocked[0],
       LockedAchievements: locked_and_unlocked[1],
       weeklytasks: this.user_achievements.weeklytasks,
-      tasksCompleted: this.user_achievements.tasksCompleted + 1
+      tasksCompleted: this.user_achievements.tasksCompleted + 1, 
+      villainLevel: this.user_achievements.villainLevel
     }
     this.updateAchievements(this.currentUser, AchievemtUpdate);
 
@@ -209,7 +225,6 @@ export class HomeComponent implements OnInit{
       complete: () => {
         console.log(Object.keys(this.tasks[1]))
         this.streakFeatures();
-
       }
     });
   }
@@ -228,7 +243,8 @@ export class HomeComponent implements OnInit{
       },
       complete: () => {
         this.streakFeatures();
-        this.ProgressCount = this.user_achievements.weeklyProgress;
+
+        //if there has been a sunday since last active, then determine new progress based on the stuff due. 
         if(this.hasSundaySinceDate(this.user_achievements.lastActive)){
 
 
@@ -248,11 +264,12 @@ export class HomeComponent implements OnInit{
             weeklyProgress: this.user_achievements.weeklyProgress,
             dailyTracker: this.user_achievements.dailyTracker,
             totalScore: this.user_achievements.totalScore,
-            lastActive: this.user_achievements.lastActive,
+            lastActive: new Date().toDateString(),
             UnlockedAchievements: this.user_achievements.unlockedAchievements,
             LockedAchievements: this.user_achievements.lockedAchievements,
             weeklytasks: taskCount, 
-            tasksCompleted: this.user_achievements.tasksCompleted
+            tasksCompleted: this.user_achievements.tasksCompleted, 
+            villainLevel: this.user_achievements.villainLevel
           })
           .subscribe({
             next: () => {
@@ -266,11 +283,28 @@ export class HomeComponent implements OnInit{
             this.progressValue = Math.ceil((this.ProgressCount / taskCount) * 100)
         }
         }    
+
         else{ 
           var taskCount: number = this.user_achievements.weeklytasks; 
           if(taskCount != 0){
-            this.progressValue = Math.ceil((this.ProgressCount / taskCount) * 100)
+            this.progressValue = Math.ceil((this.user_achievements.weeklyProgress / taskCount) * 100)
           }
+          if(taskCount == 0){ 
+            this.progressValue = 100;
+          }
+        }
+
+        if(this.progressValue >= 70){
+          this.healthStatus = 'success';
+          this.enemyStatus = 'danger';
+        }
+        if(this.progressValue >= 30 && this.progressValue < 70){
+          this.healthStatus = 'warning'; 
+          this.enemyStatus = 'warning';
+        }
+        if(this.progressValue >= 0 && this.progressValue < 30){ 
+          this.healthStatus = 'danger'; 
+          this.enemyStatus = 'success';
         }
 
         this.achievementBadges = this.achievements.getAcheivementsPics(this.user_achievements.unlockedAchievements);
@@ -279,9 +313,26 @@ export class HomeComponent implements OnInit{
           this.badgeLevel = badgeInfo.title; 
           this.userBadge = badgeInfo.path;
         }
+        this.enemyLink = this.enemyList[this.user_achievements.villainLevel][0];
+        this.enemyName = this.enemyList[this.user_achievements.villainLevel][1];
         this.achievementBadges = this.achievementBadges.filter(achievement => achievement.type !== 'Level');
+        this.loadingService.hide();
       }
+      
     });
+  }
+
+  IsDueBeforeSunday(Due: Date): boolean{ 
+
+    // getting the date value of 'next sunday'
+    const today = new Date(); 
+    const daysOfWeek = today.getDay(); 
+    const daysUntilSunday = daysOfWeek === 0 ? 7 : 7 - daysOfWeek; 
+    const nextSunday = new Date(today); 
+    nextSunday.setDate(today.getDate() + daysUntilSunday);
+    nextSunday.setHours(0, 0, 0, 0);
+
+    return Due <= nextSunday;
   }
 
   hasSundaySinceDate(startDate: Date): boolean {
@@ -320,13 +371,20 @@ export class HomeComponent implements OnInit{
 
 
   ngOnInit() { 
+    this.loadingService.show();
     if(this.authService.getLoggedInUserId != null){
       this.currentUser = Number(this.authService.getLoggedInUserId());
     }
+    this.userService.getUserById(this.currentUser).subscribe(
+      (userDetails) => {
+        this.username = userDetails.userName;
+        this.avatarLink = this.imageSelector.pickPic(userDetails.image);
+        //not sure how to get number of achievements
+      }
+    );
     console.log(this.currentUser);
     this.getUserTasks();
     this.getAchievments();
-    this.cdr.detectChanges();
   }
 
 }

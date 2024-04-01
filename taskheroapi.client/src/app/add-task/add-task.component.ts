@@ -100,7 +100,8 @@ export class AddTaskComponent implements OnInit{
           UnlockedAchievements: locked_and_unlocked[0],
           LockedAchievements: locked_and_unlocked[1],
           weeklytasks: this.user_achievements.weeklytasks + weeklytask, 
-          tasksCompleted: this.user_achievements.tasksCompleted
+          tasksCompleted: this.user_achievements.tasksCompleted, 
+          villainLevel: this.user_achievements.villainLevel
         }
 
         this.updateAchievements(this.currentUser, AchievemtUpdate);
@@ -126,9 +127,6 @@ export class AddTaskComponent implements OnInit{
     }
     else {
     }
-
-    this.modalClicked.emit();
-
   }
 
 
@@ -210,6 +208,7 @@ export class AddTaskComponent implements OnInit{
 
   closeModal() {
     this.AddTask.toggleModal();
+    this.modalClicked.emit();
   }
 
 }

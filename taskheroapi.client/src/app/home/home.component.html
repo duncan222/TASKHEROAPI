@@ -31,20 +31,23 @@ also change the font. -- these are edits to be made later once functionality is 
                 <mat-card class="dash1">
                     <mat-card-content class="dash1-content">
                         <div *ngIf="tasks.length != 0; else elseBlock">
-                            <div *ngFor="let task of tasks" class="tasks-list" style="overflow-x: hidden; overflow-y: hidden;" >
+                            <div *ngFor="let task of tasks; let i = index" class="tasks-list" style="overflow-x: none; overflow-y: none;" >
                                 <div class="m-3">
                                     <div class="contained" >
                                         <div class="input-group ps-3"  style="overflow-x: hidden;">
+                                            <div class="item_number"> 
+                                                <span>{{i + 1}}</span>
+                                            </div>
                                             <div class="card item" >{{task.title}} </div>
-                                            <div class="col place-end">
-                                                <div class="btn col button_des1" (click)="CompleteTaskClick(task)"  style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem;">
+                                            <div class="item_button">
+                                                <div class="btn button_des1" (click)="CompleteTaskClick(task)"  style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem;">
                                                     <img src="/assets/icons/checkg.svg" style="height:100%; width: 50%; ">
                                                 </div>
-                                                <div class="seperate"></div>
-                                                <div class="btn col button_des2" style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem;">
+                                            </div>
+                                            <div class="seperate"></div>
+                                                <!-- <div class="btn col button_des2" style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem;">
                                                     <img src="/assets/icons/trash1.svg" style="height:100%; width: 45%; ">
-                                                </div>        
-                                            </div>                            
+                                                </div>         -->
                                         </div>
                                     </div>
                                 </div>
@@ -52,7 +55,9 @@ also change the font. -- these are edits to be made later once functionality is 
                         </div>
                         <ng-template #elseBlock>
                             <span class="empty-message">Looks a little empty over here...</span>
-                            <img src="/assets/icons/sleepyhero.png" class="sleepy-hero">
+                            <div class="img__container_3">
+                                <img src="/assets/icons/sleepyhero.png" class="sleepy-hero">
+                            </div>
                         </ng-template>
                     </mat-card-content>
                 </mat-card>
@@ -63,21 +68,37 @@ also change the font. -- these are edits to be made later once functionality is 
             <div class="dynamic-row-other">
                 <mat-card class="dash2">
                     <mat-card-header class="web-only">
-                        <h2>Weekly Health</h2>
+                        <span class="progress-title">{{this.username}}</span>
+                        <span class="progress-title2">{{this.enemyName}}</span>
+                        <div class="img__container">
+                            <img src={{avatarLink}} alt="" />
+                            <span class="edit-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="25" height="25">
+                                    <path fill="red" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                  </svg>
+                            </span>
+                        </div>
+                        <div class="img__container_2">
+                            <img src={{enemyLink}} alt="" />
+                            <span class="edit-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="25" height="25">
+                                    <path fill="red" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                  </svg>
+                            </span>
+                        </div>
                     </mat-card-header>
                     <mat-card-content>
                         <div class="container">
                             <div class="progress_cont">
-                                <progressbar [type]="'danger'" class="vertical danger" [value]="progressValue"></progressbar>
-                                <span class="progress-val">{{progressValue}}%</span>
-                                <progressbar [type]="'danger'" class="vertical-right danger" [value]="progressValue"></progressbar>
+                                <progressbar [type]="healthStatus" class="vertical danger" [value]="progressValue"></progressbar>
                                 <span class="progress-val">{{progressValue}}%</span>
                             </div>
+                            <div class="space-between"></div>
+                            <div class="progress_cont">
+                                <progressbar [type]="enemyStatus" class="vertical-right danger" [value]="100 - progressValue"></progressbar>
+                                <span class="progress-val-right">{{100 - progressValue}}%</span>
+                            </div>
                         </div>
-                        
-                        <!-- <div class="prog_container"> -->
-                            <!-- <img src="/assets/gis/pink.gif" class="static_img"/> -->
-                        <!-- </div> -->
                     </mat-card-content>
                 </mat-card>
             </div>
