@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AddTask } from '../../services/addtask.service';
 import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
 import { userTask } from '../../services/userTasks.service';
@@ -7,6 +7,7 @@ import { IUserTasks } from '../../interfaces/usertasks.interface';
 import { userAchievements } from '../../services/userAchievement.service';
 import { IUserAchievements } from '../../interfaces/userachievements.interface';
 import { Achievements } from '../../services/achievements.service';
+import { HomeComponent } from '../home/home.component';
 
 @Component({
   selector: 'app-add-task',
@@ -18,6 +19,9 @@ import { Achievements } from '../../services/achievements.service';
 // need to add functionality when adding task to see if the task ur adding is before the next sunday, and then increment the acheivements. 
 
 export class AddTaskComponent implements OnInit{
+
+  @Output() modalClicked: EventEmitter<void> = new EventEmitter<void>();
+
   currentUser: number = 0; 
   taskGroup: FormGroup;
   descriptionTemp: String = '';
@@ -26,6 +30,8 @@ export class AddTaskComponent implements OnInit{
   color = ""
   user_achievements: any; 
   weeklytasks = 0;
+
+
 
   constructor(private AddTask: AddTask, private fb: FormBuilder, private taskService: userTask, private authService: AuthService, private Achievements: userAchievements, private achievements: Achievements) {
     this.taskGroup = this.fb.group({
@@ -120,6 +126,9 @@ export class AddTaskComponent implements OnInit{
     }
     else {
     }
+
+    this.modalClicked.emit();
+
   }
 
 

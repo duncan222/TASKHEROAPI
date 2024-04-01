@@ -42,6 +42,22 @@
     text-align: center;
 }
 
+.progress-cont{ 
+    text-align: center;
+    background-color: red !;
+    color: red !important;
+}
+.progress-val{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    justify-self: end;
+    font-weight: bolder;
+    color: whitesmoke;
+    letter-spacing: .5px;
+    font-family: "Poppins", sans-serif;
+}
 .to-the-right{ 
     
     display: flex;
@@ -108,6 +124,13 @@
     background-color: rgb(74, 74, 74);
     box-shadow: 0px 0px 10px 0px yellow;
 }
+
+.sep-prog{ 
+    padding: 3rem;
+    display: flex;
+    justify-content: space-between;
+}
+
 .seperate{ 
     display: flex;
     width: 1rem;
@@ -262,16 +285,32 @@
         transform: rotate(-90deg);
         /* background-image:image-set('/assets/gis/pink.gif'); */
         min-width: 25rem; 
-        height: 3rem;    
+        height: 3rem;   
+        margin-top: -3rem; 
+        background-color: #bebebe40;
+    }
+
+    .vertical-right{
+        -ms-transform: rotate(-90deg); 
+        -webkit-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+        /* background-image:image-set('/assets/gis/pink.gif'); */
+        min-width: 25rem; 
+        margin-left: 4rem;
+        height: 3rem;   
+        margin-top: -3rem; 
+        background-color: #bebebe40;
     }
     
-    .progress-bar{ 
+    .progressbar{ 
     
-        background-color: red !important;
+        color: red !important;
     
     }
     
     .dash2{
+        display: flex;
+        justify-content: start;
         background-color: #23232e;
         color: rgb(196, 196, 196);
         /* border: 1px solid #A8EFFF; */
@@ -301,6 +340,7 @@
 
     .container{ 
         margin-top: 15rem;
+        
     }
     
 }
@@ -412,6 +452,7 @@
     }
 
     .vertical{ 
+        color: red !important;
         height: 2rem;
         width: 100%;
     }

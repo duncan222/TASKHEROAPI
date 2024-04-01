@@ -67,9 +67,14 @@ also change the font. -- these are edits to be made later once functionality is 
                     </mat-card-header>
                     <mat-card-content>
                         <div class="container">
-                            <progressbar class="vertical" [value]="progressValue"> 
-                            </progressbar>
+                            <div class="progress_cont">
+                                <progressbar [type]="'danger'" class="vertical danger" [value]="progressValue"></progressbar>
+                                <span class="progress-val">{{progressValue}}%</span>
+                                <progressbar [type]="'danger'" class="vertical-right danger" [value]="progressValue"></progressbar>
+                                <span class="progress-val">{{progressValue}}%</span>
+                            </div>
                         </div>
+                        
                         <!-- <div class="prog_container"> -->
                             <!-- <img src="/assets/gis/pink.gif" class="static_img"/> -->
                         <!-- </div> -->

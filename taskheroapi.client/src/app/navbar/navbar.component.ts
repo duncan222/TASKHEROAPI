@@ -15,6 +15,11 @@ export class NavbarComponent {
     this.AddTask.toggleModal();
   }
 
+  refreshPage() {
+    // Refresh logic here
+    window.location.reload();
+  }
+  
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);

@@ -8,13 +8,26 @@ import { userAchievements } from '../../services/userAchievement.service';
 import { IUserAchievements } from '../../interfaces/userachievements.interface';
 import { achievementBadge } from '../../interfaces/achievementBadge.interface';
 import { Achievements } from '../../services/achievements.service';
+import { ChangeDetectorRef } from '@angular/core';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
+
+//things to currently fix: 
+// -- add notification for losing and gaining points in the score
+// -- add notifications for gaining achievements. 
+// -- add notification for defeating the villain 
+//          -- the villain would be defeated by the health bar (progress bar reversed)
+// -- the villain will remain hurt until sunday unless things change and a new item is added 
+// -- then the villain will regain its health, accordingly, the villain is only changed every sunday. 
+// -- weather you have defeated the villain is only determined when you load the webpage past a sunday. 
+
+
 export class HomeComponent implements OnInit{
-  constructor(private authService: AuthService, private TaskService: userTask, private router: Router, private AchievementService: userAchievements, private achievements: Achievements) { 
+  constructor(private authService: AuthService, private TaskService: userTask, private router: Router, private AchievementService: userAchievements,private cdr: ChangeDetectorRef, private achievements: Achievements) { 
   }
 
   comicExpressions: string[] = ['/assets/icons/kaboom.png', '/assets/icons/boom.png', '/assets/icons/pow.png', '/assets/icons/kapow.png', '/assets/icons/bang.png'];
@@ -97,6 +110,13 @@ export class HomeComponent implements OnInit{
     //refreshing the user tasks list and repositioning the top three tasks 
     this.getUserTasks();
   }
+
+
+
+  
+  //function for having a pop-up once the propgress bar reaches 100% for the week: 
+  //in future notes: this should only be done on sundays. 
+
 
 
 
@@ -210,6 +230,16 @@ export class HomeComponent implements OnInit{
         this.streakFeatures();
         this.ProgressCount = this.user_achievements.weeklyProgress;
         if(this.hasSundaySinceDate(this.user_achievements.lastActive)){
+
+
+          //************************************* */
+          //first determine the villains fate here 
+
+
+
+          //then change the villain to the next villain 
+          //************************************* */
+
           var taskCount = this.calculateProgress(); 
           this.AchievementService.update(this.currentUser,
           {
@@ -289,7 +319,6 @@ export class HomeComponent implements OnInit{
   }
 
 
-
   ngOnInit() { 
     if(this.authService.getLoggedInUserId != null){
       this.currentUser = Number(this.authService.getLoggedInUserId());
@@ -297,6 +326,7 @@ export class HomeComponent implements OnInit{
     console.log(this.currentUser);
     this.getUserTasks();
     this.getAchievments();
+    this.cdr.detectChanges();
   }
 
 }
