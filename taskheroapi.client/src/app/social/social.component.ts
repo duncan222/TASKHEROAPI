@@ -54,6 +54,7 @@ export class SocialComponent implements OnInit {
         this.currentUsername = userDetails.userName;
         this.currentUserAvatar = userDetails.image;
         this.currentUserScore = userDetails.score;
+        this.wait(() => { });
         this.loadingService.hide();
       }
     );
@@ -110,6 +111,10 @@ export class SocialComponent implements OnInit {
 
   onSearchInputChange() {
 
+  }
+
+  wait(callback: () => void) {
+    setTimeout(callback, 2000);
   }
 
   searchUsers() {
