@@ -1,5 +1,7 @@
 
-
+.badge-img{ 
+    width: 6rem;
+}
 .item{ 
     width: 60%;
     border-radius: 1rem;
@@ -15,6 +17,29 @@
     color: #282828;
     letter-spacing: .5px;
     font-family: "Poppins", sans-serif;
+}
+
+.score{
+    font-weight: bolder;
+    color: rgba(245, 245, 245, 0.836);
+    letter-spacing: .5px;
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+    padding: 2rem;
+
+}
+
+.image-and-score{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.left-score{
+    display: flex;
+    margin-right: auto;
+    align-items: center;
+    align-content: center;
+    text-align: center;
 }
 
 .to-the-right{ 
@@ -103,6 +128,12 @@
     position: fixed;
 }
 
+.empty-message{
+    width: 50%;
+    color: rgba(245, 245, 245, 0.733);
+    letter-spacing: .5px;
+    font-family: "Poppins", sans-serif;
+}
 
 
 /* .static_img{ 
@@ -125,6 +156,17 @@
 
 @media only screen and (min-width: 600px) { 
 
+    .empty-message{
+        width: 50%;
+        font-size: 98%;
+        color: rgba(245, 245, 245, 0.733);
+        letter-spacing: .5px;
+        font-family: "Poppins", sans-serif;
+    }
+    
+    .sleepy-hero{ 
+        width: 30%;
+        }
 
     .m-3{ 
         background-color: #23232e;
@@ -242,6 +284,21 @@
         
     }
 
+    .web-only{
+        display: block;
+    }
+
+    .web-only h2{ 
+        font-size: 18px;
+        display: flex;
+        justify-content: end;
+        justify-self: end;
+        font-weight: bolder;
+        color: #bebebe;
+        letter-spacing: .5px;
+        font-family: "Poppins", sans-serif;
+    }
+
     .container{ 
         margin-top: 15rem;
     }
@@ -250,7 +307,9 @@
 
 @media only screen and (max-width: 600px){ 
 
-
+    .web-only{
+        display: none;
+    }
     .dash1{
         background-color: #23232e;
         /* border: 1px solid #FF48A6; */
@@ -263,7 +322,10 @@
     }
 
 
-    
+    .sleepy-hero{ 
+        width: 60%;
+        padding-top: 1rem;
+    }
     .input-group{ 
         height: 100% !important;
         width: 100%;
@@ -304,6 +366,13 @@
         margin-left: -15px; /* Adjust as needed for negative margins */
     }
 
+    .empty-message{
+        width: 50%;
+        color: rgba(245, 245, 245, 0.733);
+        letter-spacing: .5px;
+        font-size: small;
+        font-family: "Poppins", sans-serif;
+    }
 
     .dynamic-col-5{
         background-color: #121212; /* Dark background color */

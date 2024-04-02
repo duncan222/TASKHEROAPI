@@ -48,6 +48,19 @@
 .about li.clickable {
   cursor: pointer;
   text-decoration: underline;
+
+.image-container{ 
+  width: 15rem;
+  height: auto;
+  padding: 1rem;
+}
+
+.trophies{ 
+  width: 100% !important;
+  height: auto;
+  box-shadow: 0px 0px 15px 0px #A8EFFF;
+  border-radius: 1rem;
+  background-color: rgb(0, 0, 0);
 }
 
 .settings:hover{
@@ -55,9 +68,6 @@
     transform: scale(1.01);
 }
 
-.new_container{
-  margin-top: 6rem;
-}
 
 body {
     width: 100%;
@@ -197,7 +207,7 @@ body {
     object-fit: cover;
     border-radius: 50%;
     display: block;
-    box-shadow: 1px 3px 12px rgba(175, 175, 175, 0.479);
+    box-shadow: 0px 0px 15px 0px #A8EFFF;
   }
 
   .header__wrapper .cols__container .left__col .edit-prof{ 
@@ -285,15 +295,42 @@ body {
   .header__wrapper .cols__container .right__col .Achievements {
     display: grid;
     gap: 20px;
+    padding-top: 1rem;
   }
   
   .header__wrapper .cols__container .right__col .Achievements img {
-    max-width: 100%;
     display: block;
-    height: 100%;
-    object-fit: cover;
-    width: 10rem;
   }
+  
+  .empty_ach{
+    width: 100%;
+  }
+  
+  .margin_contain .separator{ 
+    margin-left: 20%;
+    margin-right: 20%;
+    display: flex;
+    height: 1px;
+    background-color: #acacac8a;
+  }
+
+  .achv_con{
+    background-color: #23232e49;
+    /* border: 1px solid #FF48A6; */
+    border-radius: 1rem;
+    height: auto;
+    color: rgb(196, 196, 196);
+    width: 100%;
+  }
+
+  .margin_contain h3{
+    margin-top: 30px;
+    font-weight: 600;
+    font-size: 22px;
+    margin-bottom: 5px;
+    color: #acacac;
+  }
+
   
   /* Responsiveness */
   
@@ -301,6 +338,7 @@ body {
 
 
     .new_container{ 
+      
       margin-left: 8rem;
     }
 
@@ -325,6 +363,18 @@ body {
       overflow: auto;
       padding: 0 0 30px;
     }
+
+    .new_container{
+      margin-top: 8rem;
+    }
+
+    .margin_contain{
+      display: flex;
+      justify-content: center;
+      margin-top: -6rem;
+      padding-right: 2rem;
+      padding-left: 2rem;
+    }
   }
   
   @media only screen and (max-width: 600px) {
@@ -344,5 +394,17 @@ body {
 
     .header__wrapper .cols__container .right__col .Achievements {
       margin-left: 10rem;
+    }
+
+    .new_container{
+      margin-top: 6rem;
+    }
+
+    .margin_contain{
+      display: flex;
+      justify-content: center;
+      padding-right: 2rem;
+      padding-left: 2rem;
+      padding-bottom: 5rem;
     }
   }

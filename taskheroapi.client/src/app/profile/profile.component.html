@@ -2,6 +2,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
+<div class="glow-shell">
 <div class="new_container">
   <body>
     <div class="header__wrapper">
@@ -53,14 +54,26 @@
           </mat-card>
 
         </div>
-        <div class="right__col">
-          <div class="Achievements">
-              <img src={{badgeLevel}} alt="Photo" />
+        <div class="margin_contain">
+        <div class="right__col achv_con">
+          <h3>Achievements</h3>
+          <div class="separator"></div>
+          <div *ngIf="achievementBadges.length > 0; else elseBlock">
+            <div *ngFor="let badge of achievementBadges"  class="Achievements">
+              <div class="image-container">
+                <img src={{badge.path}} alt="Photo" class="trophies"/>
+              </div>
+            </div>
           </div>
+          <ng-template #elseBlock>
+            <img src={{empty_ach}} class="empty_ach">
+          </ng-template>
+        </div>
         </div>
 
 
       </div>
     </div>
   </body>
+</div>
 </div>

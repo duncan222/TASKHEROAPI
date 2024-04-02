@@ -6,21 +6,23 @@ import { userTask } from '../../services/userTasks.service';
 import { IUserTasks } from '../../interfaces/usertasks.interface';
 import { userAchievements } from '../../services/userAchievement.service';
 import { IUserAchievements } from '../../interfaces/userachievements.interface';
+import { achievementBadge } from '../../interfaces/achievementBadge.interface';
+import { Achievements } from '../../services/achievements.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit{
-  constructor(private authService: AuthService, private TaskService: userTask, private router: Router, private AchievementService: userAchievements) { 
+  constructor(private authService: AuthService, private TaskService: userTask, private router: Router, private AchievementService: userAchievements, private achievements: Achievements) { 
   }
 
   comicExpressions: string[] = ['/assets/icons/kaboom.png', '/assets/icons/boom.png', '/assets/icons/pow.png', '/assets/icons/kapow.png', '/assets/icons/bang.png'];
   currentUser: number = 0; 
   tasks: any[] = []; 
+  achievementBadges: achievementBadge[] = [];
   user_achievements: any; 
   //makes more sense for streak to be number of tasks done on time. 
-  streak: number = 0;
   ending: string = "";
   streakPicture: string = "";
   showImagePop = false;
@@ -28,6 +30,10 @@ export class HomeComponent implements OnInit{
   ProgressCount: number = 0;
   progressValue: number = 0;
   userScore: number = 0; 
+  userBadge: string = "";
+  badgeLevel: string = "";
+
+
 
 //when task is complete, display notification from comic expressions 
 //call the remove task API service, reposition the top three tasks
@@ -53,10 +59,11 @@ export class HomeComponent implements OnInit{
 
     // if the percentage is negative, reset streak to 0, else, increment. 
     if(multiplier_percentage < 0.0){ 
-      this.streak = 0;
+      this.user_achievements.dailyTracker = 0;
+      //add something to put a notification for + whatever points, or minus whatever points. 
     }
     else{ 
-      this.streak+=1;
+      this.user_achievements.dailyTracker +=1;
     }
 
     if(this.hasSundaySinceDate(new Date(this.user_achievements.lastActive))){
@@ -64,20 +71,27 @@ export class HomeComponent implements OnInit{
       this.ProgressCount = 0;
     }
 
+    var locked_and_unlocked = this.achievements.determineAcheivements(
+      this.user_achievements.unlockedAchievements,
+      this.user_achievements.lockedAchievements, 
+      this.user_achievements.dailyTracker, 
+      "complete task", 
+      this.user_achievements.tasksCompleted
+    );
+
     // update score and daily streak -- call to acheivement service. 
     var AchievemtUpdate: IUserAchievements = {
       UserId: this.currentUser,
       BadgeID: this.user_achievements.badgeID,
       weeklyProgress: this.ProgressCount + 1,
-      dailyTracker: this.streak,
+      dailyTracker: this.user_achievements.dailyTracker,
       totalScore: this.user_achievements.totalScore + (task.importance * multiplier),
       lastActive: new Date().toDateString(),
-      UnlockedAchievements: this.user_achievements.unlockedAchievements,
-      LockedAchievements: this.user_achievements.lockedAchievements,
-      weeklytasks: this.user_achievements.weeklytasks
+      UnlockedAchievements: locked_and_unlocked[0],
+      LockedAchievements: locked_and_unlocked[1],
+      weeklytasks: this.user_achievements.weeklytasks,
+      tasksCompleted: this.user_achievements.tasksCompleted + 1
     }
-
-    
     this.updateAchievements(this.currentUser, AchievemtUpdate);
 
     //refreshing the user tasks list and repositioning the top three tasks 
@@ -125,12 +139,12 @@ export class HomeComponent implements OnInit{
   }
 
   streakFeatures(){
-    if(this.streak == 0){ 
+    if(this.user_achievements.dailyTracker == 0){ 
       this.ending = "... get to work";
       this.streakPicture = "/assets/icons/ice.png";
     }
-    else if(this.streak < 10){
-      if(this.streak == 1){
+    else if(this.user_achievements.dailyTracker < 10 && this.user_achievements.dailyTracker > 0){
+      if(this.user_achievements.dailyTracker == 1){
       this.ending = " task done on time ";
       }
       else{
@@ -139,23 +153,23 @@ export class HomeComponent implements OnInit{
       this.streakPicture = "/assets/icons/newspit.png";
     }
 
-    else if(this.streak >= 10 && this.streak < 20){
+    else if(this.user_achievements.dailyTracker >= 10 && this.user_achievements.dailyTracker < 20){
       this.ending = " tasks done on time! "
       this.streakPicture = "/assets/icons/spitfiretier2.png";
     }
-    else if(this.streak >= 20 && this.streak < 30){
+    else if(this.user_achievements.dailyTracker >= 20 && this.user_achievements.dailyTracker < 30){
       this.ending = " tasks done on time! "
       this.streakPicture = "/assets/icons/spitfiretier3.png";
     }
-    else if(this.streak >= 30 && this.streak < 40){
+    else if(this.user_achievements.dailyTracker>= 30 && this.user_achievements.dailyTracker < 40){
       this.ending = " tasks done on time!! "
       this.streakPicture = "/assets/icons/spitfiretier4.png";
     }
-    else if(this.streak >= 40 && this.streak < 50){
+    else if(this.user_achievements.dailyTracker >= 40 && this.user_achievements.dailyTracker < 50){
       this.ending = " tasks done on time!! "
       this.streakPicture = "/assets/icons/spitfiretier5.png";
     }
-    else if(this.streak >=50){
+    else if(this.user_achievements.dailyTracker >=50){
       this.ending = " tasks done on time!!!   ";
       this.streakPicture = "/assets/icons/toptier.png";
     }
@@ -194,29 +208,33 @@ export class HomeComponent implements OnInit{
       },
       complete: () => {
         this.streakFeatures();
-        this.streak = this.user_achievements.dailyTracker;
         this.ProgressCount = this.user_achievements.weeklyProgress;
         if(this.hasSundaySinceDate(this.user_achievements.lastActive)){
           var taskCount = this.calculateProgress(); 
-          this.updateAchievements(
-            this.currentUser,     
-            {
-              UserId: this.currentUser,
-              BadgeID: this.user_achievements.badgeID,
-              weeklyProgress: this.user_achievements.weeklyProgress,
-              dailyTracker: this.user_achievements.dailyTracker,
-              totalScore: this.user_achievements.totalScore,
-              lastActive: this.user_achievements.lastActive,
-              UnlockedAchievements: this.user_achievements.unlockedAchievements,
-              LockedAchievements: this.user_achievements.lockedAchievements,
-              weeklytasks: taskCount
+          this.AchievementService.update(this.currentUser,
+          {
+            UserId: this.currentUser,
+            BadgeID: this.user_achievements.badgeID,
+            weeklyProgress: this.user_achievements.weeklyProgress,
+            dailyTracker: this.user_achievements.dailyTracker,
+            totalScore: this.user_achievements.totalScore,
+            lastActive: this.user_achievements.lastActive,
+            UnlockedAchievements: this.user_achievements.unlockedAchievements,
+            LockedAchievements: this.user_achievements.lockedAchievements,
+            weeklytasks: taskCount, 
+            tasksCompleted: this.user_achievements.tasksCompleted
+          })
+          .subscribe({
+            next: () => {
             }
-          );
+            , 
+            error: error => {
+              console.log('error updating', error);
+            }
+          });
           if(taskCount != 0){
             this.progressValue = Math.ceil((this.ProgressCount / taskCount) * 100)
         }
-        console.log(this.progressValue);
-        console.log(this.ProgressCount);  
         }    
         else{ 
           var taskCount: number = this.user_achievements.weeklytasks; 
@@ -224,6 +242,14 @@ export class HomeComponent implements OnInit{
             this.progressValue = Math.ceil((this.ProgressCount / taskCount) * 100)
           }
         }
+
+        this.achievementBadges = this.achievements.getAcheivementsPics(this.user_achievements.unlockedAchievements);
+        var badgeInfo = this.achievementBadges.find(badge => badge.type == 'Level');
+        if(badgeInfo != undefined){
+          this.badgeLevel = badgeInfo.title; 
+          this.userBadge = badgeInfo.path;
+        }
+        this.achievementBadges = this.achievementBadges.filter(achievement => achievement.type !== 'Level');
       }
     });
   }
@@ -256,7 +282,6 @@ export class HomeComponent implements OnInit{
     nextSunday.setHours(0, 0, 0, 0);
 
     // filtering the task list for only values between now and then 
-    console.log(nextSunday)
     var temp_tasks = this.tasks.filter(task => new Date(task.dueDate) <= nextSunday);
     
     //returning the length of the filtered tasks... all that for that. has to be easier way 
