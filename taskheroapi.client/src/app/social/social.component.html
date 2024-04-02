@@ -15,7 +15,7 @@
         
         </div>
         <ng-template #followList>
-          <div *ngFor="let user of followingList; let i = index" class="user-block">
+          <div *ngFor="let user of followingList; let i = index" class="user-block" [ngClass]="{ 'special-user-info': user.username === currentUsername }">
             <div class="user-info">
               <div class="index">{{ i + 1 }}</div>
               <div class="avatar-container">
@@ -28,7 +28,7 @@
         </ng-template>
       </div>
       <div *ngIf="!isFriendsActive && !SearchActive">
-        <div *ngFor="let user of allUsersList; let i = index" class="user-block">
+        <div *ngFor="let user of allUsersList; let i = index" class="user-block" [ngClass]="{ 'special-user-info': user.username === currentUsername }">
           <div class="user-info">
             <div class="index">{{ i + 1 }}</div>
             <div class="avatar-container">
