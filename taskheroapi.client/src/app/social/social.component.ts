@@ -18,7 +18,10 @@ import { userAchievements } from '../../services/userAchievement.service';
   styleUrls: ['./social.component.css']
 })
 export class SocialComponent implements OnInit {
-  currentUser: number | null | undefined;
+  currentUserId: number | null | undefined;
+  currentUserAvatar: string = '';
+  currentUserScore: number = 0;
+  currentUsername: string = '';
   isFriendsActive: boolean = true;
   SearchActive: boolean = false;
   activeBarLeft: string = '0%';
@@ -51,15 +54,22 @@ export class SocialComponent implements OnInit {
       }
     );
     //populate Friends List
-    this.currentUser = this.authService.getLoggedInUserId();
-
-    // get achievements, need either achievements or user scores for the followin, not sure how its done here though .. 
-    this.followerService.getFollowingById(this.currentUser).subscribe(
+    this.currentUserId = this.authService.getLoggedInUserId();
+    this.userService.getUserById(this.currentUserId).subscribe(
+      (userDetails) => {
+        this.currentUsername = userDetails.userName;
+        this.currentUserAvatar = userDetails.image;
+        this.currentUserScore = userDetails.score;
+        this.wait(() => { });
+        this.loadingService.hide();
+      }
+    );
+    this.followerService.getFollowingById(this.currentUserId).subscribe(
       (followedUsers) => {
         for (const followedUser of followedUsers) {
           this.followingList.push({ id: followedUser.userId, avatar: this.imageSelector.pickPic(followedUser.image), username: followedUser.userName, points: followedUser.score })
         }
-
+        this.followingList.push({ id: this.currentUserId, avatar: this.imageSelector.pickPic(this.currentUserAvatar), username: this.currentUsername, points: this.currentUserScore })
         this.followingList.sort((a, b) => b.points - a.points);
 
         //top three in the list, used for top three positions 
@@ -120,6 +130,10 @@ export class SocialComponent implements OnInit {
 
   }
 
+  wait(callback: () => void) {
+    setTimeout(callback, 2000);
+  }
+
   searchUsers() {
     this.searchTestData = [];
 
@@ -133,7 +147,12 @@ export class SocialComponent implements OnInit {
   }
 
   viewUserProfile(userId: number) {
-    this.router.navigate(['/user-profile', userId])
+    if (userId == this.currentUserId) {
+      this.router.navigate(['/profile'])
+    }
+    else {
+      this.router.navigate(['/user-profile', userId])
+    }
   }
 }
 

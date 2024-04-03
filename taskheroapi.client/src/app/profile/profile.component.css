@@ -45,6 +45,11 @@
     transition: all 0.3s ease-in-out;
 }
 
+.about li.clickable {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .image-container{ 
   width: 15rem;
   height: auto;
@@ -84,8 +89,98 @@ body {
   a {
     text-decoration: none;
   }
-  
 
+.user-list {
+  height: auto;
+  width: auto;
+  background-color: #23232e;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  position: absolute;
+  padding-top: .5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 0.1rem;
+  box-shadow: 0px 0px 10px 0px #A8EFFF;
+  border-radius: 1rem;
+  align-items: center;
+}
+
+.close-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: salmon;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: black;
+  border-radius: 15px;
+}
+
+.user-list-content {
+  overflow-y: auto;
+  padding-bottom: 5rem;
+}
+
+.empty-list-message {
+  overflow-y: hidden !important;
+  background-color: transparent;
+  border-radius: 10px;
+  padding: 10px;
+  padding-top: 1rem;
+  margin-bottom: 1rem;
+  color: rgba(245, 245, 245, 0.733);
+  width: auto;
+}
+
+.user-block {
+  justify-self: center;
+  background-color: #c675d5;
+  color: black;
+  border: 1px solid #ccc;
+  padding: 2%;
+  margin-top: 20px;
+  min-width: 300px;
+  width: 50%;
+  border-radius: 15px;
+}
+
+.user-info {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  overflow-x: hidden;
+}
+
+.avatar-container {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.username {
+  font-weight: bold;
+  margin-right: 10px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.points {
+  color: #000;
+  margin-left: auto;
+}
   
   .header__wrapper .cols__container .left__col {
     padding: 25px 20px;

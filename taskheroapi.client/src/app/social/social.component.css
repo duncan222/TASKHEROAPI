@@ -112,6 +112,11 @@ svg:hover {
 
 }
 
+.special-user-info {
+  background-color: #A8EFFF;
+  border: 1px solid #ccc;
+}
+
 .separator {
   position: relative;
   justify-self: center;
