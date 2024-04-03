@@ -90,6 +90,7 @@ export class AddTaskComponent implements OnInit{
           weeklytask = 1; 
         }
 
+        console.log(weeklytask)
         var AchievemtUpdate: IUserAchievements = {
           UserId: this.currentUser,
           BadgeID: this.user_achievements.badgeID,

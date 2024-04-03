@@ -47,7 +47,12 @@
 
 .about li.clickable {
   cursor: pointer;
-  text-decoration: underline;
+  transition: all 0.3s ease-in-out !important;
+}
+
+.about li.clickable:hover{
+    filter: brightness(150%);
+    transform: scale(1.05) !important;
 }
 
 .image-container{ 

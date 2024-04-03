@@ -49,6 +49,7 @@ export class HomeComponent implements OnInit{
   comicChoice: string = "";
   ProgressCount: number = 0;
   progressValue: number = 0;
+  totalScore: number = 0;
   userScore: number = 0; 
   userBadge: string = "";
   badgeLevel: string = "";
@@ -56,6 +57,7 @@ export class HomeComponent implements OnInit{
   enemyStatus: ProgressbarType | undefined= "success";
   enemyList: string[][] = [['/assets/icons/mondayprof.png', 'Monday Inc.'], ['/assets/icons/sundayprof.png', 'Sunday Knight']];
   enemyName: string = "";
+  userdetails: any = "";
 
 //when task is complete, display notification from comic expressions 
 //call the remove task API service, reposition the top three tasks
@@ -88,6 +90,8 @@ export class HomeComponent implements OnInit{
       this.user_achievements.dailyTracker +=1;
     }
 
+    this.ProgressCount = this.user_achievements.weeklyProgress;
+
     if(this.hasSundaySinceDate(new Date(this.user_achievements.lastActive))){
       console.log("here")
       this.ProgressCount = 0;
@@ -95,7 +99,10 @@ export class HomeComponent implements OnInit{
 
     var add_to_progress_count = 0; 
 
+
+    //this is where the error is, also score goes above 100 and tht shit fucks up with styling. fix that. 
     if(this.IsDueBeforeSunday(task.dueDate)){
+      console.log("what");
       add_to_progress_count = 1;
     }
 
@@ -106,6 +113,11 @@ export class HomeComponent implements OnInit{
       "complete task", 
       this.user_achievements.tasksCompleted
     );
+
+    console.log(this.user_achievements.weeklytasks);
+    console.log(this.ProgressCount);
+    this.totalScore = this.user_achievements.totalScore + (task.importance * multiplier);
+    this.userdetails.score = this.totalScore;
 
     // update score and daily streak -- call to acheivement service. 
     var AchievemtUpdate: IUserAchievements = {
@@ -123,6 +135,15 @@ export class HomeComponent implements OnInit{
     }
     this.updateAchievements(this.currentUser, AchievemtUpdate);
 
+    //updating the users score so it can be shown in the social page/profile. 
+    this.userService.put(this.userdetails).subscribe({
+      error: (error) => {
+        console.error('An error occurred:', error);
+      },
+      complete: () => {
+        console.log("good")
+      }
+    })
     //refreshing the user tasks list and repositioning the top three tasks 
     this.getUserTasks();
   }
@@ -223,7 +244,6 @@ export class HomeComponent implements OnInit{
         console.error('An error occurred:', error);
       },
       complete: () => {
-        console.log(Object.keys(this.tasks[1]))
         this.streakFeatures();
       }
     });
@@ -243,7 +263,7 @@ export class HomeComponent implements OnInit{
       },
       complete: () => {
         this.streakFeatures();
-
+        this.totalScore = this.user_achievements.totalScore;
         //if there has been a sunday since last active, then determine new progress based on the stuff due. 
         if(this.hasSundaySinceDate(this.user_achievements.lastActive)){
 
@@ -255,7 +275,6 @@ export class HomeComponent implements OnInit{
 
           //then change the villain to the next villain 
           //************************************* */
-
           var taskCount = this.calculateProgress(); 
           this.AchievementService.update(this.currentUser,
           {
@@ -294,18 +313,20 @@ export class HomeComponent implements OnInit{
           }
         }
 
-        if(this.progressValue >= 70){
-          this.healthStatus = 'success';
-          this.enemyStatus = 'danger';
-        }
-        if(this.progressValue >= 30 && this.progressValue < 70){
-          this.healthStatus = 'warning'; 
-          this.enemyStatus = 'warning';
-        }
-        if(this.progressValue >= 0 && this.progressValue < 30){ 
-          this.healthStatus = 'danger'; 
-          this.enemyStatus = 'success';
-        }
+
+        // maybe
+        // if(this.progressValue >= 70){
+        //   this.healthStatus = 'success';
+        //   this.enemyStatus = 'danger';
+        // }
+        // if(this.progressValue >= 30 && this.progressValue < 70){
+        //   this.healthStatus = 'warning'; 
+        //   this.enemyStatus = 'warning';
+        // }
+        // if(this.progressValue >= 0 && this.progressValue < 30){ 
+        //   this.healthStatus = 'danger'; 
+        //   this.enemyStatus = 'success';
+        // }
 
         this.achievementBadges = this.achievements.getAcheivementsPics(this.user_achievements.unlockedAchievements);
         var badgeInfo = this.achievementBadges.find(badge => badge.type == 'Level');
@@ -375,13 +396,18 @@ export class HomeComponent implements OnInit{
     if(this.authService.getLoggedInUserId != null){
       this.currentUser = Number(this.authService.getLoggedInUserId());
     }
-    this.userService.getUserById(this.currentUser).subscribe(
-      (userDetails) => {
-        console.log(userDetails);
-        this.username = userDetails.userName;
-        this.avatarLink = this.imageSelector.pickPic(userDetails.image);
+    this.userService.getUserById(this.currentUser).subscribe({
+      next: (userDetails) => {
+        this.userdetails = userDetails;
         //not sure how to get number of achievements
       }
+      , 
+      complete: () => {
+        console.log(this.userdetails);
+        this.username = this.userdetails.userName;
+        this.avatarLink = this.imageSelector.pickPic(this.userdetails.image);
+      }
+    }
     );
     console.log(this.currentUser);
     this.getUserTasks();
