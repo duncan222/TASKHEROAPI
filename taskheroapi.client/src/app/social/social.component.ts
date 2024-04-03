@@ -7,6 +7,7 @@ import { UserService } from '../../services/user.service';
 import { FollowerService } from '../../services/follower.service';
 import { ImageSelectorService } from '../../services/imageSelector.service';
 import { LoadingService } from '../../services/loading.service';
+import { userAchievements } from '../../services/userAchievement.service';
 
 
 // note to duncan: add top three leaderboard in social 
@@ -27,8 +28,13 @@ export class SocialComponent implements OnInit {
   followingList: any[] = [];
   allUsersList: any[] = [];
   searchTestData: any[] = [];
+  user_achievements: any; 
+  first: any; 
+  second: any; 
+  third: any; 
+  losers: any[] = []; 
 
-  constructor(private authService: AuthService, private router: Router, private followerService: FollowerService, private userService: UserService, private imageSelector: ImageSelectorService, private loadingService: LoadingService) { }
+  constructor(private authService: AuthService, private AchievementService: userAchievements, private router: Router, private followerService: FollowerService, private userService: UserService, private imageSelector: ImageSelectorService, private loadingService: LoadingService) { }
 
   ngOnInit() {
     this.loadingService.show();
@@ -46,12 +52,26 @@ export class SocialComponent implements OnInit {
     );
     //populate Friends List
     this.currentUser = this.authService.getLoggedInUserId();
+
+    // get achievements, need either achievements or user scores for the followin, not sure how its done here though .. 
     this.followerService.getFollowingById(this.currentUser).subscribe(
       (followedUsers) => {
         for (const followedUser of followedUsers) {
           this.followingList.push({ id: followedUser.userId, avatar: this.imageSelector.pickPic(followedUser.image), username: followedUser.userName, points: followedUser.score })
         }
+
         this.followingList.sort((a, b) => b.points - a.points);
+
+        //top three in the list, used for top three positions 
+        this.first = this.followingList[0]; 
+        this.second = this.followingList[1]; 
+        this.third = this.followingList[2]; 
+
+        //the rest of the people (losers lol)
+        this.losers = this.followingList.slice(2);
+
+        console.log(this.losers);
+
         this.loadingService.hide();
       },
       (error) => {

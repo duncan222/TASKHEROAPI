@@ -377,6 +377,7 @@ export class HomeComponent implements OnInit{
     }
     this.userService.getUserById(this.currentUser).subscribe(
       (userDetails) => {
+        console.log(userDetails);
         this.username = userDetails.userName;
         this.avatarLink = this.imageSelector.pickPic(userDetails.image);
         //not sure how to get number of achievements
