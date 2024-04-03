@@ -1,30 +1,33 @@
 .user-buttons-container {
   display: flex;
   justify-content: flex-end; /* Align items to the right */
-  margin-right: 2.5rem; /* Adjust margin to move the buttons to the right */
+  margin-right: 6.6rem; /* Adjust margin to move the buttons to the right */
 }
 
 .follow-user,
 .unfollow-user {
   height: 40px; /* Adjust width as needed */
-  margin: 1rem 0.5rem;
-  border-color: rgb(185, 185, 185);
+  width: 6rem;
   color: black;
+  font-size: small;
+  font-weight: bold;
+  text-align: center;
   transition: all 0.3s ease-in-out;
 }
 
-  .follow-user:hover,
   .unfollow-user:hover {
-    border-color: antiquewhite;
+    box-shadow: 0px 0px 15px 0px #ff75bc;
     transform: scale(1.01);
   }
 
-  .follow-user:focus,
-  .unfollow-user:focus {
+  .follow-user:hover:focus,
+  .unfollow-user:hover:focus {
     box-shadow: none;
   }
 
 .unfollow-user {
+  box-shadow: 0px 0px 10px 0px #ff75bc;
+  color: #ff75bc;
   margin-top: 59px;
 }
 
@@ -107,10 +110,16 @@ a {
 
   .header__wrapper .cols__container .left__col .follow-user {
     margin-top: 60px;
-    margin-left: 5px;
+    margin-left: rem;
     align-self: center;
+    color: #A8EFFF;
+    box-shadow: 0px 0px 10px 0px #A8EFFF;
   }
 
+  .header__wrapper .cols__container .left__col .follow-user:hover {
+    box-shadow: 0px 0px 15px 0px  #A8EFFF;
+    transform: scale(1.01);
+  }
   .header__wrapper .cols__container .left__col h2 {
     margin-top: 30px;
     font-weight: 600;

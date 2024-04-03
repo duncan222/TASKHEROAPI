@@ -12,8 +12,12 @@
             <img src={{avatarLink}} alt="Choose Avatar" />
           </div>
           <div class="user-buttons-container">
-            <button (click)="addFollower()" class="btn follow-user" style="background-color: lightgreen;">Follow</button>
-            <button (click)="deleteFollower()" class="btn unfollow-user" style="background-color: salmon">UnFollow</button>
+            <div *ngIf="isFollow == false; else elseBlock">
+              <button (click)="addFollower()" class="btn follow-user">Follow</button>
+            </div>
+            <ng-template #elseBlock>
+              <button (click)="deleteFollower()" class="btn unfollow-user">Unfollow</button>
+            </ng-template>
           </div>
           <h2>{{username}}</h2>
           <ul class="about">

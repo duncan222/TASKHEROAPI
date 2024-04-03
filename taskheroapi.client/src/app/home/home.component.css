@@ -6,6 +6,14 @@
     margin-left: 4.5rem;
 }
 
+.vertical .progress-bar{ 
+    background-color: #A8EFFF !important;
+}
+
+.vertical-right .progress-bar{ 
+    background-color: #FF48A6 !important;
+}
+
 .img__container_3 img {
     margin-top: 1rem;
     width: 15rem;
@@ -296,7 +304,7 @@
         min-width: 20rem; 
         height: 2rem; 
         margin-top: 1rem;
-        box-shadow: 0px 0px 10px 0px #0049e7;
+        box-shadow: 0px 0px 20px 0px #A8EFFF;
         padding-right: 1rem;
         margin-right: 5.56rem;
         display:absolute;
@@ -308,7 +316,8 @@
         -webkit-transform: rotate(-90deg);
         transform: rotate(-90deg);
         min-width: 20rem; 
-        box-shadow: 0px 0px 10px 0px #e62d2d;
+        color: red !important;
+        box-shadow: 0px 0px 20px 0px #ff8cc8;
         margin-top: -2rem;
         height: 2rem;   
         margin-left: 5.6rem;
@@ -332,7 +341,7 @@
     
         .img__container img {
           width: 4.5rem;
-          box-shadow: 0px 0px 15px 0px #0049e7;
+          box-shadow: 0px 0px 20px 0px #A8EFFF;
           height: 4.5rem;
           object-fit: cover;
           border-radius: 50%;
@@ -353,7 +362,7 @@
             background-color: rgba(255, 0, 0, 0.219);
             width: 4.5rem;
             height: 4.5rem;
-            box-shadow: 0px 0px 15px 0px #e62d2d;
+            box-shadow: 0px 0px 20px 0px #ff8cc8;
             object-fit: cover;
             border-radius: 50%;
             display: block;
@@ -663,9 +672,6 @@
 
 
     
-    .progress-bar{ 
-        background-color: red !important;
-    }
     
     .dash2{
         background-color: #23232e;
@@ -681,7 +687,6 @@
     }
 
     .vertical{ 
-        color: red !important;
         height: 2rem;
         width: 100%;
     }
