@@ -4,6 +4,8 @@ import { IUser } from '../../interfaces/user.inteface'
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LoadingService } from '../../services/loading.service';
+import { userAchievements } from '../../services/userAchievement.service';
+import { IUserAchievements } from '../../interfaces/userachievements.interface';
 
 @Component({
   selector: 'app-signup',
@@ -27,8 +29,8 @@ export class SignupComponent {
       weeklyProgress: 0,
       dailyTracker: 0, 
       totalScore: 0, 
-      lastActive: "", //idk what to put for this? --> nothing, it is useless. i just dont feel like deleteing it rn cuz tht takes work
-      UnlockedAchievements: [], LockedAchievements: [], weeklytasks: 0, 
+      lastActive: new Date().toDateString(),
+      UnlockedAchievements: ['Novice'], LockedAchievements: ['Pro','Elite','Expert','Lonesome No More', 'First Blood', 'Task Hero', '100 Tasks Completed', '200 Tasks Completed', 'Task Master', 'Justice Prevails', 'Monday Inc', 'Sunday Night', 'Dead Lines', 'Stale Coffee', 'The Hangover'], weeklytasks: 0, 
       tasksCompleted: 0, 
       villainLevel: 0
     }
@@ -37,7 +39,7 @@ export class SignupComponent {
   loading = false;
   errorMessage: string = '';
 
-  constructor(private userService: UserService, private router: Router, private authService: AuthService, private loadingService: LoadingService) { }
+  constructor(private userService: UserService, private router: Router, private authService: AuthService, private loadingService: LoadingService, private userAchievements: userAchievements) { }
 
   onSignUp() {
     console.log('onSignUp triggered');
@@ -57,9 +59,31 @@ export class SignupComponent {
 
     this.userService.post(this.user).subscribe(
       (response) => {
+        console.log(response.userId);
         console.log('User signed up successfully', response);
         this.authService.setLoggedInUserId(response.userId);
-        this.router.navigate(['/home'])
+        var user_achievements: IUserAchievements = {
+          UserId: response.userId,
+          BadgeID: 1,
+          weeklyProgress: 0,
+          dailyTracker: 0, 
+          totalScore: 0, 
+          lastActive: new Date().toDateString(),
+          UnlockedAchievements: ['Novice'], LockedAchievements: ['Pro','Elite','Expert','Lonesome No More', 'First Blood', 'Task Hero', '100 Tasks Completed', '200 Tasks Completed', 'Task Master', 'Justice Prevails', 'Monday Inc', 'Sunday Night', 'Dead Lines', 'Stale Coffee', 'The Hangover'], weeklytasks: 0, 
+          tasksCompleted: 0, 
+          villainLevel: 0
+        }
+        this.userAchievements.add(response.userId, user_achievements).subscribe({ 
+          next: (data) => { 
+            console.log(data);
+          },
+          error: (error) => { 
+            console.log(error);
+          }, 
+          complete: () => {
+            this.router.navigate(['/home'])
+          }
+        })
       },
       (error) => {
         //handle error
