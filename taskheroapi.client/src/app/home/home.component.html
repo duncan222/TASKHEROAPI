@@ -6,6 +6,7 @@ also change the font. -- these are edits to be made later once functionality is 
 
 <div class="home">
     <div class="dynamic-row">
+        <app-image-pop *ngIf="showImagePop"  class="comic" [image]="comicChoice"></app-image-pop>
         <div class="dynamic-col-7 scrolly">
             <div class="dynamic-row-2" style="padding-bottom: 2rem;"> 
                 <mat-card class="dash1">
@@ -20,7 +21,7 @@ also change the font. -- these are edits to be made later once functionality is 
                         </div>
                         <div class="to-the-right">
                             <div class="p-2">
-                              <span>{{this.user_achievements.dailyTracker + ending}}</span>
+                              <span>{{dailyTracker + ending}}</span>
                               <img src="{{streakPicture}}" class="image-streak" style="height:auto; width: 6rem;"/>
                             </div>
                         </div>
@@ -29,6 +30,7 @@ also change the font. -- these are edits to be made later once functionality is 
             </div>
             <div class="dynamic-row-2"> 
                 <mat-card class="dash1">
+                    <div class="tasks">
                     <mat-card-content class="dash1-content">
                         <div *ngIf="tasks.length != 0; else elseBlock">
                             <div *ngFor="let task of tasks; let i = index" class="tasks-list" style="overflow-x: none; overflow-y: none;" >
@@ -38,7 +40,7 @@ also change the font. -- these are edits to be made later once functionality is 
                                             <div class="item_number"> 
                                                 <span>{{i + 1}}</span>
                                             </div>
-                                            <div class="card item" >{{task.title}} </div>
+                                            <div class="card item"><span>{{task.title}}</span><span style="font-size: small">Due: {{convertDatetoDateString(task.dueDate)}}</span></div>
                                             <div class="item_button">
                                                 <div class="btn button_des1" (click)="CompleteTaskClick(task)"  style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem;">
                                                     <img src="/assets/icons/checkg.svg" style="height:100%; width: 50%; ">
@@ -60,6 +62,7 @@ also change the font. -- these are edits to be made later once functionality is 
                             </div>
                         </ng-template>
                     </mat-card-content>
+                    </div>
                 </mat-card>
             </div>
 
@@ -91,7 +94,7 @@ also change the font. -- these are edits to be made later once functionality is 
                         <div class="container">
                             <div class="progress_cont">
                                 <div class="progress vertical">
-                                    <div class="progress-bar" role="progressbar" [style.height.%]="progressValue" [style.width.%]="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar" [style.width.%]="progressValue" [style.height.%]="100" aria-valuemin="0" aria-valuemax="100" [attr.aria-valuenow]="progressValue"></div>
                                 </div>
                                 <!-- <progressbar [type]="healthStatus" class="vertical danger" [value]="progressValue"></progressbar> -->
                                 <span class="progress-val">{{progressValue}}%</span>
@@ -99,7 +102,7 @@ also change the font. -- these are edits to be made later once functionality is 
                             <div class="space-between"></div>
                             <div class="progress_cont">
                                 <div class="progress vertical-right">
-                                    <div class="progress-bar" [style.width.%]="100" [style.height.%]="100 - progressValue" role="progressbar" aria-valuemin="0" aria-valuemax="100" [attr.aria-valuenow]="100 - progressValue"></div>
+                                    <div class="progress-bar" [style.height.%]="100" [style.width.%]="100 - progressValue" role="progressbar" aria-valuemin="0" aria-valuemax="100" [attr.aria-valuenow]="100 - progressValue"></div>
                                 </div>                                
                             <span class="progress-val-right">{{100 - progressValue}}%</span>
                             </div>
@@ -110,5 +113,3 @@ also change the font. -- these are edits to be made later once functionality is 
         </div>
     </div>
 </div>
-
-<app-image-pop *ngIf="showImagePop" [image]="comicChoice"></app-image-pop>

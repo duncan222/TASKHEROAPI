@@ -1,13 +1,14 @@
-.notification{ 
-
-    position: absolute;
+.notification_2{ 
+    position: fixed;
     height: auto;
     width: 2rem;
+    top: 20px; 
+    right: 20px; 
     border-color: transparent;
     background-color: transparent;
     animation: fadeOut 5s ease;
     transition: all 0.3s ease-in-out;
-    z-index: 10;
+    z-index: 10000;
 }
 
 @keyframes fadeOut {

@@ -24,21 +24,21 @@ export class Achievements {
         unlocked.push("First Blood"); 
         locked = locked.filter(item => item !== "First Blood");
       }
-      if(streak >= 50 && streak < 100){
+      if(tasks_complete >= 50 && tasks_complete < 100){
         if(locked.includes('Pro')){
           unlocked.push("Pro"); 
           locked = locked.filter(item => item !== "Pro");
           unlocked = unlocked.filter(item => item !== "Novice");
         }  
       }
-      if(streak >= 100 && streak < 150){
+      if(tasks_complete >= 100 && tasks_complete < 150){
         if(locked.includes('Expert')){
           unlocked.push("Expert"); 
           locked = locked.filter(item => item !== "Expert");
           unlocked = unlocked.filter(item => item !== "Pro");
         }  
       }
-      if(streak >= 150){
+      if(tasks_complete >= 150){
         if(locked.includes('Elite')){
           unlocked.push("Elite"); 
           locked = locked.filter(item => item !== "Elite");
@@ -78,7 +78,7 @@ export class Achievements {
         Achievements.push({title: item, path: '/assets/icons/novice.png', type: 'Level'})
       }
       if(item == 'Expert'){ 
-        Achievements.push({title: item, path: '/assets/icons/expert.png', type: 'Level'})
+        Achievements.push({title: item, path: '/assets/icons/Expert.png', type: 'Level'})
       }
       if(item == 'Elite'){ 
         Achievements.push({title: item, path: '/assets/icons/elite.png', type: 'Level'})

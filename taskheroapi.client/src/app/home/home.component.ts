@@ -13,6 +13,8 @@ import { ProgressbarType } from 'ngx-bootstrap/progressbar';
 import { UserService } from '../../services/user.service';
 import { ImageSelectorService } from '../../services/imageSelector.service';
 import { LoadingService } from '../../services/loading.service';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-home',
@@ -31,7 +33,7 @@ import { LoadingService } from '../../services/loading.service';
 
 
 export class HomeComponent implements OnInit{
-  constructor(private authService: AuthService,  private imageSelector: ImageSelectorService, private loadingService: LoadingService, private userService: UserService, private TaskService: userTask, private router: Router, private AchievementService: userAchievements,private cdr: ChangeDetectorRef, private achievements: Achievements) { 
+  constructor(private authService: AuthService, private imageSelector: ImageSelectorService, private loadingService: LoadingService, private userService: UserService, private TaskService: userTask, private router: Router, private AchievementService: userAchievements,private cdr: ChangeDetectorRef, private achievements: Achievements) { 
   }
 
   comicExpressions: string[] = ['/assets/icons/kaboom.png', '/assets/icons/boom.png', '/assets/icons/pow.png', '/assets/icons/kapow.png', '/assets/icons/bang.png'];
@@ -48,7 +50,7 @@ export class HomeComponent implements OnInit{
   showImagePop = false;
   comicChoice: string = "";
   ProgressCount: number = 0;
-  progressValue: number = 0;
+  progressValue: number = 100;
   totalScore: number = 0;
   userScore: number = 0; 
   userBadge: string = "";
@@ -58,6 +60,7 @@ export class HomeComponent implements OnInit{
   enemyList: string[][] = [['/assets/icons/mondayprof.png', 'Monday Inc.'], ['/assets/icons/sundayprof.png', 'Sunday Knight']];
   enemyName: string = "";
   userdetails: any = "";
+  dailyTracker: number = 0;
 
 //when task is complete, display notification from comic expressions 
 //call the remove task API service, reposition the top three tasks
@@ -101,7 +104,7 @@ export class HomeComponent implements OnInit{
 
 
     //this is where the error is, also score goes above 100 and tht shit fucks up with styling. fix that. 
-    if(this.IsDueBeforeSunday(task.dueDate)){
+    if(this.IsDueBeforeSunday(new Date(task.dueDate))){
       console.log("what");
       add_to_progress_count = 1;
     }
@@ -155,7 +158,13 @@ export class HomeComponent implements OnInit{
   //in future notes: this should only be done on sundays. 
 
 
-
+  convertDatetoDateString(strdate: string) :string{ 
+    var date = new Date(strdate); 
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Adding 1 to month as it starts from 0
+    const day = date.getDate().toString().padStart(2, '0');
+    const year = date.getFullYear().toString();
+    return `${month}/${day}/${year}`;
+  }
 
   updateAchievements(currentUser: number, acheivement: IUserAchievements): void{ 
     this.AchievementService.update(currentUser, acheivement)
@@ -232,8 +241,6 @@ export class HomeComponent implements OnInit{
     }
   }
 
-
-
   getUserTasks(): void{ 
     this.TaskService.getUserTasks(this.currentUser)
     .subscribe({
@@ -244,12 +251,23 @@ export class HomeComponent implements OnInit{
         console.error('An error occurred:', error);
       },
       complete: () => {
-        this.streakFeatures();
+        var new_tasks = this.tasks.sort(this.customComparator);
+        console.log(new_tasks);
       }
     });
   }
 
-
+  customComparator(a: any, b: any): number {
+    // Primary sort based on urgency
+    if ((new Date(b.dueDate).getTime() - new Date().getTime()) < (new Date(a.dueDate).getTime() - new Date().getTime())) {
+        return 1;
+    } else if ((new Date(b.dueDate).getTime() - new Date().getTime()) > (new Date(a.dueDate).getTime() - new Date().getTime())) {
+        return -1;
+    } else {
+        // Secondary sort based on priority rating
+      return b.importance - a.importance;
+    }
+}
 
   //getting the users acheivments and progress till reaching the next one 
   getAchievments(){ 
@@ -264,6 +282,7 @@ export class HomeComponent implements OnInit{
       complete: () => {
         this.streakFeatures();
         this.totalScore = this.user_achievements.totalScore;
+        this.dailyTracker = this.user_achievements.dailyTracker;
         //if there has been a sunday since last active, then determine new progress based on the stuff due. 
         if(this.hasSundaySinceDate(this.user_achievements.lastActive)){
 
@@ -344,15 +363,12 @@ export class HomeComponent implements OnInit{
   }
 
   IsDueBeforeSunday(Due: Date): boolean{ 
-
-    // getting the date value of 'next sunday'
     const today = new Date(); 
     const daysOfWeek = today.getDay(); 
     const daysUntilSunday = daysOfWeek === 0 ? 7 : 7 - daysOfWeek; 
     const nextSunday = new Date(today); 
     nextSunday.setDate(today.getDate() + daysUntilSunday);
     nextSunday.setHours(0, 0, 0, 0);
-
     return Due <= nextSunday;
   }
 
@@ -368,11 +384,6 @@ export class HomeComponent implements OnInit{
     return false;
   }
 
-  // !!! you need to change the database--add weekly items column. ///
-  // this only needs to be changes weekly --- if a sunday has passed. --
-  // every time a task is added the item should only increment once. 
-
-  // needs to be dynamic, based on when deadlines are considered (weakly by default )
   calculateProgress(): number{ 
 
     // getting the date value of 'next sunday'
