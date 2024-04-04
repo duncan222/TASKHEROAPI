@@ -47,16 +47,15 @@ export class TasksComponent implements OnInit {
     this.getAchievements();
     this.loadTasks();
     // Subscribe to the observable that emits the updated task list
-    this.taskService.getTasksObservable().subscribe(tasks => {
-      this.tasks = tasks;
-    });
   }
 
   loadTasks(): void {
     // Load tasks for the current user
     this.taskService.getUserTasks(this.currentUser).subscribe(
-      (tasks: IUserTasks[]) => {
-        this.tasks = tasks;
+      (userTasks) => {
+        for (const userTask of userTasks) {
+          this.tasks.push({ Title: userTask.title, Description: userTask.description, DueDate: userTask.dueDate, Importance: userTask.importance, TimeStamp: userTask.timeStamp, Weight: userTask.weight, Urgency: userTask.urgency })
+        }
       },
       error => {
         console.error('Error loading tasks:', error);
@@ -70,10 +69,21 @@ export class TasksComponent implements OnInit {
       const dueControl = this.taskGroup.get('date');
       const titleControl = this.taskGroup.get('title');
       const priorityControl = this.taskGroup.get('priority');
+      let newPriorty: any;
+
+      if (priorityControl?.value == "low") {
+        newPriorty = "1";
+      }
+      else if (priorityControl?.value == "medium") {
+        newPriorty = "2";
+      }
+      else {
+        newPriorty = "3";
+      }
 
       if (descriptionControl && dueControl && titleControl && priorityControl) {
         const urgency = this.Urgency(new Date(), dueControl.value);
-        const weight = this.Weight(urgency, priorityControl.value);
+        const weight = this.Weight(urgency, newPriorty);
         const taskInstance: IUserTasks = {
           TaskId: 0,
           UserId: this.currentUser,
@@ -81,7 +91,7 @@ export class TasksComponent implements OnInit {
           TimeStamp: new Date().toString(),
           Title: titleControl.value,
           DueDate: dueControl.value.toString(),
-          Importance: priorityControl.value,
+          Importance: newPriorty,
           Weight: weight,
           Urgency: urgency,
         };
@@ -90,6 +100,8 @@ export class TasksComponent implements OnInit {
         this.tasks.push(taskInstance);
         // Clear the form after submission
         this.taskGroup.reset();
+
+        console.log(taskInstance);
 
         this.taskService.addTask(this.currentUser, taskInstance).subscribe(
           response => {

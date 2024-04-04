@@ -38,7 +38,7 @@ export class userTask {
     return this.http.put<IUserTasks>(url, task, { headers: headers });
   }
 
-  getUserTasks(userId: number): Observable<IUserTasks[]> {
+  getUserTasks(userId: number): Observable<any> {
     return this.http.get<IUserTasks[]>(`${this.apiUrl}/UserTasks/${userId}`);
   }
 
