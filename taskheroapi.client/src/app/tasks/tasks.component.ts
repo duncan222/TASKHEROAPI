@@ -8,6 +8,7 @@ import { IUserAchievements } from '../../interfaces/userachievements.interface';
 import { Achievements } from '../../services/achievements.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditTaskComponent } from '../edit-task/edit-task.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-tasks',
@@ -131,8 +132,22 @@ export class TasksComponent implements OnInit {
   }
 
   deleteTask(task: IUserTasks): void {
-    // Implement delete task functionality here
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: { message: 'Are you sure you want to delete this task?' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Delete task logic here
+        const index = this.tasks.findIndex(t => t.TaskId === task.TaskId);
+        if (index !== -1) {
+          this.tasks.splice(index, 1);
+        }
+      }
+    });
   }
+
 
   completeTask(task: IUserTasks): void {
     // Implement complete task functionality here
