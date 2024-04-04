@@ -69,7 +69,6 @@ export class SocialComponent implements OnInit {
         for (const followedUser of followedUsers) {
           this.followingList.push({ id: followedUser.userId, avatar: this.imageSelector.pickPic(followedUser.image), username: followedUser.userName, points: followedUser.score })
         }
-        this.followingList.push({ id: this.currentUserId, avatar: this.imageSelector.pickPic(this.currentUserAvatar), username: this.currentUsername, points: this.currentUserScore })
         this.followingList.sort((a, b) => b.points - a.points);
 
         //top three in the list, used for top three positions 
