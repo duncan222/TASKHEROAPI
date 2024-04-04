@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AddTask } from '../../services/addtask.service';
 import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
 import { userTask } from '../../services/userTasks.service';
@@ -7,6 +7,7 @@ import { IUserTasks } from '../../interfaces/usertasks.interface';
 import { userAchievements } from '../../services/userAchievement.service';
 import { IUserAchievements } from '../../interfaces/userachievements.interface';
 import { Achievements } from '../../services/achievements.service';
+import { HomeComponent } from '../home/home.component';
 
 @Component({
   selector: 'app-add-task',
@@ -18,6 +19,9 @@ import { Achievements } from '../../services/achievements.service';
 // need to add functionality when adding task to see if the task ur adding is before the next sunday, and then increment the acheivements. 
 
 export class AddTaskComponent implements OnInit{
+
+  @Output() modalClicked: EventEmitter<void> = new EventEmitter<void>();
+
   currentUser: number = 0; 
   taskGroup: FormGroup;
   descriptionTemp: String = '';
@@ -26,6 +30,8 @@ export class AddTaskComponent implements OnInit{
   color = ""
   user_achievements: any; 
   weeklytasks = 0;
+
+
 
   constructor(private AddTask: AddTask, private fb: FormBuilder, private taskService: userTask, private authService: AuthService, private Achievements: userAchievements, private achievements: Achievements) {
     this.taskGroup = this.fb.group({
@@ -80,25 +86,6 @@ export class AddTaskComponent implements OnInit{
 
         var weeklytask = 0; 
 
-        if(this.calculateSunday(dueControl.value.toString())){
-          weeklytask = 1; 
-        }
-
-        var AchievemtUpdate: IUserAchievements = {
-          UserId: this.currentUser,
-          BadgeID: this.user_achievements.badgeID,
-          weeklyProgress: this.user_achievements.weeklyProgress,
-          dailyTracker: this.user_achievements.dailyTracker,
-          totalScore: this.user_achievements.totalScore,
-          lastActive: this.user_achievements.lastActive,
-          UnlockedAchievements: locked_and_unlocked[0],
-          LockedAchievements: locked_and_unlocked[1],
-          weeklytasks: this.user_achievements.weeklytasks + weeklytask, 
-          tasksCompleted: this.user_achievements.tasksCompleted
-        }
-
-        this.updateAchievements(this.currentUser, AchievemtUpdate);
-
         console.log(taskInstance);
         this.taskService.addTask(this.currentUser, taskInstance).subscribe(
           response => {
@@ -107,6 +94,29 @@ export class AddTaskComponent implements OnInit{
             this.notificationMessage = "Task Added!"
             this.color = "#198754";
             this.showNotification = true;
+            console.log("pre")
+            console.log(weeklytask)
+            if(this.calculateSunday(taskInstance.DueDate)){
+              console.log("post")
+              weeklytask = 1; 
+            }
+            console.log(weeklytask)
+            var AchievemtUpdate: IUserAchievements = {
+              UserId: this.currentUser,
+              BadgeID: this.user_achievements.badgeID,
+              weeklyProgress: this.user_achievements.weeklyProgress,
+              dailyTracker: this.user_achievements.dailyTracker,
+              totalScore: this.user_achievements.totalScore,
+              lastActive: this.user_achievements.lastActive,
+              UnlockedAchievements: locked_and_unlocked[0],
+              LockedAchievements: locked_and_unlocked[1],
+              weeklytasks: this.user_achievements.weeklytasks + weeklytask, 
+              tasksCompleted: this.user_achievements.tasksCompleted, 
+              villainLevel: this.user_achievements.villainLevel
+            }
+    
+            this.updateAchievements(this.currentUser, AchievemtUpdate);
+
             setTimeout(() => {
               this.showNotification = false;
             }, 5000); 
@@ -179,10 +189,10 @@ export class AddTaskComponent implements OnInit{
   //computing the urgency by comparing the difference of the current time vs due date and creation time vs due date. 
   //urgency once is supasses the .8 mark should over ride the prioritys.  
   Urgency(date1: Date, date2: Date): number{ 
-    const mSecPerDay = 1000 * 60 * 60 * 24; 
-    const timeDiffMs = date2.getTime() - date1.getTime(); 
-    const timeDiffFromNow = date2.getTime() - (new Date()).getTime();
-    const urgency = 1 - ((timeDiffFromNow/mSecPerDay) / (timeDiffMs /mSecPerDay)); 
+    const mSecPerDay = 1000.0 * 60.0 * 60.0 * 24.0; 
+    const timeDiffMs = (date2.getTime() - date1.getTime()) + 0.0; 
+    const timeDiffFromNow = (date2.getTime() - (new Date()).getTime()) + 0.0;
+    const urgency = 1.0 - ((timeDiffFromNow/mSecPerDay) / (timeDiffMs /mSecPerDay)); 
     return urgency;
   }
 
@@ -201,6 +211,7 @@ export class AddTaskComponent implements OnInit{
 
   closeModal() {
     this.AddTask.toggleModal();
+    this.modalClicked.emit();
   }
 
 }

@@ -11,10 +11,24 @@ import { AddTask } from '../../services/addtask.service';
 export class NavbarComponent {
   constructor(private authService: AuthService, private router: Router,public AddTask: AddTask) { }
 
+  task_toggle: boolean = false;
+
   taskPopup(): void { 
     this.AddTask.toggleModal();
+    if(this.task_toggle == false){
+      this.task_toggle = true;
+    }
+    else if(this.task_toggle == true){ 
+      this.task_toggle = false; 
+      this.refreshPage(); 
+    }
   }
 
+  refreshPage() {
+    // Refresh logic here
+    window.location.reload();
+  }
+  
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);

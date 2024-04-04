@@ -95,26 +95,25 @@ svg:hover {
 
 .index {
   font-weight: bold;
-  margin-right: 10px;
+  margin-right: 20px;
 }
 
 .user-block {
   justify-self: center;
-  background-color: #bcbcda;
+  background-color: #4e4e5e;
   color: black;
-  border: 1px solid #ccc;
   padding: 2%;
   margin-top: 20px;
   min-width: 300px;
   width: 90%;
   margin-left: 2rem;
   border-radius: 15px;
-  box-shadow: 0px 0px 10px 0px #FF48A6;
+  box-shadow: 0px 0px 8px 0px #A8EFFF;
 
 }
 
 .special-user-info {
-  background-color: #A8EFFF;
+  background-color: #9d2cb4;
   border: 1px solid #ccc;
 }
 
@@ -130,9 +129,15 @@ svg:hover {
 .user-info {
   display: flex;
   width: 100%;
+  height: 3.5rem;
   align-items: center;
   justify-content:space-between;
   overflow-x: hidden;
+  font-size: large;
+  font-weight: bold;
+  color: #d8d8d8;
+  letter-spacing: .5px;
+  font-family: "Poppins", sans-serif;
   
 }
 
@@ -141,8 +146,9 @@ svg:hover {
     height: 40px;
     border-radius: 50%;
     overflow: hidden;
-    margin-right: 10px;
-}
+    margin-right: 15px;
+    box-shadow: 0px 0px 8px 0px #A8EFFF;
+  }
 
 .avatar {
     width: 100%;
@@ -153,8 +159,12 @@ svg:hover {
 .username {
   font-weight: bold;
   margin-right: 10px;
-  text-decoration: underline;
   cursor: pointer;
+  transition: all 0.3s ease-in-out !important;
+}
+
+.username:hover{
+    transform: scale(1.05) !important;
 }
 
 .search-username {
@@ -166,7 +176,8 @@ svg:hover {
 }
 
 .points {
-  color: #000;
+  color: #A8EFFF;
+  text-shadow: 2px 2px 4px #a8efff5e; 
   margin-left: auto;
 }
 

@@ -29,7 +29,8 @@ export class SignupComponent {
       totalScore: 0, 
       lastActive: "", //idk what to put for this? --> nothing, it is useless. i just dont feel like deleteing it rn cuz tht takes work
       UnlockedAchievements: [], LockedAchievements: [], weeklytasks: 0, 
-      tasksCompleted: 0
+      tasksCompleted: 0, 
+      villainLevel: 0
     }
   };
   confirmPassword: string = '';

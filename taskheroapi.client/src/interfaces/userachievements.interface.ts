@@ -9,4 +9,5 @@ export interface IUserAchievements {
   LockedAchievements: string[];
   weeklytasks: number;
   tasksCompleted: number;
+  villainLevel: number;
 }

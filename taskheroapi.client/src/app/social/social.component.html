@@ -15,7 +15,7 @@
         
         </div>
         <ng-template #followList>
-          <div *ngFor="let user of followingList; let i = index" class="user-block" [ngClass]="{ 'special-user-info': user.username === currentUsername }">
+          <div *ngFor="let user of followingList; let i = index" class="user-block">
             <div class="user-info">
               <div class="index">{{ i + 1 }}</div>
               <div class="avatar-container">
@@ -56,7 +56,6 @@
                 <div class="user-info">
                   <div class="search-username" (click)="viewUserProfile(user.id)">{{ user.username }}</div>
                   <div class="search-points">{{ user.points }} points</div>
-                  <img class="btn" (click)="toggleFriendAdded()" style="width: 2.5rem; filter:invert(100%); justify-self:end" src="/assets/icons/plus.png">
               </div>
             </div>
             </div>

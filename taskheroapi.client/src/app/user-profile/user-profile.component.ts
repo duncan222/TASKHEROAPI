@@ -25,6 +25,8 @@ export class UserProfileComponent implements OnInit {
   isFollowerAddedOpen: boolean = false;
   isUnfollowedOpen: boolean = false;
   unfollowNotifText: string = "";
+  following: any[] = [];
+  isFollow: boolean = false;
 
   constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private userService: UserService,
     private imageSelector: ImageSelectorService, private followerService: FollowerService, private loadingService: LoadingService) { }
@@ -50,6 +52,16 @@ export class UserProfileComponent implements OnInit {
         this.loadingService.hide();
       }
     );
+    this.followerService.getFollowingById(this.currentLoggedInUserId).subscribe({
+      next: (userFollowing) => {
+        this.following = userFollowing;
+      },
+      complete: () => {
+        this.isFollow = this.following.some(item => item.userId === this.pageUserId)
+        console.log(this.following);
+        console.log(this.isFollow);
+      }
+  });
   }
 
   addFollower(): void {
@@ -68,6 +80,7 @@ export class UserProfileComponent implements OnInit {
         }
       }
     );
+    this.isFollow = true;
     this.showFollowNotif();
   }
 
@@ -87,6 +100,7 @@ export class UserProfileComponent implements OnInit {
         }
       }
     );
+    this.isFollow = false;
     this.showUnfollowNotif();
   }
 
