@@ -46,6 +46,10 @@ export class TasksComponent implements OnInit {
     }
     this.getAchievements();
     this.loadTasks();
+    // Subscribe to the observable that emits the updated task list
+    this.taskService.getTasksObservable().subscribe(tasks => {
+      this.tasks = tasks;
+    });
   }
 
   loadTasks(): void {
@@ -96,9 +100,6 @@ export class TasksComponent implements OnInit {
             setTimeout(() => {
               this.showNotification = false;
             }, 5000);
-
-            // Reload tasks after adding a new task
-            this.loadTasks();
           },
           error => {
             console.error('Error saving todo:', error);
@@ -107,7 +108,6 @@ export class TasksComponent implements OnInit {
       }
     }
   }
-
 
   editTask(task: IUserTasks): void {
     // Implement edit task functionality here
