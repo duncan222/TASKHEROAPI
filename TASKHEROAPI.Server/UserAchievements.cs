@@ -27,5 +27,6 @@ namespace TaskHeroAPI
 
         public int tasksCompleted { get; set; }
 
+        public int villainLevel { get; set; }
     }
 }

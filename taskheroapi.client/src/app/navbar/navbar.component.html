@@ -50,6 +50,6 @@
   </ul>
 </nav>
 
-<app-add-task *ngIf="AddTask.showModal$ | async"></app-add-task>
+<app-add-task *ngIf="AddTask.showModal$ | async" (modalClicked)="refreshPage()"></app-add-task>
 
 <router-outlet></router-outlet>

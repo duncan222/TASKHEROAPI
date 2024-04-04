@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AddTask } from '../../services/addtask.service';
 import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
 import { userTask } from '../../services/userTasks.service';
@@ -7,6 +7,7 @@ import { IUserTasks } from '../../interfaces/usertasks.interface';
 import { userAchievements } from '../../services/userAchievement.service';
 import { IUserAchievements } from '../../interfaces/userachievements.interface';
 import { Achievements } from '../../services/achievements.service';
+import { HomeComponent } from '../home/home.component';
 
 @Component({
   selector: 'app-add-task',
@@ -18,6 +19,9 @@ import { Achievements } from '../../services/achievements.service';
 // need to add functionality when adding task to see if the task ur adding is before the next sunday, and then increment the acheivements. 
 
 export class AddTaskComponent implements OnInit{
+
+  @Output() modalClicked: EventEmitter<void> = new EventEmitter<void>();
+
   currentUser: number = 0; 
   taskGroup: FormGroup;
   descriptionTemp: String = '';
@@ -26,6 +30,8 @@ export class AddTaskComponent implements OnInit{
   color = ""
   user_achievements: any; 
   weeklytasks = 0;
+
+
 
   constructor(private AddTask: AddTask, private fb: FormBuilder, private taskService: userTask, private authService: AuthService, private Achievements: userAchievements, private achievements: Achievements) {
     this.taskGroup = this.fb.group({
@@ -84,6 +90,7 @@ export class AddTaskComponent implements OnInit{
           weeklytask = 1; 
         }
 
+        console.log(weeklytask)
         var AchievemtUpdate: IUserAchievements = {
           UserId: this.currentUser,
           BadgeID: this.user_achievements.badgeID,
@@ -94,7 +101,8 @@ export class AddTaskComponent implements OnInit{
           UnlockedAchievements: locked_and_unlocked[0],
           LockedAchievements: locked_and_unlocked[1],
           weeklytasks: this.user_achievements.weeklytasks + weeklytask, 
-          tasksCompleted: this.user_achievements.tasksCompleted
+          tasksCompleted: this.user_achievements.tasksCompleted, 
+          villainLevel: this.user_achievements.villainLevel
         }
 
         this.updateAchievements(this.currentUser, AchievemtUpdate);
@@ -201,6 +209,7 @@ export class AddTaskComponent implements OnInit{
 
   closeModal() {
     this.AddTask.toggleModal();
+    this.modalClicked.emit();
   }
 
 }

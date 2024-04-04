@@ -3,6 +3,8 @@ div {
   flex-direction: column;
   align-items: center;
   margin: 20px;
+  letter-spacing: .5px;
+  font-family: "Poppins", sans-serif;
 }
 
 .title {

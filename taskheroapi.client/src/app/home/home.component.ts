@@ -8,20 +8,40 @@ import { userAchievements } from '../../services/userAchievement.service';
 import { IUserAchievements } from '../../interfaces/userachievements.interface';
 import { achievementBadge } from '../../interfaces/achievementBadge.interface';
 import { Achievements } from '../../services/achievements.service';
+import { ChangeDetectorRef } from '@angular/core';
+import { ProgressbarType } from 'ngx-bootstrap/progressbar';
+import { UserService } from '../../services/user.service';
+import { ImageSelectorService } from '../../services/imageSelector.service';
+import { LoadingService } from '../../services/loading.service';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
+
+//things to currently fix: 
+// -- add notification for losing and gaining points in the score
+// -- add notifications for gaining achievements. 
+// -- add notification for defeating the villain 
+//          -- the villain would be defeated by the health bar (progress bar reversed)
+// -- the villain will remain hurt until sunday unless things change and a new item is added 
+// -- then the villain will regain its health, accordingly, the villain is only changed every sunday. 
+// -- weather you have defeated the villain is only determined when you load the webpage past a sunday. 
+
+
 export class HomeComponent implements OnInit{
-  constructor(private authService: AuthService, private TaskService: userTask, private router: Router, private AchievementService: userAchievements, private achievements: Achievements) { 
+  constructor(private authService: AuthService,  private imageSelector: ImageSelectorService, private loadingService: LoadingService, private userService: UserService, private TaskService: userTask, private router: Router, private AchievementService: userAchievements,private cdr: ChangeDetectorRef, private achievements: Achievements) { 
   }
 
   comicExpressions: string[] = ['/assets/icons/kaboom.png', '/assets/icons/boom.png', '/assets/icons/pow.png', '/assets/icons/kapow.png', '/assets/icons/bang.png'];
   currentUser: number = 0; 
+  username: string = "";
   tasks: any[] = []; 
   achievementBadges: achievementBadge[] = [];
   user_achievements: any; 
+  avatarLink: string = "assets/profilePics/default.png";
+  enemyLink: string = "";
   //makes more sense for streak to be number of tasks done on time. 
   ending: string = "";
   streakPicture: string = "";
@@ -29,11 +49,15 @@ export class HomeComponent implements OnInit{
   comicChoice: string = "";
   ProgressCount: number = 0;
   progressValue: number = 0;
+  totalScore: number = 0;
   userScore: number = 0; 
   userBadge: string = "";
   badgeLevel: string = "";
-
-
+  healthStatus: ProgressbarType | undefined= "danger";
+  enemyStatus: ProgressbarType | undefined= "success";
+  enemyList: string[][] = [['/assets/icons/mondayprof.png', 'Monday Inc.'], ['/assets/icons/sundayprof.png', 'Sunday Knight']];
+  enemyName: string = "";
+  userdetails: any = "";
 
 //when task is complete, display notification from comic expressions 
 //call the remove task API service, reposition the top three tasks
@@ -66,9 +90,20 @@ export class HomeComponent implements OnInit{
       this.user_achievements.dailyTracker +=1;
     }
 
+    this.ProgressCount = this.user_achievements.weeklyProgress;
+
     if(this.hasSundaySinceDate(new Date(this.user_achievements.lastActive))){
       console.log("here")
       this.ProgressCount = 0;
+    }
+
+    var add_to_progress_count = 0; 
+
+
+    //this is where the error is, also score goes above 100 and tht shit fucks up with styling. fix that. 
+    if(this.IsDueBeforeSunday(task.dueDate)){
+      console.log("what");
+      add_to_progress_count = 1;
     }
 
     var locked_and_unlocked = this.achievements.determineAcheivements(
@@ -79,24 +114,46 @@ export class HomeComponent implements OnInit{
       this.user_achievements.tasksCompleted
     );
 
+    console.log(this.user_achievements.weeklytasks);
+    console.log(this.ProgressCount);
+    this.totalScore = this.user_achievements.totalScore + (task.importance * multiplier);
+    this.userdetails.score = this.totalScore;
+
     // update score and daily streak -- call to acheivement service. 
     var AchievemtUpdate: IUserAchievements = {
       UserId: this.currentUser,
       BadgeID: this.user_achievements.badgeID,
-      weeklyProgress: this.ProgressCount + 1,
+      weeklyProgress: this.ProgressCount + add_to_progress_count,
       dailyTracker: this.user_achievements.dailyTracker,
       totalScore: this.user_achievements.totalScore + (task.importance * multiplier),
       lastActive: new Date().toDateString(),
       UnlockedAchievements: locked_and_unlocked[0],
       LockedAchievements: locked_and_unlocked[1],
       weeklytasks: this.user_achievements.weeklytasks,
-      tasksCompleted: this.user_achievements.tasksCompleted + 1
+      tasksCompleted: this.user_achievements.tasksCompleted + 1, 
+      villainLevel: this.user_achievements.villainLevel
     }
     this.updateAchievements(this.currentUser, AchievemtUpdate);
 
+    //updating the users score so it can be shown in the social page/profile. 
+    this.userService.put(this.userdetails).subscribe({
+      error: (error) => {
+        console.error('An error occurred:', error);
+      },
+      complete: () => {
+        console.log("good")
+      }
+    })
     //refreshing the user tasks list and repositioning the top three tasks 
     this.getUserTasks();
   }
+
+
+
+  
+  //function for having a pop-up once the propgress bar reaches 100% for the week: 
+  //in future notes: this should only be done on sundays. 
+
 
 
 
@@ -187,9 +244,7 @@ export class HomeComponent implements OnInit{
         console.error('An error occurred:', error);
       },
       complete: () => {
-        console.log(Object.keys(this.tasks[1]))
         this.streakFeatures();
-
       }
     });
   }
@@ -208,8 +263,18 @@ export class HomeComponent implements OnInit{
       },
       complete: () => {
         this.streakFeatures();
-        this.ProgressCount = this.user_achievements.weeklyProgress;
+        this.totalScore = this.user_achievements.totalScore;
+        //if there has been a sunday since last active, then determine new progress based on the stuff due. 
         if(this.hasSundaySinceDate(this.user_achievements.lastActive)){
+
+
+          //************************************* */
+          //first determine the villains fate here 
+
+
+
+          //then change the villain to the next villain 
+          //************************************* */
           var taskCount = this.calculateProgress(); 
           this.AchievementService.update(this.currentUser,
           {
@@ -218,11 +283,12 @@ export class HomeComponent implements OnInit{
             weeklyProgress: this.user_achievements.weeklyProgress,
             dailyTracker: this.user_achievements.dailyTracker,
             totalScore: this.user_achievements.totalScore,
-            lastActive: this.user_achievements.lastActive,
+            lastActive: new Date().toDateString(),
             UnlockedAchievements: this.user_achievements.unlockedAchievements,
             LockedAchievements: this.user_achievements.lockedAchievements,
             weeklytasks: taskCount, 
-            tasksCompleted: this.user_achievements.tasksCompleted
+            tasksCompleted: this.user_achievements.tasksCompleted, 
+            villainLevel: this.user_achievements.villainLevel
           })
           .subscribe({
             next: () => {
@@ -236,12 +302,31 @@ export class HomeComponent implements OnInit{
             this.progressValue = Math.ceil((this.ProgressCount / taskCount) * 100)
         }
         }    
+
         else{ 
           var taskCount: number = this.user_achievements.weeklytasks; 
           if(taskCount != 0){
-            this.progressValue = Math.ceil((this.ProgressCount / taskCount) * 100)
+            this.progressValue = Math.ceil((this.user_achievements.weeklyProgress / taskCount) * 100)
+          }
+          if(taskCount == 0){ 
+            this.progressValue = 100;
           }
         }
+
+
+        // maybe
+        // if(this.progressValue >= 70){
+        //   this.healthStatus = 'success';
+        //   this.enemyStatus = 'danger';
+        // }
+        // if(this.progressValue >= 30 && this.progressValue < 70){
+        //   this.healthStatus = 'warning'; 
+        //   this.enemyStatus = 'warning';
+        // }
+        // if(this.progressValue >= 0 && this.progressValue < 30){ 
+        //   this.healthStatus = 'danger'; 
+        //   this.enemyStatus = 'success';
+        // }
 
         this.achievementBadges = this.achievements.getAcheivementsPics(this.user_achievements.unlockedAchievements);
         var badgeInfo = this.achievementBadges.find(badge => badge.type == 'Level');
@@ -249,9 +334,26 @@ export class HomeComponent implements OnInit{
           this.badgeLevel = badgeInfo.title; 
           this.userBadge = badgeInfo.path;
         }
+        this.enemyLink = this.enemyList[this.user_achievements.villainLevel][0];
+        this.enemyName = this.enemyList[this.user_achievements.villainLevel][1];
         this.achievementBadges = this.achievementBadges.filter(achievement => achievement.type !== 'Level');
+        this.loadingService.hide();
       }
+      
     });
+  }
+
+  IsDueBeforeSunday(Due: Date): boolean{ 
+
+    // getting the date value of 'next sunday'
+    const today = new Date(); 
+    const daysOfWeek = today.getDay(); 
+    const daysUntilSunday = daysOfWeek === 0 ? 7 : 7 - daysOfWeek; 
+    const nextSunday = new Date(today); 
+    nextSunday.setDate(today.getDate() + daysUntilSunday);
+    nextSunday.setHours(0, 0, 0, 0);
+
+    return Due <= nextSunday;
   }
 
   hasSundaySinceDate(startDate: Date): boolean {
@@ -289,11 +391,24 @@ export class HomeComponent implements OnInit{
   }
 
 
-
   ngOnInit() { 
+    this.loadingService.show();
     if(this.authService.getLoggedInUserId != null){
       this.currentUser = Number(this.authService.getLoggedInUserId());
     }
+    this.userService.getUserById(this.currentUser).subscribe({
+      next: (userDetails) => {
+        this.userdetails = userDetails;
+        //not sure how to get number of achievements
+      }
+      , 
+      complete: () => {
+        console.log(this.userdetails);
+        this.username = this.userdetails.userName;
+        this.avatarLink = this.imageSelector.pickPic(this.userdetails.image);
+      }
+    }
+    );
     console.log(this.currentUser);
     this.getUserTasks();
     this.getAchievments();
