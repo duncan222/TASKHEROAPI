@@ -53,9 +53,20 @@
 <mat-card>
   <div class="task-list">
     <h2>Task List</h2>
+    <!-- Filter options -->
+    <div class="filter-options">
+      <label>Filter by: </label>
+      <select [(ngModel)]="selectedFilter" (change)="applyFilter()">
+        <option value="newest">Newest</option>
+        <option value="closestDueDate">Closest Due Date</option>
+      </select>
+    </div>
+    <br />
+    <!-- Task items container -->
     <div class="task-items-container">
       <div class="row">
         <div class="col-md-8 offset-md-2">
+          <!-- Task cards -->
           <div *ngFor="let task of tasks" class="card mb-4">
             <div class="card-body">
               <h3 class="card-title">{{ task.Title }}</h3>
@@ -63,6 +74,8 @@
               <p *ngIf="task.DueDate" class="card-text">Due Date: {{ task.DueDate | date }}</p>
               <p *ngIf="task.Importance" class="card-text">Priority: {{ task.Importance }}</p>
               <div class="d-flex justify-content-center">
+                <!-- Buttons for task operations -->
+                <!-- Inside the task card -->
                 <button type="button" class="btn btn-primary mx-1" (click)="editTask(task)">Edit</button>
                 <button type="button" class="btn btn-danger mx-1" (click)="deleteTask(task)">Delete</button>
                 <button type="button" class="btn btn-success mx-1" (click)="completeTask(task)">Complete</button>

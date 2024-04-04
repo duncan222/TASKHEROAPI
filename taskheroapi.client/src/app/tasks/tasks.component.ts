@@ -6,6 +6,9 @@ import { IUserTasks } from '../../interfaces/usertasks.interface';
 import { userAchievements } from '../../services/userAchievement.service';
 import { IUserAchievements } from '../../interfaces/userachievements.interface';
 import { Achievements } from '../../services/achievements.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EditTaskComponent } from '../edit-task/edit-task.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-tasks',
@@ -13,6 +16,7 @@ import { Achievements } from '../../services/achievements.service';
   styleUrls: ['./tasks.component.css']
 })
 export class TasksComponent implements OnInit {
+  selectedFilter: string = 'newest'; // Default filter
   currentUser: number = 0;
   taskGroup: FormGroup;
   tasks: IUserTasks[] = []; // Array to store tasks
@@ -27,7 +31,8 @@ export class TasksComponent implements OnInit {
     private taskService: userTask,
     private authService: AuthService,
     private Achievements: userAchievements,
-    private achievements: Achievements
+    private achievements: Achievements,
+    private dialog: MatDialog
   ) {
     this.taskGroup = this.fb.group({
       title: new FormControl(''),
@@ -122,12 +127,39 @@ export class TasksComponent implements OnInit {
   }
 
   editTask(task: IUserTasks): void {
-    // Implement edit task functionality here
+    const dialogRef = this.dialog.open(EditTaskComponent, {
+      width: '500px', // Adjust the width as needed
+      data: { task: task }
+    });
+
+    dialogRef.afterClosed().subscribe(updatedTask => {
+      if (updatedTask) {
+        // Update the task details in the tasks array
+        const index = this.tasks.findIndex(t => t.TaskId === updatedTask.TaskId);
+        if (index !== -1) {
+          this.tasks[index] = updatedTask;
+        }
+      }
+    });
   }
 
   deleteTask(task: IUserTasks): void {
-    // Implement delete task functionality here
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: { message: 'Are you sure you want to delete this task?' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Delete task logic here
+        const index = this.tasks.findIndex(t => t.TaskId === task.TaskId);
+        if (index !== -1) {
+          this.tasks.splice(index, 1);
+        }
+      }
+    });
   }
+
 
   completeTask(task: IUserTasks): void {
     // Implement complete task functionality here
@@ -198,5 +230,22 @@ export class TasksComponent implements OnInit {
     const NormalizeUrgency = Math.max(0, Math.min(1, urgency));
     const weight = (UrgencyWeight * NormalizeUrgency) + (PriorityWeight * NormalizePriority);
     return weight;
+  }
+  applyFilter(): void {
+    if (this.selectedFilter === 'newest') {
+      this.tasks.sort((a, b) => new Date(b.TimeStamp).getTime() - new Date(a.TimeStamp).getTime());
+    } else if (this.selectedFilter === 'closestDueDate') {
+      this.tasks.sort((a, b) => {
+        const dueDateA = new Date(a.DueDate).getTime();
+        const dueDateB = new Date(b.DueDate).getTime();
+
+        if (dueDateA === dueDateB) {
+          // If due dates are the same, sort by priority (high to low)
+          return b.Importance - a.Importance;
+        }
+
+        return dueDateA - dueDateB;
+      });
+    }
   }
 }

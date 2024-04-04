@@ -1,0 +1,50 @@
+<!-- edit-task.component.html -->
+
+<form [formGroup]="editTaskForm" (ngSubmit)="onSubmit()">
+  <!-- Title -->
+  <div class="form-row title fields">
+    <div class="input-group mb-3">
+      <input formControlName="title" type="text" class="form-control" placeholder="Title" aria-label="Task Title">
+    </div>
+  </div>
+
+  <!-- Description -->
+  <div class="form-row description fields">
+    <div class="input-group mb-3">
+      <textarea formControlName="description" type="text" class="form-control" rows="3" placeholder="Description..."></textarea>
+    </div>
+  </div>
+
+  <!-- Due Date -->
+  <div class="form-row due-date fields">
+    <div class="input-group mb-3">
+      <input formControlName="date" class="form-control duedate" matInput [matDatepicker]="basicDatepicker" placeholder="Select Due Date...">
+      <div class="input-group-append append">
+        <mat-datepicker-toggle matSuffix [for]="basicDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker [startAt]="startDate" #basicDatepicker></mat-datepicker>
+      </div>
+    </div>
+  </div>
+
+  <!-- Priority -->
+  <div class="form-row priority fields" style="padding-bottom: 2rem;">
+    <label class="form-check-label" style="padding-right: 1rem;">Priority: </label>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="priority" formControlName="priority" id="priorityLow" value="low">
+      <label class="form-check-label" for="priorityLow">Low</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="priority" formControlName="priority" id="priorityMedium" value="medium">
+      <label class="form-check-label" for="priorityMedium">Medium</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="priority" formControlName="priority" id="priorityHigh" value="high">
+      <label class="form-check-label" for="priorityHigh">High</label>
+    </div>
+  </div>
+
+  <!-- Submit button -->
+  <div class="form-row submit-button">
+    <button class="btn btn-success add" [disabled]="editTaskForm.invalid" type="submit">Submit</button>
+  </div>
+</form>
