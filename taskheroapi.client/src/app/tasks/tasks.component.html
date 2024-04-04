@@ -54,14 +54,24 @@
   <div class="task-list">
     <h2>Task List</h2>
     <div class="task-items-container">
-      <div *ngFor="let task of tasks" class="task-item">
-        <h3>{{ task.Title }}</h3>
-        <p>{{ task.Description }}</p>
-        <p *ngIf="task.DueDate">Due Date: {{ task.DueDate | date }}</p>
-        <p *ngIf="task.Importance">Priority: {{ task.Importance }}</p>
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+          <div *ngFor="let task of tasks" class="card mb-4">
+            <div class="card-body">
+              <h3 class="card-title">{{ task.Title }}</h3>
+              <p class="card-text description">{{ task.Description }}</p>
+              <p *ngIf="task.DueDate" class="card-text">Due Date: {{ task.DueDate | date }}</p>
+              <p *ngIf="task.Importance" class="card-text">Priority: {{ task.Importance }}</p>
+              <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-primary mx-1" (click)="editTask(task)">Edit</button>
+                <button type="button" class="btn btn-danger mx-1" (click)="deleteTask(task)">Delete</button>
+                <button type="button" class="btn btn-success mx-1" (click)="completeTask(task)">Complete</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   <br />
 </mat-card>
-

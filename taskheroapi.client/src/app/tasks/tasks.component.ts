@@ -45,6 +45,19 @@ export class TasksComponent implements OnInit {
       this.currentUser = Number(this.authService.getLoggedInUserId());
     }
     this.getAchievements();
+    this.loadTasks();
+  }
+
+  loadTasks(): void {
+    // Load tasks for the current user
+    this.taskService.getUserTasks(this.currentUser).subscribe(
+      (tasks: IUserTasks[]) => {
+        this.tasks = tasks;
+      },
+      error => {
+        console.error('Error loading tasks:', error);
+      }
+    );
   }
 
   onSubmit(): void {
@@ -69,12 +82,11 @@ export class TasksComponent implements OnInit {
           Urgency: urgency,
         };
 
-        // Push the submitted task to the tasks array
+        // Add the submitted task to the tasks array
         this.tasks.push(taskInstance);
         // Clear the form after submission
         this.taskGroup.reset();
 
-        console.log(taskInstance);
         this.taskService.addTask(this.currentUser, taskInstance).subscribe(
           response => {
             console.log("added")
@@ -84,6 +96,9 @@ export class TasksComponent implements OnInit {
             setTimeout(() => {
               this.showNotification = false;
             }, 5000);
+
+            // Reload tasks after adding a new task
+            this.loadTasks();
           },
           error => {
             console.error('Error saving todo:', error);
@@ -92,30 +107,42 @@ export class TasksComponent implements OnInit {
       }
     }
   }
+
+
+  editTask(task: IUserTasks): void {
+    // Implement edit task functionality here
+  }
+
+  deleteTask(task: IUserTasks): void {
+    // Implement delete task functionality here
+  }
+
+  completeTask(task: IUserTasks): void {
+    // Implement complete task functionality here
+  }
+
   updateAchievements(currentUser: number, acheivement: IUserAchievements): void {
     this.Achievements.update(currentUser, acheivement)
       .subscribe({
         next: () => {
-          //successfully updates values of the users ahcievements 
+          // Successfully updates values of the user's achievements
           this.getAchievements();
-        }
-        ,
+        },
         error: error => {
           console.log('error updating', error);
         }
       });
-
   }
 
   calculateSunday(due: string): boolean {
-    // getting the date value of 'next sunday'
+    // Getting the date value of 'next Sunday'
     const today = new Date();
     const daysOfWeek = today.getDay();
     const daysUntilSunday = daysOfWeek === 0 ? 7 : 7 - daysOfWeek;
     const nextSunday = new Date(today);
     nextSunday.setDate(today.getDate() + daysUntilSunday);
     nextSunday.setHours(0, 0, 0, 0);
-    //returning the length of the filtered tasks... all that for that. has to be easier way 
+    // Returning the length of the filtered tasks... all that for that. Has to be an easier way 
     return new Date(due) < nextSunday;
   }
 
