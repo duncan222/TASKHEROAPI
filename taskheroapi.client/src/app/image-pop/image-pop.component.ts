@@ -19,15 +19,13 @@ export class ImagePopComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.topPosition = Math.random() * (window.innerHeight - 100); // Adjust 100 according to your popup height
-    this.leftPosition = Math.random() * (window.innerWidth - 100); // Adjust 100 according to your popup width
     setTimeout(() => {
       this.removeNotification(); 
     }, 5000);
   }
 
   removeNotification(): void {
-    const notifcationElement = document.getElementById('notification');
+    const notifcationElement = document.getElementById('notification_2');
     if(notifcationElement){
       notifcationElement.remove();
     }

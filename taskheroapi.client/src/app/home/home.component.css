@@ -6,6 +6,9 @@
     margin-left: 4.5rem;
 }
 
+.comic{ 
+    z-index: 10000;
+}
 .vertical .progress-bar{ 
     background-color: #A8EFFF !important;
 }
@@ -31,9 +34,10 @@
     font-family: "Poppins", sans-serif;
     text-align: center;
     width: 5rem;
+    font-size: small;
     position: absolute;
     margin-top: 5rem;
-    margin-left: 4rem;
+    margin-left: 4.5rem;
 
 }
 
@@ -234,6 +238,24 @@
         width: 100%;
     }
     
+    .tasks{
+        min-height: 21rem;
+        max-height: 21rem;
+        overflow-y: auto;
+    }
+
+    .tasks::-webkit-scrollbar{ 
+        width: 0.25rem;
+    }
+    
+    .tasks::-webkit-scrollbar-track{
+        background: #1e1e24;
+    }
+    
+    .tasks::-webkit-scrollbar-thumb{
+        background: #6649b8;
+    }
+    
     
     .dynamic-row-other{
         display: flex;
@@ -303,12 +325,12 @@
         transform: rotate(-90deg);
         min-width: 20rem; 
         height: 2rem; 
-        margin-top: 1rem;
         box-shadow: 0px 0px 20px 0px #A8EFFF;
         padding-right: 1rem;
         margin-right: 5.56rem;
         display:absolute;
         background-color: #bebebe40;
+        z-index: -1;
     }
 
     .vertical-right{
@@ -321,6 +343,7 @@
         margin-top: -2rem;
         height: 2rem;   
         margin-left: 5.6rem;
+        z-index: -1;
         background-color: #bebebe40;
         display: absolute;
     }
@@ -334,7 +357,6 @@
         position: absolute;
         left: 50%;
         margin-left: -2.8rem;
-        z-index: 1;
         margin-top: 3rem;
         transform: translatex(-50%);
       }
@@ -354,7 +376,6 @@
         position: absolute;
         left: 50%;
         margin-left: 2.8rem;
-        z-index: 1;
         transform: translatex(-50%);
         }
     
