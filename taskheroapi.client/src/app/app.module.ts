@@ -34,6 +34,7 @@ import { NotificationComponent } from './notification/notification.component';
 import { LoadingComponent } from './loading/loading.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ImagePopComponent } from './image-pop/image-pop.component';
+
 @NgModule({
   declarations: [
     AppComponent,
