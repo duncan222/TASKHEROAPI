@@ -23,6 +23,7 @@ export class ProfileComponent {
   profileImageUrl: string | null = null;
   achievementBadges: achievementBadge[] = []
   currentUser: number | null | undefined;
+  followerList: any[] = [];
   user_achievements: any;
   badgeLevel: string = "assets/gis/goldbadge.png";
   badgeName: string = ""
@@ -31,8 +32,8 @@ export class ProfileComponent {
   totalScore: number = 0;
   achievementNumber: number = 0;
   avatarLink: string = "assets/profilePics/default.png";
+  isFollowersOpen: boolean = false;
   empty_ach: string = "/assets/icons/empty_ach.png";
-
 
   showEditProf = false; 
 
@@ -54,6 +55,14 @@ export class ProfileComponent {
 
   redirectSettings(){ 
     this.router.navigate(['/settings']);
+  }
+
+  openFollowersPopup() {
+    this.isFollowersOpen = !this.isFollowersOpen;
+  }
+
+  viewUserProfile(userId: number) {
+    this.router.navigate(['/user-profile', userId])
   }
 
   //getting the users acheivments and progress till reaching the next one 
@@ -81,7 +90,6 @@ export class ProfileComponent {
     }
   }
 
-
   userProfile: any
 
   ngOnInit(): void {
@@ -99,6 +107,7 @@ export class ProfileComponent {
     this.followerService.getFollowersById(this.currentUser).subscribe(
       (userFollowers) => {
         for (const followedUser of userFollowers) {
+          this.followerList.push({ id: followedUser.userId, avatar: this.imageSelector.pickPic(followedUser.image), username: followedUser.userName, points: followedUser.score })
           this.followersNumber++;
         }
         this.loadingService.hide();
