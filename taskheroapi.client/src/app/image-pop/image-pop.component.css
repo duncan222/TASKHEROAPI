@@ -1,14 +1,20 @@
-.notification_2{ 
-    position: fixed;
+.notification_2 {
+    position: absolute;
     height: auto;
     width: 2rem;
-    top: 20px; 
-    right: 20px; 
+    top: 25%;
+    left: 28%;
+    transform: translate(-50%, -50%);
     border-color: transparent;
     background-color: transparent;
-    animation: fadeOut 5s ease;
+    animation: fadeOut 2s ease;
     transition: all 0.3s ease-in-out;
     z-index: 10000;
+}
+
+.notification_2 img{ 
+    width: 18rem;
+    height: auto;
 }
 
 @keyframes fadeOut {

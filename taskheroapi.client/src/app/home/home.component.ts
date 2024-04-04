@@ -192,7 +192,7 @@ export class HomeComponent implements OnInit{
         this.showImagePop = true;
         setTimeout(() => {
           this.showImagePop = false;
-        }, 5000); 
+        }, 2000); 
         // refreshing the list 
         this.getUserTasks();
         //call to calaulate progress
