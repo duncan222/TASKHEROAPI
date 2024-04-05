@@ -55,36 +55,6 @@
   box-shadow: 0px 0px 10px 0px #ffffffba;
 }
 
-@media only screen and (min-width: 30px) {
-  .popup {
-    position: relative;
-    /* justify-content: flex-start !important; */
-    display: flex;
-    height: 80vh;
-    font-family: "Poppins", sans-serif;
-  }
-
-  .task-card {
-    width: auto;
-    font-family: "Poppins", sans-serif;
-  }
-}
-
-@media only screen and (max-width: 660px) {
-  .popup {
-    display: flex;
-    height: 70vh;
-    position: relative;
-    /* justify-content: flex-start !important; */
-    font-family: "Poppins", sans-serif;
-  }
-
-  .task-card {
-    width: 20px;
-    font-family: "Poppins", sans-serif;
-  }
-}
-
 h1, h2, h3, h4, h5, h6 {
   color: deeppink;
   font-family: "Poppins", sans-serif;
@@ -122,15 +92,17 @@ mat-card {
 }
 
 .task-items-container {
-
+  justify-content: center;
+  justify-items: center;
   display: flex;
   max-width: 800px;
   margin: 2rem auto;
   color: #282828;
   letter-spacing: .5px;
   background-color: transparent !important;
-  display: flex;
   font-family: "Poppins", sans-serif;
+    padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .task-item {
@@ -145,13 +117,18 @@ mat-card {
 }
 
 .card-body {
-  position: relative;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  position: center !important;
   border: 1px solid #A8EFFF;
   box-shadow: 0px 0px 10px 0px #A8EFFF;
   background-color: #4e4e5e;
   color: #A8EFFF;
-  justify-content: center;
-  min-width: 400px;
+  justify-content: flex-start;
+  min-width: 450px;
+  max-width: 450px;
+  overflow-y: auto;
+  flex-wrap: wrap;
 }
 
 .card-text description {
