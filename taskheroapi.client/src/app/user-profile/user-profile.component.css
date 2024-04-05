@@ -4,6 +4,51 @@
   margin-right: 6.6rem; /* Adjust margin to move the buttons to the right */
 }
 
+.edit-icon {
+  position: absolute;
+  bottom: -1px;
+  right: -20px;
+  box-shadow: none !important;
+  border: none !important;
+  background-color: transparent !important;
+}
+
+.edit-icon img{ 
+  background-color: transparent !important;
+  box-shadow: none !important;
+  width: 4.5rem !important;
+  height: auto !important;
+}
+
+.empty_ach{
+  width: 100%;
+}
+
+.margin_contain .separator{ 
+  margin-left: 20%;
+  margin-right: 20%;
+  display: flex;
+  height: 1px;
+  background-color: #acacac8a;
+}
+
+.achv_con{
+  background-color: #23232e49;
+  /* border: 1px solid #FF48A6; */
+  border-radius: 1rem;
+  height: auto;
+  color: rgb(196, 196, 196);
+  width: 100%;
+}
+
+.margin_contain h3{
+  margin-top: 30px;
+  font-weight: 600;
+  font-size: 22px;
+  margin-bottom: 5px;
+  color: #acacac;
+}
+
 .follow-user,
 .unfollow-user {
   height: 40px; /* Adjust width as needed */
@@ -108,6 +153,20 @@ a {
       box-shadow: 1px 3px 12px rgba(175, 175, 175, 0.479);
     }
 
+  .image-container{ 
+    width: 15rem;
+    height: auto;
+    padding: 1rem;
+  }
+
+  .trophies{ 
+    width: 100% !important;
+    height: auto;
+    box-shadow: 0px 0px 15px 0px #A8EFFF;
+    border-radius: 1rem;
+    background-color: rgb(0, 0, 0);
+  }
+  
   .header__wrapper .cols__container .left__col .follow-user {
     margin-top: 60px;
     margin-left: rem;
@@ -219,6 +278,13 @@ a {
 
 @media only screen and (min-width: 600px) {
 
+  .margin_contain{
+    display: flex;
+    justify-content: center;
+    margin-top: -6rem;
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
 
   .new_container {
     margin-left: 8rem;
@@ -269,5 +335,13 @@ a {
 
   .header__wrapper .cols__container .right__col .Achievements {
     margin-left: 10rem;
+  }
+
+  .margin_contain{
+    display: flex;
+    justify-content: center;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    padding-bottom: 5rem;
   }
 }

@@ -1,3 +1,15 @@
-<div class="notification_2">
+<div *ngIf="type == 'comic'; else elseblock" class="notification_2">
         <img src="{{image}}" class="notificationr_2">
 </div>
+<ng-template #elseblock> 
+        <div *ngIf="type == 'villain'; else elseblock_2" class="notification_2">
+                <span class="note_title">Villain Defeated!</span>
+                <img src="{{image}}" class="notificationr_2">
+        </div>
+        <ng-template #elseblock_2> 
+                <div class="notification_2">
+                        <span class="note_title">Achievement Unlocked!</span>
+                        <img src="{{image}}" class="notificationr_2">
+                </div>
+        </ng-template>
+</ng-template>

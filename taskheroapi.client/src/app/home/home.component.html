@@ -5,7 +5,7 @@ also change the buttons so they are not edit and delete, but rather delete and m
 also change the font. -- these are edits to be made later once functionality is achieved.  -->
 
 <div class="home">
-    <app-image-pop *ngIf="showImagePop"  class="comic" [image]="comicChoice"></app-image-pop>
+    <app-image-pop *ngIf="showImagePop"  class="comic" [image]="photoChoice" [type]="typeChoice"></app-image-pop>
     <div class="dynamic-row">
         <div class="dynamic-col-7 scrolly">
             <div class="dynamic-row-2" style="padding-bottom: 2rem;"> 

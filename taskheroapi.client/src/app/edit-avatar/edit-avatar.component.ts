@@ -14,7 +14,7 @@ export class EditAvatarComponent {
   constructor(private router: Router, private authService: AuthService, private userService: UserService, private imageSelector: ImageSelectorService) { }
 
   avatars: string[] = [
-    'assets/profilePics/1.jpeg',
+    'assets/icons/defaultpic.png',
     'assets/profilePics/2.png',
     'assets/profilePics/3.png',
     'assets/profilePics/4.png',

@@ -5,6 +5,8 @@ import { UserService } from '../../services/user.service';
 import { ImageSelectorService } from '../../services/imageSelector.service';
 import { FollowerService } from '../../services/follower.service';
 import { LoadingService } from '../../services/loading.service';
+import { Achievements } from '../../services/achievements.service';
+import { userAchievements } from '../../services/userAchievement.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -27,14 +29,37 @@ export class UserProfileComponent implements OnInit {
   unfollowNotifText: string = "";
   following: any[] = [];
   isFollow: boolean = false;
+  achievementBadges: any;
+  userBadge: string = "";
+  user_achievements: any;
+  empty_ach: string = "/assets/icons/empty_ach.png";
 
+  
   constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private userService: UserService,
-    private imageSelector: ImageSelectorService, private followerService: FollowerService, private loadingService: LoadingService) { }
+    private imageSelector: ImageSelectorService, private followerService: FollowerService, private loadingService: LoadingService, private achievements: Achievements, private AchievementService: userAchievements) { }
 
   ngOnInit(): void {
     this.loadingService.show();
     this.currentLoggedInUserId = this.authService.getLoggedInUserId();
     this.pageUserId = Number(this.route.snapshot.params['userId']);
+
+    this.AchievementService.getAchievements(this.pageUserId)
+    .subscribe({
+      next: (acheivements) => {
+        this.user_achievements = acheivements;
+      },
+      error: (error) => {
+        console.error('An error occurred:', error);
+      },
+      complete: () => {    this.achievementBadges = this.achievements.getAcheivementsPics(this.user_achievements.unlockedAchievements);
+        var badgeInfo = this.achievementBadges.find((badge: { type: string; }) => badge.type == 'Level');
+        if(badgeInfo != undefined){
+          this.badgeLevel = badgeInfo.title; 
+          this.userBadge = badgeInfo.path;
+          this.achievementBadges = this.achievementBadges.filter((achievement: { type: string; }) => achievement.type !== 'Level');
+          this.achievementNumber = this.achievementBadges.length; 
+        }}
+    });
     this.userService.getUserById(this.pageUserId).subscribe(
       (pageUserDetails) => {
         this.username = pageUserDetails.userName;
