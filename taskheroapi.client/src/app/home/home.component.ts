@@ -286,11 +286,28 @@ export class HomeComponent implements OnInit{
         //if there has been a sunday since last active, then determine new progress based on the stuff due. 
         if(this.hasSundaySinceDate(this.user_achievements.lastActive)){
 
-
+          var villainScore = 0; 
+          var newLevel = this.user_achievements.villainLevel; 
           //************************************* */
           //first determine the villains fate here 
+          if(this.user_achievements.weeklyProgress >= this.user_achievements.weeklytasks){
+            //villain defeated  
 
+            // pop up, you got the villain now 
 
+            // villain now is in subcategorie of achievements 
+
+            // moves to next villain 
+            newLevel = this.user_achievements.villainLevel + 1;
+            villainScore = 2 * this.user_achievements.villainLevel; 
+          }
+          else{ 
+            //villain not defeated 
+
+            //you did not defeate the villain notification. another week of torment. 
+            //*********  should subtract some points.  */  ( minus 1*villain level + 1);
+            villainScore = 0 - (2 * this.user_achievements.villainLevel); 
+          }
 
           //then change the villain to the next villain 
           //************************************* */
@@ -301,13 +318,13 @@ export class HomeComponent implements OnInit{
             BadgeID: this.user_achievements.badgeID,
             weeklyProgress: this.user_achievements.weeklyProgress,
             dailyTracker: this.user_achievements.dailyTracker,
-            totalScore: this.user_achievements.totalScore,
+            totalScore: this.user_achievements.totalScore + villainScore,
             lastActive: new Date().toDateString(),
             UnlockedAchievements: this.user_achievements.unlockedAchievements,
             LockedAchievements: this.user_achievements.lockedAchievements,
             weeklytasks: taskCount, 
             tasksCompleted: this.user_achievements.tasksCompleted, 
-            villainLevel: this.user_achievements.villainLevel
+            villainLevel: newLevel
           })
           .subscribe({
             next: () => {
@@ -319,13 +336,35 @@ export class HomeComponent implements OnInit{
           });
           if(taskCount != 0){
             this.progressValue = Math.ceil((this.ProgressCount / taskCount) * 100)
+            if(this.progressValue > 100){
+              this.progressValue = 100;
+            }
+            if(this.progressValue < 0){
+              this.progressValue = 0;
+            }
         }
+        this.userdetails.score = this.user_achievements + villainScore;
+        this.userService.put(this.userdetails).subscribe({
+          error: (error) => {
+            console.error('An error occurred:', error);
+          },
+          complete: () => {
+            console.log("good")
+          }
+        });
+
         }    
 
         else{ 
           var taskCount: number = this.user_achievements.weeklytasks; 
           if(taskCount != 0){
             this.progressValue = Math.ceil((this.user_achievements.weeklyProgress / taskCount) * 100)
+          }
+          if(this.progressValue > 100){
+            this.progressValue = 100;
+          }
+          if(this.progressValue < 0){
+            this.progressValue = 0;
           }
           if(taskCount == 0){ 
             this.progressValue = 100;
