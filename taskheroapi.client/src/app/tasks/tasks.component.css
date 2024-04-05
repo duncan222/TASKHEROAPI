@@ -114,6 +114,9 @@ mat-card {
   box-shadow: 0px 0px 10px 0px deeppink;
   color: white;
   background-color: #23232e;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .task-list {

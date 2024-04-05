@@ -25,22 +25,9 @@ h2 {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  justify-items:center;
+  justify-self:center;
 }
-
-  .mat-dialog-actions button.mat-button.yes-button {
-    color: #A8EFFF;
-    background-color: transparent;
-    border: 1px solid #A8EFFF;
-    padding: 8px 16px;
-    margin-right: 10px;
-  }
-
-  .mat-dialog-actions button.mat-button.no-button {
-    color: #A8EFFF;
-    background-color: transparent;
-    border: 1px solid #A8EFFF;
-    padding: 8px 16px;
-  }
 
 .yes-button {
   font-family: "Poppins", sans-serif;
