@@ -76,7 +76,7 @@ mat-card {
   display: flex;
   justify-content: space-around;
   max-width: 800px;
-  margin: 2rem auto;
+  margin: 25px 7% 40px 7%; 
   color: #282828;
   letter-spacing: .5px;
   font-family: "Poppins", sans-serif;
@@ -85,6 +85,7 @@ mat-card {
   color: white;
   background-color: #23232e;
 }
+
 
 .task-list {
   font-family: "Poppins", sans-serif;
