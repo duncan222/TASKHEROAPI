@@ -98,6 +98,7 @@ namespace TASKHEROAPI.Server.Controllers
             return CreatedAtAction("GetUserAchievements", new { id = userAchievements.UserId }, userAchievements);
         }
 
+
         // DELETE: api/UserAchievements/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUserAchievements(int id)
