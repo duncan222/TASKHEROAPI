@@ -73,9 +73,9 @@
               <p *ngIf="task.DueDate" class="card-text">Due Date: {{ task.DueDate | date }}</p>
               <p *ngIf="task.Importance" class="card-text">Priority: {{ task.Importance }}</p>
               <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-success mx-1" (click)="completeTask(task)">Complete</button>
                 <button type="button" class="btn btn-primary mx-1" (click)="editTask(task)">Edit</button>
                 <button type="button" class="btn btn-danger mx-1" (click)="deleteTask(task)">Delete</button>
-                <button type="button" class="btn btn-success mx-1" (click)="completeTask(task)">Complete</button>
               </div>
             </div>
           </div>

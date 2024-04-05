@@ -1,0 +1,81 @@
+h2{
+    color: deeppink;
+    text-align: center;
+}
+form {
+  background-color: #4e4e5e;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px 0px #A8EFFF;
+  font-family: "Poppins", sans-serif;
+  border: 2px solid #A8EFFF;
+}
+
+.form-row {
+  margin-bottom: 20px;
+}
+
+.fields {
+  color: rgba(245, 245, 245, 0.733);
+}
+
+.input-group {
+  width: 100%;
+}
+
+.form-control {
+  background-color: #4e4e5e;
+  color: rgba(245, 245, 245, 0.733);
+  border-color: #A8EFFF;
+  box-shadow: 0px 0px 10px 0px #A8EFFF;
+}
+
+.duedate {
+  background-color: #4e4e5e;
+  color: rgba(245, 245, 245, 0.733);
+  border-color: #A8EFFF;
+  box-shadow: 0px 0px 10px 0px #A8EFFF;
+}
+
+.append {
+  background-color: #4e4e5e;
+  border-color: #A8EFFF;
+  box-shadow: 0px 0px 10px 0px #A8EFFF;
+}
+
+.priority {
+  display: flex;
+  align-items: center;
+}
+
+  .priority .form-check-label {
+    color: rgba(245, 245, 245, 0.733);
+  }
+
+.submit-button {
+  text-align: center;
+}
+
+.btn-success.add {
+  background-color: #A8EFFF;
+  border-color: #A8EFFF;
+  color: #4e4e5e;
+  font-weight: bold;
+  box-shadow: 0px 0px 10px 0px #A8EFFF;
+}
+.form-check-input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid deeppink;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+}
+
+  .form-check-input[type="radio"]:checked {
+    background-color: deeppink;
+  }
