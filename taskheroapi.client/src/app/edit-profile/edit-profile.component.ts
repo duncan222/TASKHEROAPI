@@ -29,6 +29,7 @@ export class EditProfileComponent {
   currentUserId: number | null | undefined;
   confirmPassword: string = "";
   errorMessage: string = "";
+  displayedPassword: string = ""
   loading: boolean = false;
 
   ngOnInit() {
@@ -48,6 +49,17 @@ export class EditProfileComponent {
         this.userEdits.userAccount.email = userDetails.email;
       }
     );
+  }
+
+  getHiddenPassword(): string {
+    return '*'.repeat(this.userEdits.userAccount.password.length);
+  }
+  getHiddenConfirm(): string {
+    return '*'.repeat(this.confirmPassword.length);
+  }
+
+  onPasswordInput(event: Event): void {
+    this.displayedPassword = (event.target as HTMLInputElement).value.replace(/./g, '*');
   }
 
   cancelChanges() {
