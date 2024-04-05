@@ -54,6 +54,7 @@
     <!-- Filter options -->
     <div class="filter-options">
       <label>Filter by: </label>
+      <br />
       <select [(ngModel)]="selectedFilter" (change)="applyFilter()">
         <option value="newest">Newest</option>
         <option value="closestDueDate">Closest Due Date</option>
