@@ -57,7 +57,7 @@ export class userTask {
     return this.http.get<IUserTasks[]>(`${this.apiUrl}/UserTasks/${userId}`);
   }
 
-  deleteTask(taskId: number): Observable<void> {
+  deleteTask(taskId: number | undefined): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/UserTasks/${taskId}`);
   }
 

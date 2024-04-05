@@ -174,10 +174,15 @@ export class TasksComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // Delete task logic here
-        const index = this.tasks.findIndex(t => t.TaskId === task.TaskId);
-        if (index !== -1) {
-          this.tasks.splice(index, 1);
-        }
+        this.taskService.deleteTask(task.TaskId).subscribe(
+          (response) => {
+            console.log("Task deleted", response);
+            this.refreshPage();
+          },
+          (error) => {
+            console.log("Error deleting task:", error);
+          }
+        );
       }
     });
   }
