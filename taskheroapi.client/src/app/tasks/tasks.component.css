@@ -1,0 +1,226 @@
+.add {
+  width: 8rem;
+  height: auto;
+  font-family: "Poppins", sans-serif;
+  background-color: #4e4e5e !important;
+  box-shadow: 0px 0px 10px 0px #A8EFFF !important;
+  border-color: #A8EFFF !important;
+  color: rgba(245, 245, 245, 0.733) !important;
+  font-weight: bolder;
+}
+
+.task {
+  background-color: transparent !important;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 2rem;
+  font-family: "Poppins", sans-serif;
+}
+
+.below {
+  margin-bottom: -35rem;
+  font-family: "Poppins", sans-serif;
+  background-color: transparent !important;
+}
+
+.task-card {
+  background-color: transparent !important;
+  color: rgb(226, 226, 0);
+  border: 10px solid #A8EFFF;
+  box-shadow: 0px 0px 10px 0px deeppink;
+  font-family: "Poppins", sans-serif;
+}
+
+.fields {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-family: "Poppins", sans-serif;
+  background-color: transparent !important;
+}
+
+.x {
+  width: 1.5rem;
+  font-family: "Poppins", sans-serif;
+  background-color: transparent !important;
+}
+
+.duedate:focus {
+  width: 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+.append {
+  background-color: #A8EFFF !important;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 0px 0px 10px 0px #ffffffba;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: deeppink;
+  font-family: "Poppins", sans-serif;
+}
+
+content {
+  /* justify-content: space-between !important; */
+  background-color: transparent !important;
+  position: relative;
+  max-width: 800px;
+  margin: 2rem auto;
+  color: #282828;
+  letter-spacing: .5px;
+  font-family: "Poppins", sans-serif;
+}
+
+mat-card {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  max-width: 800px;
+  margin: 2rem auto;
+  color: #282828;
+  letter-spacing: .5px;
+  font-family: "Poppins", sans-serif;
+  border: 1px solid deeppink;
+  box-shadow: 0px 0px 10px 0px deeppink;
+  color: white;
+  background-color: #23232e;
+}
+
+.task-list {
+  font-family: "Poppins", sans-serif;
+  background-color: transparent !important;
+}
+
+.task-items-container {
+  justify-content: center;
+  justify-items: center;
+  display: flex;
+  max-width: 800px;
+  margin: 2rem auto;
+  color: #282828;
+  letter-spacing: .5px;
+  background-color: transparent !important;
+  font-family: "Poppins", sans-serif;
+    padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.task-item {
+  display: flex;
+  max-width: 800px;
+  margin: 2rem auto;
+  color: #282828;
+  letter-spacing: .5px;
+  font-family: "Poppins", sans-serif;
+  background-color: transparent !important;
+  border: 1px solid deeppink;
+}
+
+.card-body {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  position: center !important;
+  border: 1px solid #A8EFFF;
+  box-shadow: 0px 0px 10px 0px #A8EFFF;
+  background-color: #4e4e5e;
+  color: #A8EFFF;
+  justify-content: flex-start;
+  min-width: 450px;
+  max-width: 450px;
+  overflow-y: auto;
+  flex-wrap: wrap;
+}
+
+.card-text description {
+  display: flex;
+  flex-wrap: wrap;
+  font-family: "Poppins", sans-serif;
+  overflow-y: auto;
+  background-color: deeppink;
+}
+
+.fields input.form-control,
+.fields textarea.form-control {
+  background-color: #4e4e5e;
+  box-shadow: 0px 0px 10px 0px #A8EFFF;
+  border-color: #A8EFFF;
+  color: rgba(245, 245, 245, 0.733);
+  font-weight: bolder;
+}
+
+.btn-primary {
+  background-color: #A8EFFF;
+  border-color: #A8EFFF;
+  box-shadow: 0px 0px 10px 0px #A8EFFF;
+  color: #4e4e5e;
+  font-weight: bold;
+}
+
+/* Delete button */
+.btn-danger {
+  background-color: deeppink;
+  border-color: deeppink;
+  box-shadow: 0px 0px 10px 0px deeppink;
+  color: #4e4e5e;
+  font-weight: bold;
+}
+
+/* Complete button */
+.btn-success {
+  background-color: #00FF00;
+  border-color: #00FF00;
+  box-shadow: 0px 0px 10px 0px #00FF00;
+  color: #4e4e5e;
+  font-weight: bold;
+}
+
+.filter-options {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+  .filter-options label {
+    color: deeppink;
+    text-align: center; 
+  }
+
+  .filter-options select {
+    padding: 8px;
+    border: 1px solid #A8EFFF;
+    border-radius: 5px;
+    border-color: #A8EFFF;
+    background-color: #4e4e5e;
+    box-shadow: 0px 0px 10px 0px #A8EFFF;
+    color: rgba(245, 245, 245, 0.733) !important;
+    color: #333;
+    font-size: 16px;
+    width: 200px;
+  }
+
+    .filter-options select:hover {
+      border: 1px solid #A8EFFF;
+      background-color: #e0e0e0;
+      color: #4e4e5e !important;
+    }
+
+    .filter-options select:focus {
+      border: 1px solid #A8EFFF;
+      outline: none;
+    }
+
+.form-check-input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid deeppink; 
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+}
+
+  .form-check-input[type="radio"]:checked {
+    background-color: deeppink; 
+  }

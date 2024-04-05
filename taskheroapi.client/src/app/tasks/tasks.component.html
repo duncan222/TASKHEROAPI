@@ -1,1 +1,86 @@
-<p>tasks works!</p>
+<head>
+  <link rel="stylesheet" type="text/css" href="tasks.component.css">
+</head>
+<mat-card>
+  <div class="content">
+    <div class="task-form">
+      <h1>Add Task</h1>
+      <form [formGroup]="taskGroup" (ngSubmit)="onSubmit()">
+        <div class="form-row title fields">
+          <div class="input-group mb-3">
+            <input formControlName="title" type="text" class="form-control" placeholder="Title" aria-label="Task Title">
+          </div>
+        </div>
+        <div class="form-row description fields">
+          <div class="input-group mb-3">
+            <textarea formControlName="description" type="text" class="form-control" rows="3" placeholder="Description..."></textarea>
+          </div>
+        </div>
+        <div class="form-row due-date fields">
+          <div class="input-group mb-3">
+            <input formControlName="date" class="form-control duedate" matInput [matDatepicker]="basicDatepicker" placeholder="Select Due Date...">
+            <div class="input-group-append append">
+              <mat-datepicker-toggle matSuffix [for]="basicDatepicker"></mat-datepicker-toggle>
+              <mat-datepicker [startAt]="startDate" #basicDatepicker></mat-datepicker>
+            </div>
+          </div>
+        </div>
+        <div class="form-row priority fields" style="padding-bottom: 2rem;">
+          <label class="form-check-label" style="padding-right: 1rem;">Priority: </label>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="priority" formControlName="priority" id="priorityLow" value="low">
+            <label class="form-check-label" for="priorityLow">Low</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="priority" formControlName="priority" id="priorityMedium" value="medium">
+            <label class="form-check-label" for="priorityMedium">Medium</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="priority" formControlName="priority" id="priorityHigh" value="high">
+            <label class="form-check-label" for="priorityHigh">High</label>
+          </div>
+        </div>
+        <div class="form-row submit-button">
+          <button class="btn btn-success add" [disabled]="taskGroup.invalid" type="submit">Add Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <br />
+</mat-card>
+<mat-card>
+  <div class="task-list">
+    <h2>Task List</h2>
+    <!-- Filter options -->
+    <div class="filter-options">
+      <label>Filter by: </label>
+      <br />
+      <select [(ngModel)]="selectedFilter" (change)="applyFilter()">
+        <option value="newest">Newest</option>
+        <option value="closestDueDate">Closest Due Date</option>
+      </select>
+    </div>
+    <!-- Task items container -->
+    <div class="task-items-container">
+      <div class="row">
+        <div class="col-md-8">
+          <!-- Task cards -->
+          <div *ngFor="let task of tasks" class="card mb-4">
+            <div class="card-body">
+              <h3 class="card-title">{{ task.Title }}</h3>
+              <p class="card-text description">{{ task.Description }}</p>
+              <p *ngIf="task.DueDate" class="card-text">Due Date: {{ task.DueDate | date }}</p>
+              <p *ngIf="task.Importance" class="card-text">Priority: {{ task.Importance }}</p>
+              <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-success mx-1" (click)="completeTask(task)">Complete</button>
+                <button type="button" class="btn btn-primary mx-1" (click)="editTask(task)">Edit</button>
+                <button type="button" class="btn btn-danger mx-1" (click)="deleteTask(task)">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+</mat-card>

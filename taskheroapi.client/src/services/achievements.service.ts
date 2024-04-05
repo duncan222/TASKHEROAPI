@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { achievementBadge } from '../interfaces/achievementBadge.interface';
+import { IUserAchievements } from '../interfaces/userachievements.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,9 @@ import { achievementBadge } from '../interfaces/achievementBadge.interface';
 // WHERE UserId = 20;
 
 export class Achievements {
+  updateAchievements(userId: number, updateData: IUserAchievements) {
+      throw new Error('Method not implemented.');
+  }
 
   determineAcheivements(unlocked: string[], locked: string[], streak: number, action: string, tasks_complete: number): [string[], string[]] { 
     if(action == 'add task'){

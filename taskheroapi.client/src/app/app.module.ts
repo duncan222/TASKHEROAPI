@@ -1,10 +1,10 @@
-import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { ProgressbarModule} from 'ngx-bootstrap/progressbar';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -15,25 +15,26 @@ import { SocialComponent } from './social/social.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { AchievementsComponent } from './achievements/achievements.component';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
-import {MatCardModule} from '@angular/material/card';
-import {MatExpansionModule, MatAccordion} from '@angular/material/expansion';
-import { UserService } from '../services/user.service';
 import { SettingsComponent } from './settings/settings.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { EditAvatarComponent } from './edit-avatar/edit-avatar.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AddTaskComponent } from './add-task/add-task.component';
-import {MatDatepickerModule, MatCalendar, MatCalendarHeader, MatDatepicker} from '@angular/material/datepicker';
-import { MatFormField } from '@angular/material/form-field';
-import { MatNativeDateModule } from '@angular/material/core';
+import { NotificationComponent } from './notification/notification.component';
+import { LoadingComponent } from './loading/loading.component';
+import { ImagePopComponent } from './image-pop/image-pop.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
-import { NotificationComponent } from './notification/notification.component'; 
-import { LoadingComponent } from './loading/loading.component';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ImagePopComponent } from './image-pop/image-pop.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,15 +53,30 @@ import { ImagePopComponent } from './image-pop/image-pop.component';
     LoadingComponent,
     AddTaskComponent,
     NotificationComponent,
-    ImagePopComponent
+    ImagePopComponent,
+    ConfirmDialogComponent
   ],
   imports: [
-    BrowserModule, CommonModule, ProgressbarModule, MatCardModule, BrowserAnimationsModule,  HttpClientModule,TooltipModule.forRoot(),
-    AppRoutingModule, FormsModule, ReactiveFormsModule, MatExpansionModule, MatAccordion, MatDatepickerModule, MatFormField, MatIconModule, MatDatepicker, MatRadioModule, MatCalendar, MatNativeDateModule, MatProgressSpinnerModule
+    BrowserModule,
+    CommonModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    MatDialogModule,
+    MatCardModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatRadioModule,
+    MatNativeDateModule,
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+    MatProgressBarModule
   ],
-  providers: [UserService,
-    provideAnimationsAsync()
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
