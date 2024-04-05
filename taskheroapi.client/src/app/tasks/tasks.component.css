@@ -1,71 +1,71 @@
 .add {
   width: 8rem;
   height: auto;
-  justify-self: center;
   font-family: "Poppins", sans-serif;
-  background-color: cyan;
+  background-color: #4e4e5e !important;
+  box-shadow: 0px 0px 10px 0px #A8EFFF !important;
+  border-color: #A8EFFF !important;
+  color: rgba(245, 245, 245, 0.733) !important;
+  font-weight: bolder;
 }
 
 .task {
+  background-color: transparent !important;
   width: 2rem;
   height: 2rem;
   border-radius: 2rem;
-  justify-content: center;
   font-family: "Poppins", sans-serif;
 }
 
 .below {
-  align-self: center;
-  justify-self: center;
   margin-bottom: -35rem;
-  position: fixed;
   font-family: "Poppins", sans-serif;
+  background-color: transparent !important;
 }
 
 .task-card {
-  background-color: #ffff;
+  background-color: transparent !important;
   color: rgb(226, 226, 0);
-  border: 10px solid blue;
+  border: 10px solid #A8EFFF;
   box-shadow: 0px 0px 10px 0px deeppink;
   font-family: "Poppins", sans-serif;
 }
 
-.feilds {
+.fields {
   padding-left: 1rem;
   padding-right: 1rem;
   font-family: "Poppins", sans-serif;
+  background-color: transparent !important;
 }
 
 .x {
   width: 1.5rem;
-  align-self: center;
   font-family: "Poppins", sans-serif;
+  background-color: transparent !important;
 }
 
 .duedate:focus {
-  background-color:#ffff;
   width: 20px;
   font-family: "Poppins", sans-serif;
 }
 
 .append {
-  background-color: #00ffff;
+  background-color: #A8EFFF !important;
   font-family: "Poppins", sans-serif;
+  box-shadow: 0px 0px 10px 0px #ffffffba;
 }
 
 @media only screen and (min-width: 30px) {
   .popup {
+    position: relative;
+    /* justify-content: flex-start !important; */
     display: flex;
-    justify-content: center;
-    align-items: center;
     height: 80vh;
-    z-index: 3;
     font-family: "Poppins", sans-serif;
   }
 
   .task-card {
     width: auto;
-    align-items: center;
     font-family: "Poppins", sans-serif;
   }
 }
@@ -73,16 +73,14 @@
 @media only screen and (max-width: 660px) {
   .popup {
     display: flex;
-    justify-content: center;
-    align-items: center;
     height: 70vh;
-    z-index: 3;
+    position: relative;
+    /* justify-content: flex-start !important; */
     font-family: "Poppins", sans-serif;
   }
 
   .task-card {
     width: 20px;
-    align-items: center;
     font-family: "Poppins", sans-serif;
   }
 }
@@ -93,63 +91,103 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 content {
-  column-width: 4rem;
-  width: 4rem;
+  /* justify-content: space-between !important; */
+  background-color: transparent !important;
+  position: relative;
+  max-width: 800px;
+  margin: 2rem auto;
+  color: #282828;
+  letter-spacing: .5px;
   font-family: "Poppins", sans-serif;
 }
 
 mat-card {
-  justify-content: center;
-  align-self: center;
-  width: 75rem;
-  margin-left: 25rem;
+  /* justify-content: space-between !important; */
+  position: relative;
+  /* justify-content: flex-start !important; */
+  max-width: 800px;
+  margin: 50px 0 0 150px;
+  color: #282828;
+  letter-spacing: .5px;
   font-family: "Poppins", sans-serif;
   border: 1px solid deeppink;
   box-shadow: 0px 0px 10px 0px deeppink;
   color: white;
   background-color: #23232e;
 }
+
 .task-list {
-  /* Your existing styles for task-list */
   font-family: "Poppins", sans-serif;
+  background-color: transparent !important;
 }
 
 .task-items-container {
-  display: flex; /* Use flexbox layout */
-  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  background-color: transparent !important;
+  display: flex;
+  flex-wrap: wrap;
   font-family: "Poppins", sans-serif;
-  justify-items: center;
-  justify-content: center;
-  justify-self: center;
-  overflow-wrap: break-word;
+  /* justify-content: flex-start !important; */
+  overflow-y: auto;
 }
 
 .task-item {
-  /* Your existing styles for task-item */
-  /* Ensure each task item has appropriate width and margin */
-  width: calc(33.33% - 20px); 
-  margin: 10px; /* Adjust the margin as needed */
+  width: auto;
   font-family: "Poppins", sans-serif;
+  background-color: transparent !important;
+}
 
-}
-/* Apply custom width to the task description */
 .card-body {
-  font-size: 12px; /* Set smaller font size */
-  overflow-wrap: break-word; /* Wrap long text */
-  border-color: #ffffffba;
-  box-shadow: 0px 0px 10px 0px #ffffffba;
-  background-color: #23232e;
-  color: cyan;
+  width: 200%;
+  font-size: 12px;
+  align-items: center;
+  /* justify-content: space-between !important; */
+  overflow-y: auto;
+  border-color: #A8EFFF;
+  box-shadow: 0px 0px 10px 0px #A8EFFF;
+  background-color: #4e4e5e;
+  color: #A8EFFF;
 }
-/* Apply custom width to the task description */
-.card-text description{
-  width: 1200px; /*st width to fit inside the card body */
-  display: flex; /* Use flexbox layout */
-  flex-wrap: wrap; /* Allow items to wrap to the next line */
-  font-size: 14px; /* Adjust font size as needed */
+
+.card-text description {
+  width: 1200px;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 14px;
   font-family: "Poppins", sans-serif;
-  overflow-wrap: break-word; /* Wrap long text */
-  justify-items: center;
-  justify-content: center;
-  justify-self: center;
+  overflow-y: auto;
+  background-color: deeppink;
+}
+
+.fields input.form-control,
+.fields textarea.form-control {
+  background-color: #4e4e5e;
+  box-shadow: 0px 0px 10px 0px #A8EFFF;
+  color: rgba(245, 245, 245, 0.733);
+  font-weight: bolder;
+}
+
+.btn-primary {
+  background-color: #A8EFFF;
+  border-color: #A8EFFF;
+  box-shadow: 0px 0px 10px 0px #A8EFFF;
+  color: #4e4e5e;
+  font-weight: bold;
+}
+
+/* Delete button */
+.btn-danger {
+  background-color: deeppink;
+  border-color: deeppink;
+  box-shadow: 0px 0px 10px 0px deeppink;
+  color: #4e4e5e;
+  font-weight: bold;
+}
+
+/* Complete button */
+.btn-success {
+  background-color: #00FF00;
+  border-color: #00FF00;
+  box-shadow: 0px 0px 10px 0px #00FF00;
+  color: #4e4e5e;
+  font-weight: bold;
 }
