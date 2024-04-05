@@ -126,8 +126,8 @@ mat-card {
   background-color: #4e4e5e;
   color: #A8EFFF;
   justify-content: flex-start;
-  min-width: 450px;
-  max-width: 450px;
+  min-width: 400px;
+  max-width: 400px;
   overflow-y: auto;
   flex-wrap: wrap;
 }
