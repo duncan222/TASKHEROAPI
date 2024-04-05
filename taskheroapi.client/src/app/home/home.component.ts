@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit{
   ending: string = "";
   streakPicture: string = "";
   showImagePop = false;
-  comicChoice: string = "";
+  photoChoice: string = "";
   ProgressCount: number = 0;
   progressValue: number = 100;
   totalScore: number = 0;
@@ -57,10 +57,15 @@ export class HomeComponent implements OnInit{
   badgeLevel: string = "";
   healthStatus: ProgressbarType | undefined= "danger";
   enemyStatus: ProgressbarType | undefined= "success";
+  //add the remaining images and stuff and add them to array --------- TODO 
   enemyList: string[][] = [['/assets/icons/mondayprof.png', 'Monday Inc.'], ['/assets/icons/sundayprof.png', 'Sunday Knight']];
+  villainPhotos: string[] = ['/assets/icons/monday.png','/assets/icons/sunday.png', '/assets/icons/deadlines.png'];
+  achievementPhotos: any = {'First Task': '/assets/icons/firsttask.png', 'First Blood': '/assets/icons/firstblood.png', 'Lonesome No More': '/assets/icons/lonesome.png', '100 Tasks': '/assets/icons/100.png'};
   enemyName: string = "";
   userdetails: any = "";
   dailyTracker: number = 0;
+  typeChoice: string = "";
+  
 
 //when task is complete, display notification from comic expressions 
 //call the remove task API service, reposition the top three tasks
@@ -116,6 +121,19 @@ export class HomeComponent implements OnInit{
       "complete task", 
       this.user_achievements.tasksCompleted
     );
+
+    //************* fix this, should be an achievment ********************************************** */
+
+    // const unlocked = this.user_achievements.unlockedAchievements.split(",");
+
+    // const missingelement = locked_and_unlocked[0].filter(element => !unlocked.includes(element));
+    // console.log(missingelement);
+    // this.photoChoice=this.achievementPhotos.missingelement;
+    // this.typeChoice="achievement"; 
+    // this.showImagePop = true;
+    // setTimeout(() => {
+    //   this.showImagePop = false;
+    // }, 2000); 
 
     console.log(this.user_achievements.weeklytasks);
     console.log(this.ProgressCount);
@@ -188,7 +206,8 @@ export class HomeComponent implements OnInit{
     .subscribe({
       next: () => {
         // chooses a comic expression to relay the success 
-        this.comicChoice = this.comicExpressions[Math.floor(Math.random() * 5)];
+        this.photoChoice = this.comicExpressions[Math.floor(Math.random() * 5)];
+        this.typeChoice = "comic";
         this.showImagePop = true;
         setTimeout(() => {
           this.showImagePop = false;
@@ -294,7 +313,12 @@ export class HomeComponent implements OnInit{
             //villain defeated  
 
             // pop up, you got the villain now 
-
+            this.photoChoice=this.villainPhotos[this.user_achievements.villainLevel];
+            this.typeChoice="villain"; 
+            this.showImagePop = true;
+            setTimeout(() => {
+              this.showImagePop = false;
+            }, 2000); 
             // villain now is in subcategorie of achievements 
 
             // moves to next villain 
@@ -303,6 +327,8 @@ export class HomeComponent implements OnInit{
           }
           else{ 
             //villain not defeated 
+
+            //maybe add a pop up of the super hero getting rocked or somthing if u have time. 
 
             //you did not defeate the villain notification. another week of torment. 
             //*********  should subtract some points.  */  ( minus 1*villain level + 1);

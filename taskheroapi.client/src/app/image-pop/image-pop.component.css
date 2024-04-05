@@ -12,6 +12,13 @@
     z-index: 10000;
 }
 
+.note_title{ 
+    font-size: large;
+    font-weight: bolder;
+    color: #A8EFFF;
+    letter-spacing: .5px;
+    font-family: "Poppins", sans-serif;}
+
 .notification_2 img{ 
     width: 18rem;
     height: auto;

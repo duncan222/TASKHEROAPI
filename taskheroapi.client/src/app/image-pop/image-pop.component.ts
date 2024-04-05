@@ -13,6 +13,7 @@ export class ImagePopComponent implements OnInit{
   leftPosition = 0;
 
   @Input() image: string | undefined; 
+  @Input() type: string | undefined; 
 
   constructor() {
     
