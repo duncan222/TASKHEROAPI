@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { userTask } from '../../services/userTasks.service';
 import { AuthService } from '../../services/auth.service';
@@ -9,6 +9,7 @@ import { Achievements } from '../../services/achievements.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditTaskComponent } from '../edit-task/edit-task.component';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { DOCUMENT } from "@angular/common";
 
 @Component({
   selector: 'app-tasks',
@@ -27,6 +28,7 @@ export class TasksComponent implements OnInit {
   weeklytasks = 0;
 
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private fb: FormBuilder,
     private taskService: userTask,
     private authService: AuthService,
@@ -59,13 +61,17 @@ export class TasksComponent implements OnInit {
     this.taskService.getUserTasks(this.currentUser).subscribe(
       (userTasks) => {
         for (const userTask of userTasks) {
-          this.tasks.push({ Title: userTask.title, Description: userTask.description, DueDate: userTask.dueDate, Importance: userTask.importance, TimeStamp: userTask.timeStamp, Weight: userTask.weight, Urgency: userTask.urgency })
+          this.tasks.push({ Title: userTask.title, Description: userTask.description, DueDate: userTask.dueDate, Importance: userTask.importance, TimeStamp: userTask.timeStamp, Weight: userTask.weight, Urgency: userTask.urgency, TaskId: userTask.taskId })
         }
       },
       error => {
         console.error('Error loading tasks:', error);
       }
     );
+  }
+
+  refreshPage() {
+    this.document.location.reload();
   }
 
   onSubmit(): void {
@@ -131,14 +137,30 @@ export class TasksComponent implements OnInit {
       width: '500px', // Adjust the width as needed
       data: { task: task }
     });
+    console.log("task", task);
 
     dialogRef.afterClosed().subscribe(updatedTask => {
       if (updatedTask) {
-        // Update the task details in the tasks array
-        const index = this.tasks.findIndex(t => t.TaskId === updatedTask.TaskId);
-        if (index !== -1) {
-          this.tasks[index] = updatedTask;
+        updatedTask.DueDate = String(updatedTask.DueDate)
+        if (updatedTask.Importance == "low") {
+          updatedTask.Importance = 1;
         }
+        else if (updatedTask.importance == "medium") {
+          updatedTask.Importance = 2;
+        }
+        else {
+          updatedTask.Importance = 3;
+        }
+        console.log("updatedTask:", updatedTask);
+        this.taskService.update(this.currentUser, updatedTask).subscribe(
+          (response) => {
+            console.log("Task updated successfully", response);
+            this.refreshPage();
+          },
+          (error) => {
+            console.log("Error editing task: ", error);
+          }
+        );
       }
     });
   }

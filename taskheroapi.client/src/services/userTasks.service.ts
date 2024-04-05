@@ -29,13 +29,28 @@ export class userTask {
     );
   }
 
-  update(userId: number, task: IUserTasks): Observable<IUserTasks> {
-    const url = `${this.apiUrl}/UserTasks/${userId}`;
+  update(userId: number, task: IUserTasks): Observable<any> {
+    const url = `${this.apiUrl}/UserTasks/${task.TaskId}`; // Ensure property names match
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Accept': 'text/plain'
+      'Content-Type': 'application/json'
     });
-    return this.http.put<IUserTasks>(url, task, { headers: headers });
+
+    // Ensure property names match the server's expectations
+    const requestBody = {
+      taskId: task.TaskId,
+      userId: userId,
+      description: task.Description,
+      timeStamp: task.TimeStamp,
+      title: task.Title,
+      dueDate: task.DueDate,
+      importance: task.Importance,
+      weight: task.Weight,
+      urgency: task.Urgency
+    };
+
+    console.log("requestbody:", requestBody);
+
+    return this.http.put<IUserTasks>(url, requestBody, { headers: headers });
   }
 
   getUserTasks(userId: number): Observable<any> {
