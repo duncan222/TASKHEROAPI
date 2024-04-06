@@ -65,7 +65,9 @@ export class HomeComponent implements OnInit{
   userdetails: any = "";
   dailyTracker: number = 0;
   typeChoice: string = "";
-  
+  wordcolor: string = "";
+  showNotification: boolean = false;
+  notificationMessage: string = "";
 
 //when task is complete, display notification from comic expressions 
 //call the remove task API service, reposition the top three tasks
@@ -107,7 +109,6 @@ export class HomeComponent implements OnInit{
 
     var add_to_progress_count = 0; 
 
-
     //this is where the error is, also score goes above 100 and tht shit fucks up with styling. fix that. 
     if(this.IsDueBeforeSunday(new Date(task.dueDate))){
       console.log("what");
@@ -140,13 +141,51 @@ export class HomeComponent implements OnInit{
     this.totalScore = this.user_achievements.totalScore + (task.importance * multiplier);
     this.userdetails.score = this.totalScore;
 
+    //ensuring score is non-negative (creates errors in avatar page)
+    if(this.totalScore < 0){ 
+      this.totalScore = 0
+      this.notificationMessage = "+ 0";
+      this.wordcolor = "whitesmoke";
+      this.showNotification = true;
+      setTimeout(() => {
+        this.showNotification = false;
+      }, 3000);
+    }
+    else{ 
+      if((task.importance * multiplier) > 0){
+        this.notificationMessage = "+ " + (task.importance * multiplier).toString(); 
+        this.wordcolor = "#A8EFFF";
+        this.showNotification = true;
+        setTimeout(() => {
+          this.showNotification = false;
+        }, 3000);
+      }
+      else if((task.importance * multiplier) < 0){
+        this.notificationMessage = (task.importance * multiplier).toString();
+        this.wordcolor = "#FF48A6";
+        this.showNotification = true;
+        setTimeout(() => {
+          this.showNotification = false;
+        }, 3000);
+      }
+      else if((task.importance * multiplier) == 0){
+        this.notificationMessage = "+ 0";
+        this.wordcolor = "whitesmoke";
+        this.showNotification = true;
+        setTimeout(() => {
+          this.showNotification = false;
+        }, 3000);
+      }
+
+    }
+
     // update score and daily streak -- call to acheivement service. 
     var AchievemtUpdate: IUserAchievements = {
       UserId: this.currentUser,
       BadgeID: this.user_achievements.badgeID,
       weeklyProgress: this.ProgressCount + add_to_progress_count,
       dailyTracker: this.user_achievements.dailyTracker,
-      totalScore: this.user_achievements.totalScore + (task.importance * multiplier),
+      totalScore: this.totalScore,
       lastActive: new Date().toDateString(),
       UnlockedAchievements: locked_and_unlocked[0],
       LockedAchievements: locked_and_unlocked[1],
@@ -335,6 +374,13 @@ export class HomeComponent implements OnInit{
             villainScore = 0 - (2 * this.user_achievements.villainLevel); 
           }
 
+          //ensuring userScore is once again, non negative. 
+          this.totalScore = this.user_achievements.totalScore + villainScore; 
+
+          if(this.totalScore < 0){
+            this.totalScore = 0; 
+          }
+
           //then change the villain to the next villain 
           //************************************* */
           var taskCount = this.calculateProgress(); 
@@ -344,7 +390,7 @@ export class HomeComponent implements OnInit{
             BadgeID: this.user_achievements.badgeID,
             weeklyProgress: this.user_achievements.weeklyProgress,
             dailyTracker: this.user_achievements.dailyTracker,
-            totalScore: this.user_achievements.totalScore + villainScore,
+            totalScore: this.totalScore,
             lastActive: new Date().toDateString(),
             UnlockedAchievements: this.user_achievements.unlockedAchievements,
             LockedAchievements: this.user_achievements.lockedAchievements,
@@ -368,8 +414,8 @@ export class HomeComponent implements OnInit{
             if(this.progressValue < 0){
               this.progressValue = 0;
             }
-        }
-        this.userdetails.score = this.user_achievements + villainScore;
+          }
+        this.userdetails.score = this.totalScore;
         this.userService.put(this.userdetails).subscribe({
           error: (error) => {
             console.error('An error occurred:', error);

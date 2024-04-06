@@ -187,6 +187,15 @@
 
 @media only screen and (min-width: 700px) { 
 
+    .below {
+        font-family: "Poppins", sans-serif;
+        margin-left: 12rem;
+        margin-top: 5rem;
+        background-color: transparent !important;
+        position: fixed;
+        z-index: 15;
+      }
+
     .empty-message{
         width: 50%;
         font-size: 98%;
@@ -552,6 +561,16 @@
 
 
 @media only screen and (max-width: 700px){ 
+
+    .below {
+        font-family: "Poppins", sans-serif;
+        margin-left: 12rem;
+        margin-top: 5rem;
+        background-color: transparent !important;
+        position: fixed;
+        z-index: 15;
+        align-items: center;
+    }
 
 
     .item{ 

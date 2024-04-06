@@ -1,3 +1,6 @@
+<div class="below">
+  <app-notification class="not-pos" *ngIf="showNotification" [message]="notificationMessage" [wordcolor]="wordcolor"   [color]= "color"></app-notification>
+</div>
 <head>
   <link rel="stylesheet" type="text/css" href="tasks.component.css">
 </head>
@@ -50,6 +53,7 @@
   </div>
   <br />
 </mat-card>
+<app-image-pop *ngIf="showImagePop"  class="comic" [image]="photoChoice" [type]="typeChoice"></app-image-pop>
 <mat-card>
   <div class="task-list">
     <span class="card-title">Task List</span>
@@ -133,3 +137,4 @@
   </div>
   <br />
 </mat-card>
+

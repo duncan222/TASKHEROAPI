@@ -33,6 +33,10 @@ export class UserProfileComponent implements OnInit {
   userBadge: string = "";
   user_achievements: any;
   empty_ach: string = "/assets/icons/empty_ach.png";
+  showNotification: boolean = false;
+  notificationMessage: string = "";
+  wordcolor: string = "";
+  color: string = "";
 
   
   constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private userService: UserService,
@@ -130,16 +134,22 @@ export class UserProfileComponent implements OnInit {
   }
 
   showFollowNotif(): void {
-    this.isFollowerAddedOpen = true;
+    this.notificationMessage = "You followed " + this.username + "!";
+    this.color = "#A8EFFF";
+    this.wordcolor = "#212121";
+    this.showNotification = true;
     setTimeout(() => {
-      this.isFollowerAddedOpen = false;
-    }, 5000);
+      this.showNotification = false;
+    }, 5000); 
   }
 
   showUnfollowNotif(): void {
-    this.isUnfollowedOpen = true;
+    this.notificationMessage = "Unfollowed " + this.username + "!";
+    this.color = "#A8EFFF";
+    this.wordcolor = "#212121";
+    this.showNotification = true;
     setTimeout(() => {
-      this.isUnfollowedOpen = false;
-    }, 5000);
+      this.showNotification = false;
+    }, 5000); 
   }
 }
