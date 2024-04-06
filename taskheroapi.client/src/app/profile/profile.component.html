@@ -53,13 +53,15 @@
 
         </div>
         <div class="margin_contain">
-        <div class="right__col achv_con">
-          <h3>Achievements</h3>
-          <div class="separator"></div>
-          <div *ngIf="achievementBadges.length > 0; else elseBlock">
-            <div *ngFor="let badge of achievementBadges"  class="Achievements">
-              <div class="image-container">
-                <img src={{badge.path}} alt="Photo" class="trophies"/>
+          <div class="right__col achv_con">
+            <h3>Achievements</h3>
+            <div class="separator"></div>
+            <div class="achievements-container">
+            <div *ngIf="achievementBadges.length > 0; else elseBlock" class="achievements-row">
+              <div *ngFor="let badge of achievementBadges" class="Achievements">
+                <div class="image-container">
+                  <img src={{badge.path}} alt="Photo" class="trophies" />
+                </div>
               </div>
             </div>
           </div>

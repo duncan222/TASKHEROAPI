@@ -31,6 +31,7 @@ export class EditProfileComponent {
   errorMessage: string = "";
   displayedPassword: string = ""
   loading: boolean = false;
+  passwordVisible: boolean = false;
 
   ngOnInit() {
     this.currentUserId = this.authService.getLoggedInUserId();
@@ -49,6 +50,11 @@ export class EditProfileComponent {
         this.userEdits.userAccount.email = userDetails.email;
       }
     );
+  }
+
+  // Function to toggle password visibility
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
   }
 
   getHiddenPassword(): string {
