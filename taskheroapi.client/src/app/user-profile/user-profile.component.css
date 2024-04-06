@@ -129,6 +129,12 @@ a {
   border-radius: 15px;
 }
 
+.below_2 {
+  font-family: "Poppins", sans-serif;
+  background-color: transparent !important;
+  z-index: 15;
+}
+
 .header__wrapper .cols__container .left__col {
   padding: 25px 20px;
   text-align: center;
@@ -319,7 +325,7 @@ a {
     .below{ 
       width: 15rem;
       margin-left: 13rem;
-      margin-top: -33rem;
+      margin-top: -65rem;
       display: relative !important;
    }
  
@@ -357,7 +363,7 @@ a {
   .below{ 
     width: 15rem;
     margin-left: 8rem;
-    margin-top: -67rem;
+    margin-top: -99rem;
     display: relative !important;
  }
 

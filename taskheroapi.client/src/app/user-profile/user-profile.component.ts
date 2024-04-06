@@ -7,6 +7,7 @@ import { FollowerService } from '../../services/follower.service';
 import { LoadingService } from '../../services/loading.service';
 import { Achievements } from '../../services/achievements.service';
 import { userAchievements } from '../../services/userAchievement.service';
+import { AudioService } from '../../services/audioservice.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -37,9 +38,11 @@ export class UserProfileComponent implements OnInit {
   notificationMessage: string = "";
   wordcolor: string = "";
   color: string = "";
+  showImagePop = false;
+  photoChoice: string = "";
+  typeChoice: string = "";
 
-  
-  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private userService: UserService,
+  constructor(private audioService: AudioService, private route: ActivatedRoute, private router: Router, private authService: AuthService, private userService: UserService,
     private imageSelector: ImageSelectorService, private followerService: FollowerService, private loadingService: LoadingService, private achievements: Achievements, private AchievementService: userAchievements) { }
 
   ngOnInit(): void {
@@ -93,12 +96,83 @@ export class UserProfileComponent implements OnInit {
   });
   }
 
+
+  playSound(choice: number): void {
+    if(choice == 1){
+      this.audioService.loadSound('assets/sounds/click1.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 2){
+      this.audioService.loadSound('assets/sounds/click2.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 3){
+      this.audioService.loadSound('assets/sounds/gainprogress.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 4){
+      this.audioService.loadSound('assets/sounds/lostprogress.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 5){
+      this.audioService.loadSound('assets/sounds/addingclick.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 6){
+      this.audioService.loadSound('assets/sounds/bonus.mp3'); // Assuming click.mp3 is in the assets folder
+      console.log("here")
+      this.audioService.play();
+    }
+    if(choice == 7){
+      console.log("here")
+      this.audioService.loadSound('assets/sounds/losst.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 8){
+      this.audioService.loadSound('assets/sounds/progressandpoints.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+  }
+
+
   addFollower(): void {
     this.followerService.addFollower(this.pageUserId, this.currentLoggedInUserId).subscribe(
       (response) => {
         console.log("Following successfully", response);
         this.notifText = `Now Following ${this.username}!`;
         this.followersNumber++;
+    
+        var this_user: any; 
+        //************* fix this, should be an achievment ********************************************** */
+        if(this.currentLoggedInUserId != null){
+          this.AchievementService.getAchievements(this.currentLoggedInUserId)
+          .subscribe({
+            next: (acheivements) => {
+              this_user = acheivements;
+            },
+            error: (error) => {
+              console.error('An error occurred:', error);
+            },
+            complete: () => {    
+              var locked_and_unlocked = this.achievements.determineAcheivements(this_user.unlockedAchievements, this_user.lockedAchievements, this_user.dailyTracker, 'follow others', this_user.tasksCompleted);
+              console.log(locked_and_unlocked[2]);
+
+              if(locked_and_unlocked[2].length != 0){
+                this.playSound(6)
+                this.typeChoice="achievement"; 
+                var pics = this.achievements.getAcheivementsPics(locked_and_unlocked[2]);
+                this.photoChoice = pics[0].path;
+                console.log(this.photoChoice);
+                this.showImagePop = true;
+                setTimeout(() => {
+                  this.showImagePop = false;
+                }, 4000); 
+              }
+            else{
+              this.playSound(5)
+            }}
+          });
+      }
       },
       (error) => {
         console.log("Error:", error);
@@ -116,6 +190,7 @@ export class UserProfileComponent implements OnInit {
   deleteFollower(): void {
     this.followerService.unfollowUser(this.currentLoggedInUserId, this.pageUserId).subscribe(
       (response) => {
+        this.playSound(1)
         console.log("Unfollowed successfully", response);
         this.unfollowNotifText = `Unfollowed ${this.username}!`;
         this.followersNumber--;
