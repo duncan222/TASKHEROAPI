@@ -15,10 +15,10 @@
             </span>
           </div>
           <div class="user-buttons-container">
-            <div *ngIf="isFollow == false; else elseBlock">
+            <div *ngIf="isFollow == false; else followElseBlock">
               <button (click)="addFollower()" class="btn follow-user">Follow</button>
             </div>
-            <ng-template #elseBlock>
+            <ng-template #followElseBlock>
               <button (click)="deleteFollower()" class="btn unfollow-user">Unfollow</button>
             </ng-template>
           </div>
