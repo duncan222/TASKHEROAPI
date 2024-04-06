@@ -60,6 +60,11 @@
   </body>
 </div>
 
+<div class="below_2">
+<app-image-pop *ngIf="showImagePop"  class="comic" [image]="photoChoice" [type]="typeChoice"></app-image-pop>
+</div>
+
+
 <div class="below">
   <app-notification class="not-pos" *ngIf="showNotification" [message]="notificationMessage" [wordcolor]="wordcolor"   [color]= "color"></app-notification>
 </div>
