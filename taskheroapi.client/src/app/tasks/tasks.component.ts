@@ -33,6 +33,7 @@ export class TasksComponent implements OnInit {
   ProgressCount: number = 0;
   totalScore: number = 0;
   userdetails: any = "";
+  priorities:string[] = ['None', 'Low', 'Medium', 'High'];
 
   constructor(
     @Inject(DOCUMENT) private document: Document,

@@ -1,4 +1,4 @@
-.add {
+/* .add {
   width: 8rem;
   height: auto;
   font-family: "Poppins", sans-serif;
@@ -7,6 +7,24 @@
   border-color: #A8EFFF !important;
   color: rgba(245, 245, 245, 0.733) !important;
   font-weight: bolder;
+} */
+
+.priority{ 
+  margin-left: 1rem;;
+}
+
+.add{ 
+  width: 2rem;
+  height: auto;
+  justify-self: center;
+  filter:hue-rotate(180deg);
+}
+
+.task_2{ 
+  width: 4rem;
+  height: 4rem;
+  border-radius: 10rem;
+  justify-content: center;
 }
 
 .task {
@@ -23,12 +41,17 @@
   background-color: transparent !important;
 }
 
+
 .task-card {
   background-color: transparent !important;
   color: rgb(226, 226, 0);
   border: 10px solid #A8EFFF;
-  box-shadow: 0px 0px 10px 0px deeppink;
+  box-shadow: 0px 0px 10px 0px #A8EFFF;
   font-family: "Poppins", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem !important;
 }
 
 .fields {
@@ -47,6 +70,15 @@
 .duedate:focus {
   width: 20px;
   font-family: "Poppins", sans-serif;
+}
+
+.fields_texts{
+  font-size: medium;
+  font-weight: normal !important;
+  letter-spacing: .5px;
+  font-family: "Poppins", sans-serif;
+  color: whitesmoke;
+  box-shadow: 0px 0px 8px 0px #a8efff75 !important;
 }
 
 .append {
@@ -73,6 +105,7 @@ content {
 
 mat-card {
   position: relative;
+  border-radius: 0.5rem;
   display: flex;
   justify-content: space-around;
   max-width: 800px;
@@ -80,14 +113,44 @@ mat-card {
   color: #282828;
   letter-spacing: .5px;
   font-family: "Poppins", sans-serif;
-  border: 1px solid deeppink;
-  box-shadow: 0px 0px 10px 0px deeppink;
+  box-shadow: 0px 0px 10px 0px #A8EFFF;
   color: white;
   background-color: #23232e;
 }
 
+.mb-3{
+  justify-self: center;
+  align-self: center;
+  width: 80%;
+  margin-left: 10%;
+  padding-bottom: 4px;
+}
+.margin-form{ 
+  justify-self: center;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.card-title{ 
+  font-size: x-large;
+  font-weight: bold;
+  letter-spacing: .5px;
+  color: #bebebe;
+  font-family: "Poppins", sans-serif;
+}
+
+.card-title-task{ 
+  margin-top: -.5rem;
+  font-size: large;
+  font-weight: bolder;
+  letter-spacing: .9px;
+  color: rgba(245, 245, 245, 0.938);
+  font-family: "Poppins", sans-serif;
+}
 
 .task-list {
+  margin-top: 1.5rem;
   font-family: "Poppins", sans-serif;
   background-color: transparent !important;
 }
@@ -108,37 +171,96 @@ mat-card {
 
 .task-item {
   display: flex;
-  max-width: 800px;
+  max-width: 20rem;
   margin: 2rem auto;
   color: #282828;
   letter-spacing: .5px;
   font-family: "Poppins", sans-serif;
   background-color: transparent !important;
-  border: 1px solid deeppink;
 }
 
-.card-body {
+.button_des1 { 
+  align-items: center;
+  justify-content: center;
+  z-index: 0;
+  border-color: rgba(125, 248, 100, 0.76) !important;
+  background-color: #a8efff00;
+  box-shadow: 0px 0px 10px 0px rgba(125, 248, 100, 0.76);
+  transition: all 0.3s ease-in-out;
+  border-radius: 1rem !important;
   padding-left: 1rem;
-  padding-right: 1rem;
-  position: center !important;
-  border: 1px solid #A8EFFF;
+  padding: 0;
+  filter: brightness(100%);
+  transition: all 0.3s ease-in-out;
+}
+
+.button_des1:hover, .button_des2:hover, .button_des3:hover {
+  filter: brightness(200%);
+  transform: scale(1.05);
+}
+
+.button_des2 { 
+  z-index: 0;
+  transition: all 0.3s ease-in-out;
+  filter: brightness(100%);
+  color: #FF48A6 !important; 
+  border-color: #F76E6E !important;
+  box-shadow: 0px 0px 10px 0px #F76E6E;
+  overflow: hidden !important;
+  border-radius: 1rem !important;
+  padding: 0;
+}
+
+.button_des3 { 
+  transition: all 0.3s ease-in-out;
+  z-index: 0;
+  color: #A8EFFF !important; 
+  filter: brightness(100%);
+  border-color: #A8EFFF !important;
   box-shadow: 0px 0px 10px 0px #A8EFFF;
+  overflow: hidden !important;
+  border-radius: 1rem !important;
+  padding: 0;
+}
+
+.task-form{
+  margin-top: 1.5rem;
+}
+.card-body {
+  position: center !important;
   background-color: #4e4e5e;
-  color: #A8EFFF;
+  color: whitesmoke;
   justify-content: flex-start;
   min-width: 400px;
-  max-width: 400px;
+  width: 100%;
   overflow-y: auto;
   flex-wrap: wrap;
+  border-radius: .5rem;
 }
+
+
 
 .card-text description {
   display: flex;
   flex-wrap: wrap;
   font-family: "Poppins", sans-serif;
   overflow-y: auto;
-  background-color: deeppink;
+  background-color: #FF48A6;
 }
+
+textarea::-webkit-scrollbar{ 
+  width: 0.25rem;
+}
+
+textarea::-webkit-scrollbar-track{
+  background: #1e1e24;
+}
+
+textarea::-webkit-scrollbar-thumb{
+  background: #6649b8;
+}
+
+
 
 .fields input.form-control,
 .fields textarea.form-control {
@@ -159,30 +281,61 @@ mat-card {
 
 /* Delete button */
 .btn-danger {
-  background-color: deeppink;
-  border-color: deeppink;
-  box-shadow: 0px 0px 10px 0px deeppink;
+  background-color: #FF48A6;
+  border-color: #FF48A6;
+  box-shadow: 0px 0px 10px 0px #FF48A6;
   color: #4e4e5e;
   font-weight: bold;
 }
 
 /* Complete button */
 .btn-success {
-  background-color: #00FF00;
-  border-color: #00FF00;
-  box-shadow: 0px 0px 10px 0px #00FF00;
+  background-color: #FF48A6;
+  border-color: #FF48A6;
+  box-shadow: 0px 0px 10px 0px #FF48A6;
   color: #4e4e5e;
   font-weight: bold;
 }
 
+.description_seen{
+  margin-top: .5rem;
+  font-size: medium;
+}
+
+.thedue{
+  font-size: small;
+  color: rgba(245, 245, 245, 0.829);
+  margin-top: 2rem;
+  font-weight: bolder;
+
+}
+
+.importance_{
+  color: rgba(245, 245, 245, 0.829);
+  font-size: small;
+  margin-top: -.5rem;
+  font-weight: bolder;
+}
+
 .filter-options {
-  margin-bottom: 20px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   text-align: center;
 }
 
   .filter-options label {
-    color: deeppink;
-    text-align: center; 
+    color: rgba(245, 245, 245, 0.527);
+    text-align: center;
+    margin-bottom: .5rem; 
+  }
+
+  .separator{ 
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-top: -.3rem;
+    display: flex;
+    height: 1px;
+    background-color: #acacac8a;
   }
 
   .filter-options select {
@@ -192,7 +345,7 @@ mat-card {
     border-color: #A8EFFF;
     background-color: #4e4e5e;
     box-shadow: 0px 0px 10px 0px #A8EFFF;
-    color: rgba(245, 245, 245, 0.733) !important;
+    color: rgba(245, 245, 245, 0.651) !important;
     color: #333;
     font-size: 16px;
     width: 200px;
@@ -200,8 +353,6 @@ mat-card {
 
     .filter-options select:hover {
       border: 1px solid #A8EFFF;
-      background-color: #e0e0e0;
-      color: #4e4e5e !important;
     }
 
     .filter-options select:focus {
@@ -216,12 +367,37 @@ mat-card {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  border: 2px solid deeppink; 
+  border: 2px solid #FF48A6; 
   background-color: transparent;
   outline: none;
   cursor: pointer;
 }
 
   .form-check-input[type="radio"]:checked {
-    background-color: deeppink; 
+    background-color: #FF48A6; 
+  }
+
+
+
+  @media only screen and (min-width: 700px) { 
+
+    .card{ 
+      width: 35rem;
+      height: auto;
+      background-color: transparent;
+    }
+    
+  }
+
+
+  @media only screen and (max-width: 700px) { 
+
+    .card{ 
+      margin-left: -7rem;
+      width: 20rem;
+      padding-right: 1rem;
+      padding-left: 1rem;
+      background-color: transparent;
+    }
+
   }

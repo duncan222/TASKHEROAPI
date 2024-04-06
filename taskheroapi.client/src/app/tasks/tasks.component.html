@@ -4,21 +4,21 @@
 <mat-card>
   <div class="content">
     <div class="task-form">
-      <h1>Add Task</h1>
-      <form [formGroup]="taskGroup" (ngSubmit)="onSubmit()">
+      <span class="card-title">Add Task</span>
+      <form [formGroup]="taskGroup" (ngSubmit)="onSubmit()" class="margin-form">
         <div class="form-row title fields">
           <div class="input-group mb-3">
-            <input formControlName="title" type="text" class="form-control" placeholder="Title" aria-label="Task Title">
+            <input formControlName="title" type="text" class="form-control fields_texts" placeholder="Title" aria-label="Task Title">
           </div>
         </div>
         <div class="form-row description fields">
           <div class="input-group mb-3">
-            <textarea formControlName="description" type="text" class="form-control" rows="3" placeholder="Description..."></textarea>
+            <textarea formControlName="description" type="text" class="form-control fields_texts" rows="3" placeholder="Description..."></textarea>
           </div>
         </div>
         <div class="form-row due-date fields">
           <div class="input-group mb-3">
-            <input formControlName="date" class="form-control duedate" matInput [matDatepicker]="basicDatepicker" placeholder="Select Due Date...">
+            <input formControlName="date" class="form-control duedate fields_texts" matInput [matDatepicker]="basicDatepicker" placeholder="Select Due Date...">
             <div class="input-group-append append">
               <mat-datepicker-toggle matSuffix [for]="basicDatepicker"></mat-datepicker-toggle>
               <mat-datepicker [startAt]="startDate" #basicDatepicker></mat-datepicker>
@@ -41,7 +41,9 @@
           </div>
         </div>
         <div class="form-row submit-button">
-          <button class="btn btn-success add" [disabled]="taskGroup.invalid" type="submit">Add Task</button>
+          <button class="btn btn-success task_2" [disabled]="taskGroup.invalid" type="submit">
+            <img src="/assets/icons/plus.png" class="add">
+          </button>
         </div>
       </form>
     </div>
@@ -50,14 +52,14 @@
 </mat-card>
 <mat-card>
   <div class="task-list">
-    <h2>Task List</h2>
+    <span class="card-title">Task List</span>
     <!-- Filter options -->
     <div class="filter-options">
       <label>Filter by: </label>
       <br />
-      <select [(ngModel)]="selectedFilter" (change)="applyFilter()">
-        <option value="newest">Newest</option>
-        <option value="closestDueDate">Closest Due Date</option>
+      <select class="fields_texts" [(ngModel)]="selectedFilter" (change)="applyFilter()">
+        <option  value="newest">Newest</option>
+        <option  value="closestDueDate">Closest Due Date</option>
       </select>
     </div>
     <!-- Task items container -->
@@ -66,17 +68,64 @@
         <div class="col-md-8">
           <!-- Task cards -->
           <div *ngFor="let task of tasks" class="card mb-4">
-            <div class="card-body">
-              <h3 class="card-title">{{ task.Title }}</h3>
-              <p class="card-text description">{{ task.Description }}</p>
-              <p *ngIf="task.DueDate" class="card-text">Due Date: {{ task.DueDate | date }}</p>
-              <p *ngIf="task.Importance" class="card-text">Priority: {{ task.Importance }}</p>
+            <div *ngIf="task.Importance == 1; else ElseBlock" class="card-body" style="box-shadow: 0px 0px 10px  rgb(120, 255, 120);">
+              <h3 class="card-title-task">{{ task.Title }}</h3>
+              <div class="separator"></div>
+              <p class="card-text description_seen">{{ task.Description }}</p>
+              <p *ngIf="task.DueDate" class="card-text thedue">Due: {{ task.DueDate | date }}</p>
+              <p *ngIf="task.Importance" class="card-text importance_">{{ priorities[task.Importance]}} Priority</p>
               <div class="d-flex justify-content-center">
-                <button type="button" class="btn btn-success mx-1" (click)="completeTask(task)">Complete</button>
-                <button type="button" class="btn btn-primary mx-1" (click)="editTask(task)">Edit</button>
-                <button type="button" class="btn btn-danger mx-1" (click)="deleteTask(task)">Delete</button>
+                <button (click)="completeTask(task)" type="button" class="btn button_des1 mx-2" style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem;">
+                  <img src="/assets/icons/checkg.svg" style="height:100%; width: 50%; ">
+                </button>
+                <button class="btn col button_des3 mx-2" (click)="editTask(task)" style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem;">
+                  <img src="/assets/icons/edit_blu.svg" style="height:100%; width: 45%; ">
+                </button>  
+                <button class="btn col button_des2 mx-2" (click)="deleteTask(task)" style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem;">
+                  <img src="/assets/icons/trash1.svg" style="height:100%; width: 45%; ">
+                </button>   
               </div>
             </div>
+            <ng-template #ElseBlock>
+              <div *ngIf="task.Importance == 2; else ElseBlock2" class="card-body" style="box-shadow: 0px 0px 10px  rgb(253, 255, 114);">
+                <h3 class="card-title-task">{{ task.Title }}</h3>
+                <div class="separator"></div>
+                <p class="card-text description_seen">{{ task.Description }}</p>
+                <p *ngIf="task.DueDate" class="card-text thedue">Due: {{ task.DueDate | date }}</p>
+                <p *ngIf="task.Importance" class="card-text importance_">{{ priorities[task.Importance]}} Priority</p>
+                <div class="d-flex justify-content-center">
+                  <button (click)="completeTask(task)" type="button" class="btn button_des1 mx-2" style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem;">
+                    <img src="/assets/icons/checkg.svg" style="height:100%; width: 50%; ">
+                  </button>
+                  <button class="btn col button_des3 mx-2" (click)="editTask(task)" style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem;">
+                    <img src="/assets/icons/edit_blu.svg" style="height:100%; width: 45%; ">
+                  </button>  
+                  <button class="btn col button_des2 mx-2" (click)="deleteTask(task)" style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem;">
+                    <img src="/assets/icons/trash1.svg" style="height:100%; width: 45%; ">
+                  </button>   
+                </div>
+              </div>
+              <ng-template #ElseBlock2>
+                <div *ngIf="task.Importance == 3" class="card-body" style="box-shadow: 0px 0px 10px rgb(255, 70, 70);">
+                  <h3 class="card-title-task">{{ task.Title }}</h3>
+                  <div class="separator"></div>
+                  <p class="card-text description_seen">{{ task.Description }}</p>
+                  <p *ngIf="task.DueDate" class="card-text thedue">Due: {{ task.DueDate | date }}</p>
+                  <p *ngIf="task.Importance" class="card-text importance_">{{ priorities[task.Importance]}} Priority</p>
+                  <div class="d-flex justify-content-center">
+                    <button (click)="completeTask(task)" type="button" class="btn button_des1 mx-2" style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem;">
+                      <img src="/assets/icons/checkg.svg" style="height:100%; width: 50%; ">
+                    </button>
+                    <button class="btn col button_des3 mx-2" (click)="editTask(task)" style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem;">
+                      <img src="/assets/icons/edit_blu.svg" style="height:100%; width: 45%; ">
+                    </button>  
+                    <button class="btn col button_des2 mx-2" (click)="deleteTask(task)" style="height: 2rem; width: 2rem; min-width: 2rem; max-width: 2rem;">
+                      <img src="/assets/icons/trash1.svg" style="height:100%; width: 45%; ">
+                    </button>   
+                  </div>
+                </div>
+              </ng-template>
+            </ng-template>
           </div>
         </div>
       </div>
