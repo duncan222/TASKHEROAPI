@@ -1,22 +1,14 @@
 
-.edit-prof{
-    width: auto;
-    margin-top: 1rem;
-    margin-left: 5rem;  
-    background-color: transparent !important;
-    border-color:  rgb(185, 185, 185);
-    color: rgb(185, 185, 185);
-    transition: all 0.3s ease-in-out;
-}
-
-.edit-prof:hover{ 
-    color: antiquewhite;
-    border-color: antiquewhite;
-    transform: scale(1.01);
-}
-
-.edit-prof:focus{
-    box-shadow: none;
+.edit-prof, .logout {
+  display: inline-block;
+  vertical-align: middle;
+  width: auto;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  background-color: transparent !important;
+  border-color: rgb(185, 185, 185);
+  color: rgb(185, 185, 185);
+  transition: all 0.3s ease-in-out;
 }
 
 .container{ 
@@ -24,6 +16,26 @@
     margin-left: 8rem;
     background-color: #1d1d1d !important;
     color: white !important;
+}
+
+.little {
+  width: 2rem;
+  transition: all 0.3s ease-out;
+  padding-left: .5rem;
+}
+
+.logout {
+  margin-top: 3.7rem;
+}
+
+.edit-prof:hover, .logout:hover {
+  color: antiquewhite;
+  border-color: antiquewhite;
+  transform: scale(1.01);
+}
+
+.edit-prof:focus, .logout:focus {
+  box-shadow: none;
 }
 
 .edit-icon {
@@ -96,8 +108,8 @@ body {
   }
 
 .user-list {
-  height: auto;
-  width: auto;
+  height: 400px;
+  width: 400px;
   background-color: #23232e;
   overflow: hidden;
   top: 0;
@@ -138,7 +150,18 @@ body {
   padding-top: 1rem;
   margin-bottom: 1rem;
   color: rgba(245, 245, 245, 0.733);
-  width: auto;
+  width: 400px;
+}
+
+.sad-image {
+  overflow-y: hidden !important;
+  background-color: transparent;
+  border-radius: 10px;
+  padding: 10px;
+  padding-top: 1rem;
+  margin-bottom: 1rem;
+  color: rgba(245, 245, 245, 0.733);
+  width: 400px;
 }
 
 .user-block {
@@ -348,6 +371,13 @@ body {
       margin-left: 8rem;
     }
 
+    .sad-img {
+      width: 60%;
+      height: auto;
+      overflow-y: none;
+      overflow: none;
+    }
+
     .header__wrapper .cols__container {
       max-width: 1200px;
       margin: 1 auto;
@@ -388,6 +418,12 @@ body {
       margin: 0;
       margin-right: auto;
       margin-left: 4rem;
+    }
+    .sad-img {
+      width: 90%;
+      height: auto;
+      overflow-y: none;
+      overflow: none;
     }
     .header__wrapper .cols__container .right__col nav {
       flex-direction: row;

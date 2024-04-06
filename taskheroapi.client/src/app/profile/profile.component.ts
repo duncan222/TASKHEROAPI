@@ -65,6 +65,12 @@ export class ProfileComponent {
     this.router.navigate(['/user-profile', userId])
   }
 
+  logout(): void {
+    this.loadingService.showForDuration(2000);
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
+
   //getting the users acheivments and progress till reaching the next one 
   getAchievments(){ 
     if(this.currentUser != null && this.currentUser != undefined){
