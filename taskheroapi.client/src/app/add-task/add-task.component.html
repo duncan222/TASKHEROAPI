@@ -1,6 +1,7 @@
 <div class="modal-overlay" (click)="closeModal()"></div>
-
 <div class="modal popup">
+<app-image-pop *ngIf="showImagePop"  class="comic" [image]="photoChoice" [type]="typeChoice"></app-image-pop>
+
 <div class="row-1">
     <div class="card task-card">
         <div class="card-header" style="padding-top: 1rem;">

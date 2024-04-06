@@ -20,9 +20,7 @@ export class ImagePopComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.removeNotification(); 
-    }, 2000);
+
   }
 
   removeNotification(): void {

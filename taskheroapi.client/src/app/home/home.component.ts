@@ -14,7 +14,7 @@ import { UserService } from '../../services/user.service';
 import { ImageSelectorService } from '../../services/imageSelector.service';
 import { LoadingService } from '../../services/loading.service';
 import { DatePipe } from '@angular/common';
-
+import { AudioService } from '../../services/audioservice.service';
 
 @Component({
   selector: 'app-home',
@@ -33,7 +33,7 @@ import { DatePipe } from '@angular/common';
 
 
 export class HomeComponent implements OnInit{
-  constructor(private authService: AuthService, private imageSelector: ImageSelectorService, private loadingService: LoadingService, private userService: UserService, private TaskService: userTask, private router: Router, private AchievementService: userAchievements,private cdr: ChangeDetectorRef, private achievements: Achievements) { 
+  constructor(private audioService: AudioService, private authService: AuthService, private imageSelector: ImageSelectorService, private loadingService: LoadingService, private userService: UserService, private TaskService: userTask, private router: Router, private AchievementService: userAchievements,private cdr: ChangeDetectorRef, private achievements: Achievements) { 
   }
 
   comicExpressions: string[] = ['/assets/icons/kaboom.png', '/assets/icons/boom.png', '/assets/icons/pow.png', '/assets/icons/kapow.png', '/assets/icons/bang.png'];
@@ -58,9 +58,8 @@ export class HomeComponent implements OnInit{
   healthStatus: ProgressbarType | undefined= "danger";
   enemyStatus: ProgressbarType | undefined= "success";
   //add the remaining images and stuff and add them to array --------- TODO 
-  enemyList: string[][] = [['/assets/icons/mondayprof.png', 'Monday Inc.'], ['/assets/icons/sundayprof.png', 'Sunday Knight']];
+  enemyList: string[][] = [['/assets/icons/mondayprof.png', 'Monday Inc.'], ['/assets/icons/sundayprof.png', 'Sunday Knight'], ['/assets/icons/deadlinesprof.png', 'Deadlines']];
   villainPhotos: string[] = ['/assets/icons/monday.png','/assets/icons/sunday.png', '/assets/icons/deadlines.png'];
-  achievementPhotos: any = {'First Task': '/assets/icons/firsttask.png', 'First Blood': '/assets/icons/firstblood.png', 'Lonesome No More': '/assets/icons/lonesome.png', '100 Tasks': '/assets/icons/100.png'};
   enemyName: string = "";
   userdetails: any = "";
   dailyTracker: number = 0;
@@ -68,13 +67,22 @@ export class HomeComponent implements OnInit{
   wordcolor: string = "";
   showNotification: boolean = false;
   notificationMessage: string = "";
+  color = "";
+  showNotification_2: boolean = false;
+  scoreUp: boolean = false;
+  progressUp: boolean = false;
+  leveledUp: boolean = false;
+  getAchievement: boolean = false;
+
 
 //when task is complete, display notification from comic expressions 
 //call the remove task API service, reposition the top three tasks
   CompleteTaskClick(task: any){ 
+
+    const determine_lock = this.user_achievements.lockedAchievements;
+    const determine_unlock = this.user_achievements.unlockedAchievements;
     // deleting task and randomly choosing an expression
     // and refreshing the list. 
-    this.deletingTask(task.taskId);
 
     // update score and daily streak (using weigth * multiplier ? i guess this is how many days until due. reward for not precrastinating)
     var multiplier_percentage = (new Date().getTime() - new Date(task.timeStamp).getTime()) / (new Date(task.dueDate).getTime() - new Date(task.timeStamp).getTime()); 
@@ -103,7 +111,7 @@ export class HomeComponent implements OnInit{
     this.ProgressCount = this.user_achievements.weeklyProgress;
 
     if(this.hasSundaySinceDate(new Date(this.user_achievements.lastActive))){
-      console.log("here")
+      console.log("here");
       this.ProgressCount = 0;
     }
 
@@ -112,12 +120,13 @@ export class HomeComponent implements OnInit{
     //this is where the error is, also score goes above 100 and tht shit fucks up with styling. fix that. 
     if(this.IsDueBeforeSunday(new Date(task.dueDate))){
       console.log("what");
+      this.progressUp = true;
       add_to_progress_count = 1;
     }
 
     var locked_and_unlocked = this.achievements.determineAcheivements(
-      this.user_achievements.unlockedAchievements,
-      this.user_achievements.lockedAchievements, 
+      determine_unlock,
+      determine_lock, 
       this.user_achievements.dailyTracker, 
       "complete task", 
       this.user_achievements.tasksCompleted
@@ -125,16 +134,13 @@ export class HomeComponent implements OnInit{
 
     //************* fix this, should be an achievment ********************************************** */
 
-    // const unlocked = this.user_achievements.unlockedAchievements.split(",");
+    console.log(locked_and_unlocked[2]);
+    if(locked_and_unlocked[2].length != 0){
+      this.getAchievement = true;
+    }
 
-    // const missingelement = locked_and_unlocked[0].filter(element => !unlocked.includes(element));
-    // console.log(missingelement);
-    // this.photoChoice=this.achievementPhotos.missingelement;
-    // this.typeChoice="achievement"; 
-    // this.showImagePop = true;
-    // setTimeout(() => {
-    //   this.showImagePop = false;
-    // }, 2000); 
+    this.deletingTask(task.taskId, locked_and_unlocked[2]);
+
 
     console.log(this.user_achievements.weeklytasks);
     console.log(this.ProgressCount);
@@ -143,6 +149,7 @@ export class HomeComponent implements OnInit{
 
     //ensuring score is non-negative (creates errors in avatar page)
     if(this.totalScore < 0){ 
+      this.scoreUp = false;
       this.totalScore = 0
       this.notificationMessage = "+ 0";
       this.wordcolor = "whitesmoke";
@@ -153,6 +160,7 @@ export class HomeComponent implements OnInit{
     }
     else{ 
       if((task.importance * multiplier) > 0){
+        this.scoreUp = true;
         this.notificationMessage = "+ " + (task.importance * multiplier).toString(); 
         this.wordcolor = "#A8EFFF";
         this.showNotification = true;
@@ -161,6 +169,8 @@ export class HomeComponent implements OnInit{
         }, 3000);
       }
       else if((task.importance * multiplier) < 0){
+        this.scoreUp = false;
+        add_to_progress_count = 1;
         this.notificationMessage = (task.importance * multiplier).toString();
         this.wordcolor = "#FF48A6";
         this.showNotification = true;
@@ -169,6 +179,7 @@ export class HomeComponent implements OnInit{
         }, 3000);
       }
       else if((task.importance * multiplier) == 0){
+        this.scoreUp = false;
         this.notificationMessage = "+ 0";
         this.wordcolor = "whitesmoke";
         this.showNotification = true;
@@ -204,6 +215,27 @@ export class HomeComponent implements OnInit{
         console.log("good")
       }
     })
+
+    if(this.scoreUp && this.progressUp  && !this.getAchievement){ 
+      this.playSound(8)
+    }
+    if(this.scoreUp && !this.progressUp && !this.getAchievement){
+      this.playSound(3)
+    }
+    if(!this.scoreUp && !this.progressUp && !this.getAchievement){
+      this.playSound(4)
+    }
+    if(!this.scoreUp && this.progressUp && !this.getAchievement){
+      console.log("here")
+      this.playSound(7)
+    }
+    if(this.getAchievement){
+      this.playSound(6)
+    }
+
+    this.scoreUp = false; 
+    this.progressUp = false; 
+    this.getAchievement = false;
     //refreshing the user tasks list and repositioning the top three tasks 
     this.getUserTasks();
   }
@@ -238,19 +270,65 @@ export class HomeComponent implements OnInit{
 
   }
 
+  playSound(choice: number): void {
+    if(choice == 1){
+      this.audioService.loadSound('assets/sounds/click1.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 2){
+      this.audioService.loadSound('assets/sounds/click2.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 3){
+      this.audioService.loadSound('assets/sounds/gainprogress.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 4){
+      this.audioService.loadSound('assets/sounds/lostprogress.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 5){
+      this.audioService.loadSound('assets/sounds/addingclick.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 6){
+      this.audioService.loadSound('assets/sounds/bonus.mp3'); // Assuming click.mp3 is in the assets folder
+      console.log("here")
+      this.audioService.play();
+    }
+    if(choice == 7){
+      console.log("here")
+      this.audioService.loadSound('assets/sounds/losst.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 8){
+      this.audioService.loadSound('assets/sounds/progressandpoints.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+  }
 
-
-  deletingTask(taskID: number): void{ 
+  deletingTask(taskID: number, array: string[]): void{ 
     this.TaskService.deleteTask(taskID)
     .subscribe({
       next: () => {
         // chooses a comic expression to relay the success 
-        this.photoChoice = this.comicExpressions[Math.floor(Math.random() * 5)];
-        this.typeChoice = "comic";
-        this.showImagePop = true;
-        setTimeout(() => {
-          this.showImagePop = false;
-        }, 2000); 
+        if(array.length != 0){
+          this.typeChoice="achievement"; 
+          var pics = this.achievements.getAcheivementsPics(array);
+          this.photoChoice = pics[0].path;
+          this.showImagePop = true;
+          setTimeout(() => {
+            this.showImagePop = false;
+          }, 4000); 
+        }
+        else{
+          this.photoChoice = this.comicExpressions[Math.floor(Math.random() * 5)];
+          this.typeChoice = "comic";
+          this.showImagePop = true;
+          setTimeout(() => {
+            this.showImagePop = false;
+          }, 2000); 
+        }
         // refreshing the list 
         this.getUserTasks();
         //call to calaulate progress

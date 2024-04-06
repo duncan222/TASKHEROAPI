@@ -52,11 +52,14 @@
           <mat-card-content class="search-contents">
             <div class="search-results">
               <!-- Test Data -->
-              <div *ngFor="let user of searchTestData" class="user-block">
+              <div *ngFor="let user of searchTestData" class="user-block search_block">
                 <div class="user-info">
-                  <div class="search-username" (click)="viewUserProfile(user.id)">{{ user.username }}</div>
-                  <div class="search-points">{{ user.points }} points</div>
-              </div>
+                  <div class="avatar-container">
+                    <img src="{{ user.avatar}}" alt="User Avatar" class="avatar" />
+                  </div>
+                  <div class="username" (click)="viewUserProfile(user.id)">{{ user.username }}</div>
+                  <div class="points">{{ user.points }} points</div>
+                </div>
             </div>
             </div>
           </mat-card-content>

@@ -58,7 +58,9 @@
     width: 1.5rem;
     align-self: center;
 }
-
+.comic{ 
+    z-index: 10000;
+}
 .duedate:focus{ 
     background-color: #cccccc ;
 }
