@@ -2,6 +2,20 @@ h2{
     color: deeppink;
     text-align: center;
 }
+
+.form-boxx{
+  justify-content: center;
+  text-align: center;
+}
+
+.card-title{ 
+  font-size: x-large;
+  font-weight: bold;
+  letter-spacing: .5px;
+  color: #dbdbdb;
+  font-family: "Poppins", sans-serif;
+}
+
 form {
   background-color: #4e4e5e;
   border-radius: 10px;
@@ -11,12 +25,21 @@ form {
   border: 2px solid #A8EFFF;
 }
 
+.fields_texts{
+  font-size: medium;
+  font-weight: normal !important;
+  letter-spacing: .5px;
+  font-family: "Poppins", sans-serif;
+  color: whitesmoke;
+  box-shadow: 0px 0px 8px 0px #a8efff75 !important;
+}
+
 .form-row {
   margin-bottom: 20px;
 }
 
 .fields {
-  color: rgba(245, 245, 245, 0.733);
+  color: rgba(245, 245, 245, 0.808);
 }
 
 .input-group {
@@ -24,14 +47,14 @@ form {
 }
 
 .form-control {
-  background-color: #4e4e5e;
+  background-color: #5a5a64;
   color: rgba(245, 245, 245, 0.733);
   border-color: #A8EFFF;
   box-shadow: 0px 0px 10px 0px #A8EFFF;
 }
 
 .duedate {
-  background-color: #4e4e5e;
+  background-color: #5a5a64;
   color: rgba(245, 245, 245, 0.733);
   border-color: #A8EFFF;
   box-shadow: 0px 0px 10px 0px #A8EFFF;

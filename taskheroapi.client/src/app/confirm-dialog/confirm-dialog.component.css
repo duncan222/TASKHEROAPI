@@ -1,16 +1,18 @@
 .confirmation-card {
+  border-radius: .5rem;
   font-family: "Poppins", sans-serif;
-  color: deeppink;
+  color: rgba(245, 245, 245, 0.692);
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 20px;
+  padding: 40px;
   border: 1px solid #A8EFFF;
-  border-radius: 5px;
-  background-color: #4e4e5e;
+  background-color: #4b4b61;
   box-shadow: 0px 0px 10px 0px #A8EFFF;
   z-index: 2;
+  display: flex;
+  justify-content: center;
   text-align: center;
 }
 
@@ -20,13 +22,29 @@
   margin-top: 20px;
 }
 
-.yes-button,
 .no-button {
+  font-family: "Poppins", sans-serif;
+  border-radius: .5rem;
+  background-color: #A8EFFF;
+  padding: 8px 16px;
+  border: 1px solid #A8EFFF;
+  box-shadow: 0px 0px 10px 0px #A8EFFF;
+  margin: 16px; /* Adjust margin to center the buttons */
+  width: 8rem;
+}
+
+.align{
+  display: flex;
+  justify-content: center;
+}
+
+.yes-button{
+  border-radius: .5rem;
   font-family: "Poppins", sans-serif;
   background-color: #A8EFFF;
   padding: 8px 16px;
   border: 1px solid #A8EFFF;
   box-shadow: 0px 0px 10px 0px #A8EFFF;
   margin: 16px; /* Adjust margin to center the buttons */
-  width: calc(100% - 40px);
+  width: 8rem;
 }

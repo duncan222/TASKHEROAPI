@@ -1,23 +1,29 @@
+<div class="form-boxx">
+
 <form [formGroup]="editTaskForm" (ngSubmit)="onSubmit()">
-  <h2>Edit Task</h2>
+
+  <span class="card-title">Edit Task</span>
   <!-- Title -->
   <div class="form-row title fields">
-    <div class="input-group mb-3">
-      <input formControlName="title" type="text" class="form-control" placeholder="Title" aria-label="Task Title">
+    <div class=
+    
+    
+    "input-group mb-3">
+      <input formControlName="title" type="text" class="form-control fields_texts" placeholder="Title" aria-label="Task Title">
     </div>
   </div>
 
   <!-- Description -->
   <div class="form-row description fields">
     <div class="input-group mb-3">
-      <textarea formControlName="description" type="text" class="form-control" rows="3" placeholder="Description..."></textarea>
+      <textarea formControlName="description" type="text" class="form-control fields_texts" rows="3" placeholder="Description..."></textarea>
     </div>
   </div>
 
   <!-- Due Date -->
   <div class="form-row due-date fields">
     <div class="input-group mb-3">
-      <input formControlName="date" class="form-control duedate" matInput [matDatepicker]="basicDatepicker" placeholder="Select Due Date...">
+      <input formControlName="date" class="form-control duedate fields_texts" matInput [matDatepicker]="basicDatepicker" placeholder="Select Due Date...">
       <div class="input-group-append append">
         <mat-datepicker-toggle matSuffix [for]="basicDatepicker"></mat-datepicker-toggle>
         <mat-datepicker [startAt]="startDate" #basicDatepicker></mat-datepicker>
@@ -47,3 +53,5 @@
     <button class="btn btn-success add" [disabled]="editTaskForm.invalid" type="submit">Submit</button>
   </div>
 </form>
+
+</div>
