@@ -35,11 +35,6 @@
   font-family: "Poppins", sans-serif;
 }
 
-.below {
-  margin-bottom: -35rem;
-  font-family: "Poppins", sans-serif;
-  background-color: transparent !important;
-}
 
 
 .task-card {
@@ -386,6 +381,15 @@ textarea::-webkit-scrollbar-thumb{
       height: auto;
       background-color: transparent;
     }
+
+    .below {
+      margin-left: 29.2rem;
+      margin-top: -.5rem;
+      font-family: "Poppins", sans-serif;
+      background-color: transparent !important;
+      position: fixed;
+      z-index: 10;
+    }
     
   }
 
@@ -398,6 +402,15 @@ textarea::-webkit-scrollbar-thumb{
       padding-right: 1rem;
       padding-left: 1rem;
       background-color: transparent;
+    }
+
+    .below {
+      margin-top: -.5rem;
+      margin-left: 11.5rem;
+      font-family: "Poppins", sans-serif;
+      background-color: transparent !important;
+      position: fixed;
+      z-index: 10;
     }
 
   }

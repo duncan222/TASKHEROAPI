@@ -27,13 +27,15 @@ export class TasksComponent implements OnInit {
   notificationMessage = "";
   color = "";
   weeklytasks = 0;
-  comicChoice: string = "";
+  photoChoice: string = "";
+  typeChoice: string = "";
   comicExpressions: string[] = ['/assets/icons/kaboom.png', '/assets/icons/boom.png', '/assets/icons/pow.png', '/assets/icons/kapow.png', '/assets/icons/bang.png'];
   showImagePop = false;
   ProgressCount: number = 0;
   totalScore: number = 0;
   userdetails: any = "";
   priorities:string[] = ['None', 'Low', 'Medium', 'High'];
+  wordcolor: string = "";
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -80,6 +82,7 @@ export class TasksComponent implements OnInit {
     this.taskService.getUserTasks(this.currentUser).subscribe(
       (userTasks) => {
         for (const userTask of userTasks) {
+          console.log(userTask.taskId)
           this.tasks.push({ Title: userTask.title, Description: userTask.description, DueDate: userTask.dueDate, Importance: userTask.importance, TimeStamp: userTask.timeStamp, Weight: userTask.weight, Urgency: userTask.urgency, TaskId: userTask.taskId })
         }
       },
@@ -90,7 +93,7 @@ export class TasksComponent implements OnInit {
   }
 
   refreshPage() {
-    this.document.location.reload();
+    window.location.reload();
   }
 
   onSubmit(): void {
@@ -126,6 +129,7 @@ export class TasksComponent implements OnInit {
           Urgency: urgency,
         };
 
+        //didnt realize this was already implemented. sweet. 
         var locked_and_unlocked = this.achievements.determineAcheivements(
           this.user_achievements.unlockedAchievements,
           this.user_achievements.lockedAchievements,
@@ -133,9 +137,7 @@ export class TasksComponent implements OnInit {
           "add task",
           this.user_achievements.tasksCompleted
         );
-
-        // Add the submitted task to the tasks array
-        this.tasks.push(taskInstance);
+        
         // Clear the form after submission
         this.taskGroup.reset();
 
@@ -147,7 +149,7 @@ export class TasksComponent implements OnInit {
           response => {
             console.log("added")
             this.notificationMessage = "Task Added!"
-            this.color = "#198754";
+            this.color = "#A8EFFF";
             this.showNotification = true;
             if (this.calculateSunday(taskInstance.DueDate)) {
               console.log("post")
@@ -168,6 +170,9 @@ export class TasksComponent implements OnInit {
             }
 
             this.updateAchievements(this.currentUser, AchievemtUpdate);
+
+            //refreshing the task list. 
+            this.loadTasks(); 
 
             setTimeout(() => {
               this.showNotification = false;
@@ -220,6 +225,11 @@ export class TasksComponent implements OnInit {
       data: { message: 'Are you sure you want to delete this task?' }
     });
 
+    //we should doc the points if the item is deleted past due date hahaaagagagagagagaa
+
+    // gonna do that in just a second. 
+
+  
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // Delete task logic here
@@ -237,24 +247,131 @@ export class TasksComponent implements OnInit {
   }
 
 
-  completeTask(task: IUserTasks): void {
+  completeTask(task: any): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '250px',
       data: { message: 'Have you completed this task?' }
     });
-
+    var ID = task.TaskId;
+    console.log(ID)
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
       if (result) {
         console.log(task.TaskId);
         this.taskService.deleteTask(task.TaskId).subscribe(
           (response) => {
+
+
+            //fix positioning. 
             console.log("Task successfully completed", response);
-            this.comicChoice = this.comicExpressions[Math.floor(Math.random() * 5)];
+            this.photoChoice = this.comicExpressions[Math.floor(Math.random() * 5)];
+            this.typeChoice = "comic";
             this.showImagePop = true;
+            
             setTimeout(() => {
               this.showImagePop = false;
             }, 2000);
-            this.handleProgressUpdate(task);
+
+            //*********************************************
+            // update score and daily streak (using weigth * multiplier ? i guess this is how many days until due. reward for not precrastinating)
+            var multiplier_percentage = (new Date().getTime() - new Date(task.TimeStamp).getTime()) / (new Date(task.DueDate).getTime() - new Date(task.TimeStamp).getTime()); 
+            var addition_to_score = task.Importance / multiplier_percentage; 
+            var multiplier = 1; 
+
+
+
+            if(addition_to_score >= 1000){ 
+              multiplier = parseInt(addition_to_score.toString()[0]) + 1;
+            }
+            else if(addition_to_score < 0.0 && addition_to_score > -1000){ 
+              multiplier = -1
+            }
+            else if(addition_to_score <= -1000){
+              multiplier = parseInt(addition_to_score.toString()[0] + addition_to_score.toString()[1]) - 1;
+            }
+
+            // if the percentage is negative, reset streak to 0, else, increment. 
+            if(multiplier_percentage < 0.0){ 
+              this.user_achievements.dailyTracker = 0;
+              //add something to put a notification for + whatever points, or minus whatever points. 
+            }
+            else{ 
+              this.user_achievements.dailyTracker +=1;
+            }
+
+            this.ProgressCount = this.user_achievements.weeklyProgress;
+
+            if(this.hasSundaySinceDate(new Date(this.user_achievements.lastActive))){
+              console.log("here")
+              this.ProgressCount = 0;
+            }
+
+            var add_to_progress_count = 0; 
+
+            //this is where the error is, also score goes above 100 and tht shit fucks up with styling. fix that. 
+            if(this.IsDueBeforeSunday(new Date(task.DueDate))){
+              console.log("what");
+              add_to_progress_count = 1;
+            }
+
+            var locked_and_unlocked = this.achievements.determineAcheivements(
+              this.user_achievements.unlockedAchievements,
+              this.user_achievements.lockedAchievements, 
+              this.user_achievements.dailyTracker, 
+              "complete task", 
+              this.user_achievements.tasksCompleted
+            );
+
+            //************* fix this, should be an achievment ********************************************** */
+
+            // const unlocked = this.user_achievements.unlockedAchievements.split(",");
+
+            // const missingelement = locked_and_unlocked[0].filter(element => !unlocked.includes(element));
+            // console.log(missingelement);
+            // this.photoChoice=this.achievementPhotos.missingelement;
+            // this.typeChoice="achievement"; 
+            // this.showImagePop = true;
+            // setTimeout(() => {
+            //   this.showImagePop = false;
+            // }, 2000); 
+
+            console.log(this.user_achievements.weeklytasks);
+            console.log(this.ProgressCount);
+            this.totalScore = this.user_achievements.totalScore + (task.Importance * multiplier);
+            this.userdetails.score = this.totalScore;
+
+            //ensuring score is non-negative (creates errors in avatar page)
+            if(this.totalScore < 0){ 
+              this.totalScore = 0
+            }
+
+            // update score and daily streak -- call to acheivement service. 
+            var AchievemtUpdate: IUserAchievements = {
+              UserId: this.currentUser,
+              BadgeID: this.user_achievements.badgeID,
+              weeklyProgress: this.ProgressCount + add_to_progress_count,
+              dailyTracker: this.user_achievements.dailyTracker,
+              totalScore: this.totalScore,
+              lastActive: new Date().toDateString(),
+              UnlockedAchievements: locked_and_unlocked[0],
+              LockedAchievements: locked_and_unlocked[1],
+              weeklytasks: this.user_achievements.weeklytasks,
+              tasksCompleted: this.user_achievements.tasksCompleted + 1, 
+              villainLevel: this.user_achievements.villainLevel
+            }
+            this.updateAchievements(this.currentUser, AchievemtUpdate);
+
+            //updating the users score so it can be shown in the social page/profile. 
+            this.userService.put(this.userdetails).subscribe({
+              error: (error) => {
+                console.error('An error occurred:', error);
+              },
+              complete: () => {
+                console.log("good")
+                this.refreshPage();
+              }
+            })
+            //refreshing the user tasks list and repositioning the top three tasks 
           },
           (error) => {
             console.log("Error marking task as complete", error);
@@ -277,83 +394,6 @@ export class TasksComponent implements OnInit {
       });
   }
 
-  handleProgressUpdate(task: any) {
-    // update score and daily streak (using weigth * multiplier ? i guess this is how many days until due. reward for not precrastinating)
-    var multiplier_percentage = (new Date().getTime() - new Date(task.timeStamp).getTime()) / (new Date(task.dueDate).getTime() - new Date(task.timeStamp).getTime());
-    var addition_to_score = task.importance / multiplier_percentage;
-    var multiplier = 1;
-
-    if (addition_to_score >= 1000) {
-      multiplier = parseInt(addition_to_score.toString()[0]) + 1;
-    }
-    else if (addition_to_score < 0.0 && addition_to_score > -1000) {
-      multiplier = -1
-    }
-    else if (addition_to_score <= -1000) {
-      multiplier = parseInt(addition_to_score.toString()[0] + addition_to_score.toString()[1]) - 1;
-    }
-
-    // if the percentage is negative, reset streak to 0, else, increment. 
-    if (multiplier_percentage < 0.0) {
-      this.user_achievements.dailyTracker = 0;
-      //add something to put a notification for + whatever points, or minus whatever points. 
-    }
-    else {
-      this.user_achievements.dailyTracker += 1;
-    }
-
-    this.ProgressCount = this.user_achievements.weeklyProgress;
-
-    if (this.hasSundaySinceDate(new Date(this.user_achievements.lastActive))) {
-      this.ProgressCount = 0;
-    }
-
-    var add_to_progress_count = 0;
-
-    //this is where the error is, also score goes above 100 and tht shit fucks up with styling. fix that. 
-    if (this.IsDueBeforeSunday(new Date(task.dueDate))) {
-      add_to_progress_count = 1;
-    }
-
-    var locked_and_unlocked = this.achievements.determineAcheivements(
-      this.user_achievements.unlockedAchievements,
-      this.user_achievements.lockedAchievements,
-      this.user_achievements.dailyTracker,
-      "complete task",
-      this.user_achievements.tasksCompleted
-    );
-
-    this.totalScore = this.user_achievements.totalScore + (task.importance * multiplier);
-    this.userdetails.score = this.totalScore;
-
-    // update score and daily streak -- call to acheivement service. 
-    var AchievemtUpdate: IUserAchievements = {
-      UserId: this.currentUser,
-      BadgeID: this.user_achievements.badgeID,
-      weeklyProgress: this.ProgressCount + add_to_progress_count,
-      dailyTracker: this.user_achievements.dailyTracker,
-      totalScore: this.user_achievements.totalScore + (task.importance * multiplier),
-      lastActive: new Date().toDateString(),
-      UnlockedAchievements: locked_and_unlocked[0],
-      LockedAchievements: locked_and_unlocked[1],
-      weeklytasks: this.user_achievements.weeklytasks,
-      tasksCompleted: this.user_achievements.tasksCompleted + 1,
-      villainLevel: this.user_achievements.villainLevel
-    }
-    this.updateAchievements(this.currentUser, AchievemtUpdate);
-
-    //updating the users score so it can be shown in the social page/profile. 
-    this.userService.put(this.userdetails).subscribe({
-      error: (error) => {
-        console.error('An error occurred:', error);
-      },
-      complete: () => {
-        console.log("good")
-        this.refreshPage();
-      }
-    })
-  }
-
   calculateSunday(due: string): boolean {
     // Getting the date value of 'next Sunday'
     const today = new Date();
@@ -371,7 +411,7 @@ export class TasksComponent implements OnInit {
     let currentDateToCheck = new Date(startDate);
     while (currentDateToCheck <= currentDate) {
       if (currentDateToCheck.getDay() === 0) {
-        return true;
+        return true; 
       }
       currentDateToCheck.setDate(currentDateToCheck.getDate() + 1);
     }
@@ -462,28 +502,28 @@ export class TasksComponent implements OnInit {
     }
   }
 
-  calculateProgress(): number {
+  calculateProgress(): number{ 
 
     // getting the date value of 'next sunday'
-    const today = new Date();
-    const daysOfWeek = today.getDay();
-    const daysUntilSunday = daysOfWeek === 0 ? 7 : 7 - daysOfWeek;
-    const nextSunday = new Date(today);
+    const today = new Date(); 
+    const daysOfWeek = today.getDay(); 
+    const daysUntilSunday = daysOfWeek === 0 ? 7 : 7 - daysOfWeek; 
+    const nextSunday = new Date(today); 
     nextSunday.setDate(today.getDate() + daysUntilSunday);
     nextSunday.setHours(0, 0, 0, 0);
 
     // filtering the task list for only values between now and then 
     var temp_tasks = this.tasks.filter(task => new Date(task.DueDate) <= nextSunday);
-
+    
     //returning the length of the filtered tasks... all that for that. has to be easier way 
     return temp_tasks.length;
   }
 
-  IsDueBeforeSunday(Due: Date): boolean {
-    const today = new Date();
-    const daysOfWeek = today.getDay();
-    const daysUntilSunday = daysOfWeek === 0 ? 7 : 7 - daysOfWeek;
-    const nextSunday = new Date(today);
+  IsDueBeforeSunday(Due: Date): boolean{ 
+    const today = new Date(); 
+    const daysOfWeek = today.getDay(); 
+    const daysUntilSunday = daysOfWeek === 0 ? 7 : 7 - daysOfWeek; 
+    const nextSunday = new Date(today); 
     nextSunday.setDate(today.getDate() + daysUntilSunday);
     nextSunday.setHours(0, 0, 0, 0);
     return Due <= nextSunday;

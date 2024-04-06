@@ -34,6 +34,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ScoreNotificationComponent } from './score-notification/score-notification.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     AddTaskComponent,
     NotificationComponent,
     ImagePopComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    ScoreNotificationComponent
   ],
   imports: [
     BrowserModule,

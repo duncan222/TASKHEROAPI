@@ -17,6 +17,9 @@ also change the font. -- these are edits to be made later once functionality is 
                                 <span class="row score"> 
                                     Score: {{totalScore}}
                                 </span>
+                                <div class="below">
+                                    <app-score-notification class="not-pos" *ngIf="showNotification" [message]="notificationMessage" [wordcolor]="wordcolor"></app-score-notification>
+                                </div>                                
                             </div> 
                         </div>
                         <div class="to-the-right">

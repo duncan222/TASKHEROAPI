@@ -9,7 +9,7 @@ export class NotificationComponent implements OnInit{
 
   @Input() message: string | undefined; 
   @Input() color: string = "#198754";
-
+  @Input() wordcolor: string = "#bebebe";
   constructor() {
     
   }

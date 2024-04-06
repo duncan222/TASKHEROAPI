@@ -2,9 +2,10 @@
     position: relative;
     padding: 10px; 
     border-radius: 5px; 
-    animation: fadeOut 5s ease;
+    animation: fadeOut 3s ease;
     z-index: 2;
-    background-color: #198754;
+    background-color: transparent;
+    font-size: small;
     font-weight: bold;
     letter-spacing: .5px;
     font-family: "Poppins", sans-serif;
