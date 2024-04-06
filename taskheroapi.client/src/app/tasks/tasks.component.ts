@@ -11,6 +11,7 @@ import { EditTaskComponent } from '../edit-task/edit-task.component';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { DOCUMENT } from "@angular/common";
 import { UserService } from '../../services/user.service';
+import { AudioService } from '../../services/audioservice.service';
 
 @Component({
   selector: 'app-tasks',
@@ -23,9 +24,6 @@ export class TasksComponent implements OnInit {
   taskGroup: FormGroup;
   tasks: IUserTasks[] = []; // Array to store tasks
   user_achievements: any;
-  showNotification = false;
-  notificationMessage = "";
-  color = "";
   weeklytasks = 0;
   photoChoice: string = "";
   typeChoice: string = "";
@@ -36,10 +34,19 @@ export class TasksComponent implements OnInit {
   userdetails: any = "";
   priorities:string[] = ['None', 'Low', 'Medium', 'High'];
   wordcolor: string = "";
+  showNotification = false;
+  notificationMessage = "";
+  color = "";
+  scoreUp: boolean = false;
+  progressUp: boolean = false;
+  leveledUp: boolean = false;
+  getAchievement: boolean = false;
+
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private fb: FormBuilder,
+    private audioService: AudioService,
     private taskService: userTask,
     private authService: AuthService,
     private Achievements: userAchievements,
@@ -75,6 +82,43 @@ export class TasksComponent implements OnInit {
     this.getAchievements();
     this.loadTasks();
     // Subscribe to the observable that emits the updated task list
+  }
+
+  playSound(choice: number): void {
+    if(choice == 1){
+      this.audioService.loadSound('assets/sounds/click1.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 2){
+      this.audioService.loadSound('assets/sounds/click2.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 3){
+      this.audioService.loadSound('assets/sounds/gainprogress.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 4){
+      this.audioService.loadSound('assets/sounds/lostprogress.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 5){
+      this.audioService.loadSound('assets/sounds/addingclick.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 6){
+      this.audioService.loadSound('assets/sounds/bonus.mp3'); // Assuming click.mp3 is in the assets folder
+      console.log("here")
+      this.audioService.play();
+    }
+    if(choice == 7){
+      console.log("here")
+      this.audioService.loadSound('assets/sounds/losst.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 8){
+      this.audioService.loadSound('assets/sounds/progressandpoints.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
   }
 
   loadTasks(): void {
@@ -138,6 +182,19 @@ export class TasksComponent implements OnInit {
           this.user_achievements.tasksCompleted
         );
         
+        if(locked_and_unlocked[2].length != 0){
+          this.playSound(6)
+          this.typeChoice="achievement"; 
+          var pics = this.achievements.getAcheivementsPics(locked_and_unlocked[2]);
+          this.photoChoice = pics[0].path;
+          this.showImagePop = true;
+          setTimeout(() => {
+            this.showImagePop = false;
+          }, 4000); 
+        }
+        else{
+          this.playSound(5)
+        }
         // Clear the form after submission
         this.taskGroup.reset();
 
@@ -194,6 +251,7 @@ export class TasksComponent implements OnInit {
     console.log("task", task);
 
     dialogRef.afterClosed().subscribe(updatedTask => {
+      this.playSound(2)
       if (updatedTask) {
         updatedTask.DueDate = String(updatedTask.DueDate)
         if (updatedTask.Importance == "low") {
@@ -209,7 +267,9 @@ export class TasksComponent implements OnInit {
         this.taskService.update(this.currentUser, updatedTask).subscribe(
           (response) => {
             console.log("Task updated successfully", response);
-            this.refreshPage();
+            setTimeout(() => {
+              this.refreshPage();                
+            }, 500);          
           },
           (error) => {
             console.log("Error editing task: ", error);
@@ -232,12 +292,14 @@ export class TasksComponent implements OnInit {
   
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.playSound(7)
         // Delete task logic here
         this.taskService.deleteTask(task.TaskId).subscribe(
           (response) => {
             console.log("Task deleted", response);
-            this.refreshPage();
-          },
+            setTimeout(() => {
+              this.refreshPage();                
+            }, 400);              },
           (error) => {
             console.log("Error deleting task:", error);
           }
@@ -261,16 +323,6 @@ export class TasksComponent implements OnInit {
         this.taskService.deleteTask(task.TaskId).subscribe(
           (response) => {
 
-
-            //fix positioning. 
-            console.log("Task successfully completed", response);
-            this.photoChoice = this.comicExpressions[Math.floor(Math.random() * 5)];
-            this.typeChoice = "comic";
-            this.showImagePop = true;
-            
-            setTimeout(() => {
-              this.showImagePop = false;
-            }, 2000);
 
             //*********************************************
             // update score and daily streak (using weigth * multiplier ? i guess this is how many days until due. reward for not precrastinating)
@@ -322,6 +374,17 @@ export class TasksComponent implements OnInit {
               this.user_achievements.tasksCompleted
             );
 
+            if(locked_and_unlocked[2].length != 0){
+              this.getAchievement = true;
+              this.typeChoice="achievement"; 
+              var pics = this.achievements.getAcheivementsPics(locked_and_unlocked[2]);
+              this.photoChoice = pics[0].path;
+              this.showImagePop = true;
+              setTimeout(() => {
+                this.showImagePop = false;
+              }, 4000); 
+            }
+
             //************* fix this, should be an achievment ********************************************** */
 
             // const unlocked = this.user_achievements.unlockedAchievements.split(",");
@@ -368,10 +431,24 @@ export class TasksComponent implements OnInit {
               },
               complete: () => {
                 console.log("good")
-                this.refreshPage();
+
+                if(this.getAchievement){
+                  this.playSound(6)
+                  this.scoreUp = false; 
+                  this.progressUp = false; 
+                  this.getAchievement = false;
+                  setTimeout(() => {
+                    this.refreshPage();                
+                  }, 2000);
+                }
+                else{
+                  
+                  this.playSound(1);
+                  setTimeout(() => {
+                    this.refreshPage();                
+                  }, 1000);                };                
               }
             })
-            //refreshing the user tasks list and repositioning the top three tasks 
           },
           (error) => {
             console.log("Error marking task as complete", error);

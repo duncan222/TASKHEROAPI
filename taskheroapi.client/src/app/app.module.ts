@@ -35,6 +35,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ScoreNotificationComponent } from './score-notification/score-notification.component';
+import { AudioServiceComponent } from './audio-service/audio-service.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { ScoreNotificationComponent } from './score-notification/score-notificat
     NotificationComponent,
     ImagePopComponent,
     ConfirmDialogComponent,
-    ScoreNotificationComponent
+    ScoreNotificationComponent,
+    AudioServiceComponent
   ],
   imports: [
     BrowserModule,

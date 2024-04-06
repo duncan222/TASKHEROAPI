@@ -8,6 +8,7 @@ import { userAchievements } from '../../services/userAchievement.service';
 import { IUserAchievements } from '../../interfaces/userachievements.interface';
 import { Achievements } from '../../services/achievements.service';
 import { HomeComponent } from '../home/home.component';
+import { AudioService } from '../../services/audioservice.service';
 
 @Component({
   selector: 'app-add-task',
@@ -30,10 +31,13 @@ export class AddTaskComponent implements OnInit{
   color = ""
   user_achievements: any; 
   weeklytasks = 0;
+  getAchievement: boolean = false;
+  showImagePop = false;
+  photoChoice: string = "";
+  typeChoice: string = "";
 
 
-
-  constructor(private AddTask: AddTask, private fb: FormBuilder, private taskService: userTask, private authService: AuthService, private Achievements: userAchievements, private achievements: Achievements) {
+  constructor(private audioService: AudioService, private AddTask: AddTask, private fb: FormBuilder, private taskService: userTask, private authService: AuthService, private Achievements: userAchievements, private achievements: Achievements) {
     this.taskGroup = this.fb.group({
       title: new FormControl('') , 
       description: new FormControl(''),
@@ -52,6 +56,44 @@ export class AddTaskComponent implements OnInit{
     }
     this.getAchievments()
   }
+
+  playSound(choice: number): void {
+    if(choice == 1){
+      this.audioService.loadSound('assets/sounds/click1.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 2){
+      this.audioService.loadSound('assets/sounds/click2.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 3){
+      this.audioService.loadSound('assets/sounds/gainprogress.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 4){
+      this.audioService.loadSound('assets/sounds/lostprogress.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 5){
+      this.audioService.loadSound('assets/sounds/addingclick.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 6){
+      this.audioService.loadSound('assets/sounds/bonus.mp3'); // Assuming click.mp3 is in the assets folder
+      console.log("here")
+      this.audioService.play();
+    }
+    if(choice == 7){
+      console.log("here")
+      this.audioService.loadSound('assets/sounds/losst.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+    if(choice == 8){
+      this.audioService.loadSound('assets/sounds/progressandpoints.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
+  }
+
 
   onSubmit(): void {
     if (this.taskGroup.valid && this.taskGroup != null) {
@@ -84,6 +126,10 @@ export class AddTaskComponent implements OnInit{
           this.user_achievements.tasksCompleted
         );
 
+        if(locked_and_unlocked[2].length != 0){
+          this.getAchievement = true;
+        }
+
         var weeklytask = 0; 
 
         console.log(taskInstance);
@@ -115,6 +161,21 @@ export class AddTaskComponent implements OnInit{
               villainLevel: this.user_achievements.villainLevel
             }
     
+            if(this.getAchievement){
+              this.playSound(6);
+              this.typeChoice="achievement"; 
+              var pics = this.achievements.getAcheivementsPics(locked_and_unlocked[2]);
+              this.photoChoice = pics[0].path;
+              this.showImagePop = true;
+              setTimeout(() => {
+                this.showImagePop = false;
+              }, 4000); 
+            }
+            else{
+              this.playSound(5); 
+            }
+
+            this.getAchievement = false;
             this.updateAchievements(this.currentUser, AchievemtUpdate);
 
             setTimeout(() => {
