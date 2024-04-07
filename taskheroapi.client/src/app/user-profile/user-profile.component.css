@@ -327,7 +327,7 @@ a {
   }
 
     .header__wrapper .cols__container .left__col {
-      padding: 25px 0px;
+      justify-self: center;
     }
 
     .header__wrapper .cols__container .right__col nav ul {
@@ -344,22 +344,31 @@ a {
     .below{ 
       width: 15rem;
       margin-left: 13rem;
-      margin-top: -65rem;
-      display: relative !important;
+      margin-top: -50rem;
+      z-index: 20;
    }
  
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 700px) and (min-width: 430px) {
   .header__wrapper .cols__container .left__col {
     margin: 0;
     margin-right: auto;
-    margin-left: 4rem;
-  }
+    margin-left: auto;
+  }}
+
+@media only screen and (max-width: 430px) {
+  .header__wrapper .cols__container .left__col {
+      margin: 0;
+      margin-right: auto;
+      margin-left: auto;
+  }}
+
+
+@media only screen and (max-width: 700px) {
 
   .header__wrapper .cols__container .right__col nav {
     flex-direction: row;
-    margin-right: 4rem;
   }
 
     .header__wrapper .cols__container .right__col nav button {
@@ -387,8 +396,10 @@ a {
 
   .below{ 
     width: 15rem;
-    margin-left: 8rem;
-    margin-top: -99rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -115rem;
+    position: relative;
     display: relative !important;
  }
 

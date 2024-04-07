@@ -21,7 +21,7 @@
         </div>
         <div class="form-row due-date fields">
           <div class="input-group mb-3">
-            <input formControlName="date" class="form-control duedate fields_texts" matInput [matDatepicker]="basicDatepicker" placeholder="Select Due Date...">
+            <input formControlName="date" class="form-control duedate fields_texts" matInput [min]="minDate" [matDatepicker]="basicDatepicker" placeholder="Select Due Date...">
             <div class="input-group-append append">
               <mat-datepicker-toggle matSuffix [for]="basicDatepicker"></mat-datepicker-toggle>
               <mat-datepicker [startAt]="startDate" #basicDatepicker></mat-datepicker>

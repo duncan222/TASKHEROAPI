@@ -13,7 +13,7 @@ export class ImageSelectorService {
       case "image1":
         return "assets/icons/defaultpic.png";
       case "image2":
-        return "assets/profilePics/2.png";
+        return "assets/profilePics/superhero1.png";
       case "image3":
         return "assets/profilePics/3.png";
       case "image4":
@@ -39,7 +39,7 @@ export class ImageSelectorService {
     switch (imageString) {
       case "assets/icons/defaultpic.png":
         return "image1";
-      case "assets/profilePics/2.png":
+      case "assets/profilePics/superhero1.png":
         return "image2";
       case "assets/profilePics/3.png":
         return "image3";
