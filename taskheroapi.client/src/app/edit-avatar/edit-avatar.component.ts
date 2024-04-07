@@ -15,7 +15,7 @@ export class EditAvatarComponent {
 
   avatars: string[] = [
     'assets/icons/defaultpic.png',
-    'assets/profilePics/2.png',
+    'assets/profilePics/superhero1.png',
     'assets/profilePics/3.png',
     'assets/profilePics/4.png',
     'assets/profilePics/5.png',

@@ -62,16 +62,27 @@ button {
 
 .locked-info {
   text-align: center;
-  margin-top: 5px;
+  margin-top: 1px;
+  padding: 0px;
 }
 
 .locked-text {
   color: #ff0000;
   font-weight: bold;
+  position: absolute;
+  margin-top: -5rem;
+  width: 7rem;
+  padding: 0px;
+  background-color: #121212b2;
 }
 
 .required-points {
   color: #ff0000;
+  position: absolute;
+  margin-top: -3rem;
+  padding: 0px;
+  background-color: #121212b2;
+
 }
 
 .user-points {

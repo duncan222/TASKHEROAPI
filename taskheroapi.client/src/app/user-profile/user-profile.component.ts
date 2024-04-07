@@ -39,7 +39,7 @@ export class UserProfileComponent implements OnInit {
   notificationMessage: string = "";
   wordcolor: string = "";
   color: string = "";
-  showImagePop = false;
+  showImagePop = true;
   photoChoice: string = "";
   typeChoice: string = "";
 
