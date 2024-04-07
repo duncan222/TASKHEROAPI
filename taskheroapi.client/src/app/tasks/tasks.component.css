@@ -226,13 +226,21 @@ mat-card {
   background-color: #4e4e5e;
   color: whitesmoke;
   justify-content: flex-start;
-  min-width: 400px;
+  min-width: 300px;
   width: 100%;
   overflow-y: auto;
   flex-wrap: wrap;
   border-radius: .5rem;
 }
 
+@media only screen and (max-width: 700px) {
+  .card-body {
+    margin-left: 48px; /* Add margin to the left when the page is smaller than 700px */
+  }
+  .mat-card {
+    margin-left: 48px; /* Add margin to the left when the page is smaller than 700px */
+  }
+}
 
 
 .card-text description {
