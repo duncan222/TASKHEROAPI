@@ -95,6 +95,23 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+.achievements-row {
+  display: flex; /* Use flexbox */
+  flex-wrap: wrap; /* Wrap items to the next line when they exceed the container width */
+}
+
+.achievements-container {
+  display: flex; /* Use flexbox */
+  flex-wrap: wrap; /* Wrap items to the next line when they exceed the container width */
+}
+
+.Achievements {
+  flex: 0 0 33.33%;
+  padding: 10px;
+  display: flex;
+  justify-content: center; /* Horizontally center the achievements */
+}
+
 ul {
   list-style-type: none;
   margin: 0;
@@ -163,6 +180,8 @@ a {
     width: 15rem;
     height: auto;
     padding: 1rem;
+    display: flex;
+    justify-content: center;
   }
 
   .trophies{ 
@@ -349,7 +368,13 @@ a {
     }
 
   .header__wrapper .cols__container .right__col .Achievements {
-    margin-left: 10rem;
+    justify-content: center;
+    flex: 0 0 100%;
+  }
+
+  .achievements-container {
+    justify-content: center;
+    align-items: center;
   }
 
   .margin_contain{
