@@ -8,6 +8,7 @@ import { LoadingService } from '../../services/loading.service';
 import { Achievements } from '../../services/achievements.service';
 import { userAchievements } from '../../services/userAchievement.service';
 import { AudioService } from '../../services/audioservice.service';
+import { IUserAchievements } from '../../interfaces/userachievements.interface';
 
 @Component({
   selector: 'app-user-profile',
@@ -145,6 +146,7 @@ export class UserProfileComponent implements OnInit {
         var this_user: any; 
         //************* fix this, should be an achievment ********************************************** */
         if(this.currentLoggedInUserId != null){
+          var ID: number = this.currentLoggedInUserId;
           this.AchievementService.getAchievements(this.currentLoggedInUserId)
           .subscribe({
             next: (acheivements) => {
@@ -154,7 +156,7 @@ export class UserProfileComponent implements OnInit {
               console.error('An error occurred:', error);
             },
             complete: () => {    
-              var locked_and_unlocked = this.achievements.determineAcheivements(this_user.unlockedAchievements, this_user.lockedAchievements, this_user.dailyTracker, 'follow others', this_user.tasksCompleted);
+              var locked_and_unlocked = this.achievements.determineAcheivements(this_user.unlockedAchievements, this_user.lockedAchievements, this_user.dailyTracker, 'follow others', this_user.tasksCompleted, 1000000);
               console.log(locked_and_unlocked[2]);
 
               if(locked_and_unlocked[2].length != 0){
@@ -164,6 +166,25 @@ export class UserProfileComponent implements OnInit {
                 this.photoChoice = pics[0].path;
                 console.log(this.photoChoice);
                 this.showImagePop = true;
+                var AchievemtUpdate: IUserAchievements = {
+                  UserId: ID,
+                  BadgeID: this_user.badgeID,
+                  weeklyProgress: this_user.weeklyProgress,
+                  dailyTracker: this_user.dailyTracker,
+                  totalScore: this_user.totalScore,
+                  lastActive: this_user.lastActive,
+                  UnlockedAchievements: locked_and_unlocked[0],
+                  LockedAchievements: locked_and_unlocked[1],
+                  weeklytasks: this_user.weeklytasks, 
+                  tasksCompleted: this_user.tasksCompleted, 
+                  villainLevel: this_user.villainLevel
+                }
+                this.AchievementService.update(ID, AchievemtUpdate).subscribe({
+                  error: error => { 
+                    console.log(error);
+                  }
+                })
+
                 setTimeout(() => {
                   this.showImagePop = false;
                 }, 4000); 

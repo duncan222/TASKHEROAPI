@@ -73,7 +73,8 @@ export class HomeComponent implements OnInit{
   progressUp: boolean = false;
   leveledUp: boolean = false;
   getAchievement: boolean = false;
-
+  villainDefeat: boolean = false; 
+  villainLost: boolean = false; 
 
 //when task is complete, display notification from comic expressions 
 //call the remove task API service, reposition the top three tasks
@@ -129,7 +130,7 @@ export class HomeComponent implements OnInit{
       determine_lock, 
       this.user_achievements.dailyTracker, 
       "complete task", 
-      this.user_achievements.tasksCompleted
+      this.user_achievements.tasksCompleted, 1000000
     );
 
     //************* fix this, should be an achievment ********************************************** */
@@ -305,6 +306,10 @@ export class HomeComponent implements OnInit{
       this.audioService.loadSound('assets/sounds/progressandpoints.mp3'); // Assuming click.mp3 is in the assets folder
       this.audioService.play();
     }
+    if(choice == 9){ 
+      this.audioService.loadSound('assets/sounds/levelup.mp3'); // Assuming click.mp3 is in the assets folder
+      this.audioService.play();
+    }
   }
 
   deletingTask(taskID: number, array: string[]): void{ 
@@ -420,37 +425,37 @@ export class HomeComponent implements OnInit{
         this.totalScore = this.user_achievements.totalScore;
         this.dailyTracker = this.user_achievements.dailyTracker;
         //if there has been a sunday since last active, then determine new progress based on the stuff due. 
-        if(this.hasSundaySinceDate(this.user_achievements.lastActive)){
-
+        if(this.hasSundaySinceDate(this.user_achievements.lastActive) && new Date(this.user_achievements.lastActive).getDay() != new Date().getDay()){
           var villainScore = 0; 
           var newLevel = this.user_achievements.villainLevel; 
+
           //************************************* */
           //first determine the villains fate here 
+          var locked_and_unlocked: any[] = []; 
           if(this.user_achievements.weeklyProgress >= this.user_achievements.weeklytasks){
+            this.villainDefeat = true;
             //villain defeated  
-
-            // pop up, you got the villain now 
-            this.photoChoice=this.villainPhotos[this.user_achievements.villainLevel];
-            this.typeChoice="villain"; 
-            this.showImagePop = true;
-            setTimeout(() => {
-              this.showImagePop = false;
-            }, 2000); 
+            locked_and_unlocked = this.achievements.determineAcheivements(
+              this.user_achievements.unlockedAchievements, 
+              this.user_achievements.lockedAchievements, 
+              this.user_achievements.dailyTracker,
+              'villain', 
+              this.user_achievements.tasksCompleted, 
+              newLevel);
             // villain now is in subcategorie of achievements 
-
             // moves to next villain 
             newLevel = this.user_achievements.villainLevel + 1;
             villainScore = 2 * this.user_achievements.villainLevel; 
           }
           else{ 
-            //villain not defeated 
-
+            this.villainLost = true; 
             //maybe add a pop up of the super hero getting rocked or somthing if u have time. 
 
             //you did not defeate the villain notification. another week of torment. 
             //*********  should subtract some points.  */  ( minus 1*villain level + 1);
             villainScore = 0 - (2 * this.user_achievements.villainLevel); 
           }
+          
 
           //ensuring userScore is once again, non negative. 
           this.totalScore = this.user_achievements.totalScore + villainScore; 
@@ -459,6 +464,17 @@ export class HomeComponent implements OnInit{
             this.totalScore = 0; 
           }
 
+          var locked: any[];
+          var unlocked: any[]; 
+
+          if(locked_and_unlocked.length != 0){ 
+            locked = locked_and_unlocked[1];
+            unlocked = locked_and_unlocked[0];
+          }
+          else{ 
+            locked = this.user_achievements.lockedAchievements; 
+            unlocked = this.user_achievements.unlockedAchievements;
+          }
           //then change the villain to the next villain 
           //************************************* */
           var taskCount = this.calculateProgress(); 
@@ -470,8 +486,8 @@ export class HomeComponent implements OnInit{
             dailyTracker: this.user_achievements.dailyTracker,
             totalScore: this.totalScore,
             lastActive: new Date().toDateString(),
-            UnlockedAchievements: this.user_achievements.unlockedAchievements,
-            LockedAchievements: this.user_achievements.lockedAchievements,
+            UnlockedAchievements: unlocked,
+            LockedAchievements: locked,
             weeklytasks: taskCount, 
             tasksCompleted: this.user_achievements.tasksCompleted, 
             villainLevel: newLevel
@@ -484,6 +500,9 @@ export class HomeComponent implements OnInit{
               console.log('error updating', error);
             }
           });
+
+          newLevel = newLevel - 1; 
+
           if(taskCount != 0){
             this.progressValue = Math.ceil((this.ProgressCount / taskCount) * 100)
             if(this.progressValue > 100){
@@ -503,6 +522,46 @@ export class HomeComponent implements OnInit{
           }
         });
 
+        this.AchievementService.getAchievements(this.currentUser)
+          .subscribe({
+            next: (acheivements) => {
+              this.user_achievements = acheivements;
+            },
+            error: (error) => {
+              console.error('An error occurred:', error);
+            },
+            complete: () => {
+              this.streakFeatures();
+              this.totalScore = this.user_achievements.totalScore;
+              this.dailyTracker = this.user_achievements.dailyTracker;
+              if(this.villainDefeat == true){
+                document.body.click();
+                this.playSound(9)
+                // pop up, you got the villain now 
+                this.photoChoice=this.villainPhotos[newLevel];
+                this.typeChoice="villain"; 
+                this.showImagePop = true;
+                setTimeout(() => {
+                  this.showImagePop = false;
+                }, 4000); 
+                this.villainDefeat = false; 
+                this.enemyLink = this.enemyList[newLevel + 1][0]; 
+                this.enemyName = this.enemyList[newLevel + 1][1]; 
+
+              }
+              else if(this.villainLost == true){
+                document.body.click();
+                //villain not defeated 
+                this.playSound(4)
+                this.photoChoice=this.villainPhotos[newLevel];
+                this.typeChoice="villain_not"; 
+                this.showImagePop = true;
+                setTimeout(() => {
+                  this.showImagePop = false;
+                }, 4000); 
+                this.villainLost = false;
+              }
+            }});
         }    
 
         else{ 
@@ -612,6 +671,7 @@ export class HomeComponent implements OnInit{
     console.log(this.currentUser);
     this.getUserTasks();
     this.getAchievments();
+
   }
 
 }

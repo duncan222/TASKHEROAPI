@@ -12,6 +12,13 @@
     z-index: 10000;
 }
 
+.notificationr_img_vil{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    width: 10rem;
+    height: auto;
+}
+
 .notification_3 {
     position: absolute;
     height: auto;
