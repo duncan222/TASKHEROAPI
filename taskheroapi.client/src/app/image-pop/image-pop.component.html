@@ -2,16 +2,26 @@
         <img src="{{image}}" class="notificationr_2">
 </div>
 <ng-template #elseblock> 
-        <div *ngIf="type == 'villain'; else elseblock_2" class="notification_2">
+        <div *ngIf="type == 'villain'; else elseblock_2" class="notification_3">
+                <div class="space"></div>
                 <span class="note_title">Villain Defeated!</span>
-                <img src="{{image}}" class="notificationr_2">
+                <div class="space"></div>
+                <img src="{{image}}" class="notificationr_img_vil">
         </div>
         <ng-template #elseblock_2> 
-                <div class="notification_3">
+                <div *ngIf="type == 'achievement'; else elseblock_3" class="notification_3">
                         <div class="space"></div>
                         <span class="note_title">Achievement Unlocked!</span>
                         <div class="space"></div>
                         <img src="{{image}}" class="notificationr_img">
                 </div>
+                <ng-template #elseblock_3> 
+                        <div *ngIf="type == 'villain_not'" class="notification_3">
+                                <div class="space"></div>
+                                <span class="note_title">You lost! Another week of fighting!</span>
+                                <div class="space"></div>
+                                <img src="{{image}}" class="notificationr_img_vil">
+                        </div>
+                </ng-template>
         </ng-template>
 </ng-template>

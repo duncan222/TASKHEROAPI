@@ -123,7 +123,7 @@ export class AddTaskComponent implements OnInit{
           this.user_achievements.lockedAchievements, 
           this.user_achievements.dailyTracker, 
           "add task", 
-          this.user_achievements.tasksCompleted
+          this.user_achievements.tasksCompleted, 100000
         );
 
         if(locked_and_unlocked[2].length != 0){

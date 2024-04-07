@@ -16,9 +16,10 @@ export class Achievements {
       throw new Error('Method not implemented.');
   }
 
-  determineAcheivements(unlocked: string[], locked: string[], streak: number, action: string, tasks_complete: number): [string[], string[], string[]] { 
+  determineAcheivements(unlocked: string[], locked: string[], streak: number, action: string, tasks_complete: number, current_villain: number): [string[], string[], string[]] { 
     var new_stuff: string[] = [];
 
+    console.log(current_villain);
     if(action == 'add task'){
       if(locked.includes('Task Hero')){
         new_stuff.push("Task Hero"); 
@@ -95,6 +96,25 @@ export class Achievements {
         locked = locked.filter(item => item !== "Lonesome No More");
       }
     }
+    else if(action == 'villain'){
+      if(current_villain == 0){
+        console.log("here");
+        new_stuff.push("Monday Inc"); 
+        unlocked.push("Monday Inc"); 
+        locked = locked.filter(item => item !== "Monday Inc");
+      }
+      if(current_villain == 2){
+        new_stuff.push("Dead Lines"); 
+        unlocked.push("Dead Lines"); 
+        locked = locked.filter(item => item !== "Dead Lines");
+      }
+      if(current_villain == 1){
+        new_stuff.push("Sunday Night"); 
+        unlocked.push("Sunday Night"); 
+        locked = locked.filter(item => item !== "Sunday Night");
+      }
+    }
+    
     
     return [unlocked, locked, new_stuff];
   }
@@ -125,6 +145,15 @@ export class Achievements {
       }
       if(item == 'Lonesome No More'){ 
         Achievements.push({title: item, path: '/assets/icons/lonesome.png', type: 'trophy'})
+      }
+      if(item == 'Dead Lines'){ 
+        Achievements.push({title: item, path: '/assets/icons/deadlines.png', type: 'trophy'})
+      }
+      if(item == 'Sunday Night'){ 
+        Achievements.push({title: item, path: '/assets/icons/sunday.png', type: 'trophy'})
+      }
+      if(item == 'Monday Inc'){ 
+        Achievements.push({title: item, path: '/assets/icons/monday.png', type: 'trophy'})
       }
       if(item == 'Pro'){ 
         Achievements.push({title: item, path: '/assets/icons/pro.png', type: 'Level'})
