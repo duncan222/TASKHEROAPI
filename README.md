@@ -17,6 +17,9 @@ This repository is for the API and Client of our web application, which was deve
 
 The project is a task management application that uses gamification in order to make the tasks more fun to complete, attempting to motivate the user into doing their work instead of procrastinating. It was developed using the .NET and entity framework to create the API, Azure data studio to create the data server, and the Angular Framework for front-end UI design. 
 
+<br>
+<br> 
+
+![Drawing-26 sketchpad (2)](https://github.com/duncan222/TASKHEROAPI/assets/75388877/79d7c1eb-14d9-44c6-9df6-7e2d146251c7) ![Drawing-27 sketchpad (16)](https://github.com/duncan222/TASKHEROAPI/assets/75388877/a14929ca-bb05-4e3b-a880-5f6e90b5a529)
 
 
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;![Drawing-26 sketchpad (2)](https://github.com/duncan222/TASKHEROAPI/assets/75388877/79d7c1eb-14d9-44c6-9df6-7e2d146251c7)
