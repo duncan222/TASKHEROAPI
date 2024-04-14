@@ -20,6 +20,6 @@ The project is a task management application that uses gamification in order to 
 <br>
 <br> 
 
-![Drawing-26 sketchpad (2)](https://github.com/duncan222/TASKHEROAPI/assets/75388877/79d7c1eb-14d9-44c6-9df6-7e2d146251c7) ![Drawing-27 sketchpad (16)](https://github.com/duncan222/TASKHEROAPI/assets/75388877/a14929ca-bb05-4e3b-a880-5f6e90b5a529)
+&emsp;&emsp;&emsp;&emsp; ![Drawing-27 sketchpad (17)](https://github.com/duncan222/TASKHEROAPI/assets/75388877/02265ce3-b527-4b18-af86-b1d1531bddfa) ![Drawing-27 sketchpad (16)](https://github.com/duncan222/TASKHEROAPI/assets/75388877/a14929ca-bb05-4e3b-a880-5f6e90b5a529)
 
 
