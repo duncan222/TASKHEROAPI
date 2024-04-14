@@ -1,13 +1,13 @@
 
 
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; ![Drawing-23 sketchpad](https://github.com/Deegee13244/Senior-Design/assets/75388877/b9c51f86-275e-4059-8940-e3f7291cea01) ![Drawing-24 sketchpad](https://github.com/Deegee13244/Senior-Design/assets/75388877/1c595d6d-1800-40c3-872a-4e6b1e2427d4)
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; ![Drawing-23 sketchpad](https://github.com/Deegee13244/Senior-Design/assets/75388877/b9c51f86-275e-4059-8940-e3f7291cea01) ![Drawing-24 sketchpad](https://github.com/Deegee13244/Senior-Design/assets/75388877/1c595d6d-1800-40c3-872a-4e6b1e2427d4)
 <br>
 <br>
 
 <br>
 
-# &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;&emsp; API and Client
-#### &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Developed by Brad Didier, Duncan Collins, and  Aaliyah Loechner
+# &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp;&emsp; API and Client
+#### &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp;&emsp;&emsp;Developed by Brad Didier, Duncan Collins, and  Aaliyah Loechner
 
 <br> 
 <br> 
